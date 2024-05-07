@@ -16,7 +16,16 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<HandelsRakettenContext>();
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
+{
+    var emailSenderConfig = builder.Configuration.GetSection("EmailSender");
+    return new EmailSender(
+        emailSenderConfig["Host"],
+        int.Parse(emailSenderConfig["Port"]),
+        bool.Parse(emailSenderConfig["EnableSSL"]),
+        emailSenderConfig["UserName"],
+        emailSenderConfig["Password"]);
+});
 
 var app = builder.Build();
 
