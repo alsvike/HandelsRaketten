@@ -1,0 +1,14 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@if (Model._signInManager.IsSignedIn(User))
+{
+    <p>DU ER LOGGET IND DIT FEDE LÆS LORT!</p>
+}
+@if (!Model._signInManager.IsSignedIn(User))
+{
+    <p>DU ER IKKE LOGGET IND DIT FEDE LÆS SVINEFODDER!</p>
+}
