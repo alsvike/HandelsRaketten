@@ -18,5 +18,15 @@
     "Description": "23",
     "Price": 12,
     "AdImage": "jg"
+  },
+  {
+    "Id": 4,
+    "Category": "OutdoorPlant",
+    "Name": "a",
+    "Active": true,
+    "CreatedOn": "2024-05-08T11:51:51.3135767+02:00",
+    "Description": "456",
+    "Price": 456,
+    "AdImage": "asd456"
   }
 ]

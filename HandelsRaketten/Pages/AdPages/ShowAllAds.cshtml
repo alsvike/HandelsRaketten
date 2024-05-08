@@ -26,20 +26,101 @@
         </form>
 
     </div>
+    <div class="row">
+        <div class="col-7"><h5>Search Name</h5></div>
+        <div class="col-4"><h5>Filter Price</h5></div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <form method="post" class="form-inline">
+                <div class="input-group mb-3">
+                    <input asp-for="SearchString" class="form-control mr-1" placeholder="Enter search term" />
+                    <input type="submit" asp-page-handler="NameSearch" value="Search" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-3"></div>
+        <div class="col-5">
+            <form method="post" class="form-inline">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Min</span>
+                    </div>
+                    <input asp-for="MinPrice" class="form-control me-2" />
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Max</span>
+                    </div>
+                    <input asp-for="MaxPrice" class="form-control me-2" />
+                    <input type="submit" asp-page-handler="PriceFilter" value="Filter" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+
+
+    </div>
     <div>
-        <table class="table table-primary">
+        <table class="table table-bordered table-hover table-striped table-opacity" width="60%">
+            	<colgroup>
+		<col style="width : 5%">
+		<col style="width : 77%">
+		<col style="width : 9%">
+		<col style="width : 9%">
+	</colgroup>
+	<thead>
+			<tr class="btn-secondary active">
+                    <th>
+                        <div class="d-flex justify-content-between p-0">
+                            <div><a asp-page-handler="SortName" style="color: white; text-decoration: none;"><h5>Navn</h5></a></div>
+                        </div>
+                    </th>
+
+                <th>
+                    <div class="d-flex justify-content-between p-0">
+                        <div>
+                            <h5>Beskrivelse</h5>
+                        </div>
+                    </div>
+                   
+                </th>
+                <th>
+                    <div class="d-flex justify-content-between p-0">
+                        <div>
+                            <div><a asp-page-handler="SortPrice" style="color: white; text-decoration: none;"><h5>Pris</h5></a></div>
+                        </div>
+
+                    </div>
+                </th>
+                <th>
+                    <div class="d-flex justify-content-between p-0">
+                        <h5>Aktiv</h5>
+                    </div>
+                </th>
+                <th>
+                    <div class="d-flex justify-content-between p-0">
+                        <h5>OprettelsesDato</h5>
+                    </div>
+                </th>
+                <th>
+                    <h5>Action</h5>
+                </th>
+            </tr>
+	</thead>
             <tbody>
                 @foreach (var ad in Model._ads)
                 {
                     <tr>
                         <td>@ad.Name</td>
-                        <td>@ad.Active</td>
-                        <td>@ad.CreatedOn</td>
                         <td>@ad.Description</td>
                         <td>@ad.Price</td>
-                        <td><a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a></td>
-                        <td><a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a></td>
-                        <td><a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a></td>
+                        <td>@ad.Active</td>
+                        <td>@ad.CreatedOn</td>
+                        <td class="d-inline-flex">
+                            <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a>
+                            <a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a>
+                            <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a>
+                        </td>
 
                     </tr>
                 }

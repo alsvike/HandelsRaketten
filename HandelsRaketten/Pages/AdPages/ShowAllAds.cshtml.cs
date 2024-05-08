@@ -12,7 +12,20 @@ namespace HandelsHjornet.Pages.TestPages
         [BindProperty]
         public string SelectedOption { get; set; }
 
+        [BindProperty]
+        public string? SearchString { get; set; }
+
+        [BindProperty]
+        public int MinPrice { get; set; }
+
+        [BindProperty]
+        public int MaxPrice { get; set; }
+
         public List<Ad> _ads;
+
+
+        bool _isNameSorted;
+        bool _isPriceSorted;
         public ViewCategoriesTestPageModel(IAdService adService)
         {
             _adService = adService;
@@ -72,6 +85,66 @@ namespace HandelsHjornet.Pages.TestPages
                     _ads = _adService.GetAllAds();
                     break;
             }
+        }
+
+        public IActionResult OnGetSortName()
+        {
+            if (TempData.ContainsKey("IsNameSorted"))
+            {
+                _isNameSorted = (bool)TempData["IsNameSorted"];
+            }
+
+            if (_isNameSorted)
+            {
+                _ads = _adService.SortByNameDescending().ToList();
+                _isNameSorted = false;
+            }
+            else
+            {
+                _ads = _adService.SortByName().ToList();
+                _isNameSorted = true;
+            }
+
+            TempData["IsNameSorted"] = _isNameSorted;
+
+            return Page();
+        }
+
+
+        public IActionResult OnGetSortPrice()
+        {
+            if (TempData.ContainsKey("IsPriceSorted"))
+            {
+                _isPriceSorted = (bool)TempData["IsPriceSorted"];
+            }
+
+            if (_isPriceSorted)
+            {
+                _ads = _adService.SortByPriceDescending().ToList();
+                _isPriceSorted = false;
+            }
+            else
+            {
+                _ads = _adService.SortByPrice().ToList();
+                _isPriceSorted = true;
+            }
+
+            TempData["IsPriceSorted"] = _isPriceSorted;
+
+            return Page();
+        }
+
+
+        public IActionResult OnPostNameSearch()
+        {
+            _ads = _adService.NameSearch(SearchString).ToList();
+            return Page();
+        }
+
+        public IActionResult OnPostPriceFilter()
+        {
+            _ads = _adService.PriceFilter(MaxPrice, MinPrice).ToList();
+            return Page();
         }
 
     }

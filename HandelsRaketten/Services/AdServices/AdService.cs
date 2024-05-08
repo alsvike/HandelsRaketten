@@ -163,5 +163,82 @@ namespace HandelsRaketten.Services.AdServices
         public List<Ad> GetAllAds() => _objs = _adCatalog.GetAll();
 
 
+        // sorting and filtering
+
+        public IEnumerable<Ad> NameSearch(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return _objs;
+            }
+            var objsQuery = from obj in _objs
+                            where obj.Name.ToLower().Contains(str.ToLower())
+                            select obj;
+
+            return objsQuery;
+        }
+
+        public IEnumerable<Ad> PriceFilter(int maxPrice, int minPrice = 0)
+        {
+            var objsQuery = from obj in _objs
+                            where (obj.Price <= maxPrice && minPrice == 0) ||
+                                  (obj.Price >= minPrice && maxPrice == 0) ||
+                                  (obj.Price >= minPrice && obj.Price <= maxPrice)
+                            select obj;
+            return objsQuery;
+        }
+        public IEnumerable<Ad> SortByName()
+        {
+            // Sort Name Without Linq
+            //_items.Sort(new NameComperator());
+            //return _items;
+
+            // Sort Name With Linq
+            var namesQuery = from obj in _objs
+                             orderby obj.Name
+                             select obj;
+            return namesQuery;
+        }
+
+        public IEnumerable<Ad> SortByNameDescending()
+        {
+            // Without linq
+            //_items.Sort(new NameComperator());
+            //return _items.Reverse<Item>();
+
+
+            // With Linq
+            var namesQuery = from obj in _objs
+                             orderby obj.Name descending
+                             select obj;
+            return namesQuery;
+        }
+
+        public IEnumerable<Ad> SortByPrice()
+        {
+            // Without Linq
+            //_items.Sort(new PriceComperator());
+            //return _items;
+
+            // With Linq
+            var priceQuery = from obj in _objs
+                             orderby obj.Price
+                             select obj;
+            return priceQuery;
+        }
+
+        public IEnumerable<Ad> SortByPriceDescending()
+        {
+            // Without Linq
+            //_items.Sort(new PriceComperator());
+            //return _items.Reverse<Item>();
+
+            // With Linq
+            var priceQuery = from obj in _objs
+                             orderby obj.Price descending
+                             select obj;
+            return priceQuery;
+
+        }
     }
 }

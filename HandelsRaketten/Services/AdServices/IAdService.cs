@@ -11,5 +11,11 @@ namespace HandelsRaketten.Services.AdServices
         List<Ad> GetAll(string category);
         List<Ad> GetAllAds();
 
+        IEnumerable<Ad> NameSearch(string str);
+        IEnumerable<Ad> PriceFilter(int maxPrice, int minPrice = 0);
+        IEnumerable<Ad> SortByPrice();
+        IEnumerable<Ad> SortByPriceDescending();
+        IEnumerable<Ad> SortByName();
+        IEnumerable<Ad> SortByNameDescending();
     }
 }
