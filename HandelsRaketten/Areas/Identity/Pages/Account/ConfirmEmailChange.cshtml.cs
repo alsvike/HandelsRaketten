@@ -49,7 +49,7 @@ namespace HandelsRaketten.Areas.Identity.Pages.Account
             var result = await _userManager.ChangeEmailAsync(user, email, code);
             if (!result.Succeeded)
             {
-                StatusMessage = "Error changing email.";
+                StatusMessage = "Der skete desværre en fejl ved ændringen af din email";
                 return Page();
             }
 
@@ -58,12 +58,12 @@ namespace HandelsRaketten.Areas.Identity.Pages.Account
             var setUserNameResult = await _userManager.SetUserNameAsync(user, email);
             if (!setUserNameResult.Succeeded)
             {
-                StatusMessage = "Error changing user name.";
+                StatusMessage = "Der skete desværre en fejl ved ændringen af dit brugernavn";
                 return Page();
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Thank you for confirming your email change.";
+            StatusMessage = "Tak for at bekræfte ændringen af din email";
             return Page();
         }
     }
