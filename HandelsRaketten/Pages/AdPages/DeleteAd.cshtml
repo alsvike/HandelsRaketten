@@ -1,0 +1,14 @@
+﻿@page
+@model HandelsHjornet.Pages.AdPages.DeleteAdModel
+@{
+}
+
+
+<div>
+    <p> Er du sikker på at du vil slette - @Model.AdToBeDeleted.Name</p>
+
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Ja</button>
+    </form>
+    <a asp-page="ShowAllAds" class="btn btn-secondary">Nej</a>
+</div>

@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 2,
+    "Category": "OutdoorPlant",
+    "Name": "violie",
+    "Active": true,
+    "CreatedOn": "2024-05-07T10:33:16.5616414+02:00",
+    "Description": "lila",
+    "Price": 69,
+    "AdImage": "udend\u00F8rsplante.jpg"
+  },
+  {
+    "Id": 7,
+    "Category": "OutdoorPlant",
+    "Name": "jhg",
+    "Active": true,
+    "CreatedOn": "2024-05-07T13:51:26.4184343+02:00",
+    "Description": "23",
+    "Price": 12,
+    "AdImage": "jg"
+  }
+]

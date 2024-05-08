@@ -1,0 +1,170 @@
+﻿@page
+@model HandelsHjornet.Pages.AdPages.CreateAdModel
+@{
+}
+
+
+
+<div>
+    <form method="post">
+        <div>
+            <p>Vælg Kategori</p>
+            <select name="category" class="form-control">
+                <option value="IndoorPlant">Indedørs Planter</option>
+                <option value="OutdoorPlant">Udendørs Planter</option>
+                <option value="Soil">Jord</option>
+                <option value="Fertilizer">Gødning</option>
+                <option value="Tool">Værktøj</option>
+                <option value="GardeningTool">Have værktøj</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Vælg</button>
+        </div>
+    </form>
+</div>
+
+
+<div>
+    <form method="post">
+        <div>
+            @if (Model.Category == "IndoorPlant")
+            {
+                <div class="form-group">
+                    <label asp-for="IndoorPlant.AdImage" class="control-label"></label>
+                    <input asp-for="IndoorPlant.AdImage" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlant.Name" class="control-label"></label>
+                    <input asp-for="IndoorPlant.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlant.Description" class="control-label"></label>
+                    <input asp-for="IndoorPlant.Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlant.Price" class="control-label"></label>
+                    <input asp-for="IndoorPlant.Price" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlant.UniqueProperty" class="control-label"></label>
+                    <input asp-for="IndoorPlant.UniqueProperty" class="form-control" />
+                </div>
+
+            }
+            else if (Model.Category == "OutdoorPlant")
+            {
+                <div class="form-group">
+                    <label asp-for="OutdoorPlant.AdImage" class="control-label"></label>
+                    <input asp-for="OutdoorPlant.AdImage" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="OutdoorPlant.Name" class="control-label"></label>
+                    <input asp-for="OutdoorPlant.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="OutdoorPlant.Description" class="control-label"></label>
+                    <input asp-for="OutdoorPlant.Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="OutdoorPlant.Price" class="control-label"></label>
+                    <input asp-for="OutdoorPlant.Price" class="form-control" />
+                </div>
+            }
+            else if (Model.Category == "Soil")
+            {
+                <div class="form-group">
+                    <label asp-for="Soil.AdImage" class="control-label"></label>
+                    <input asp-for="Soil.AdImage" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Soil.Name" class="control-label"></label>
+                    <input asp-for="Soil.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Soil.Description" class="control-label"></label>
+                    <input asp-for="Soil.Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Soil.Price" class="control-label"></label>
+                    <input asp-for="Soil.Price" class="form-control" />
+                </div>
+
+            }
+            else if (Model.Category == "Fertilizer")
+            {
+                <div class="form-group">
+                    <label asp-for="Fertilizer.AdImage" class="control-label"></label>
+                    <input asp-for="Fertilizer.AdImage" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fertilizer.Name" class="control-label"></label>
+                    <input asp-for="Fertilizer.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fertilizer.Description" class="control-label"></label>
+                    <input asp-for="Fertilizer.Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fertilizer.Price" class="control-label"></label>
+                    <input asp-for="Fertilizer.Price" class="form-control" />
+                </div>
+
+            }
+            else if (Model.Category == "GardeningTool")
+            {
+                <div class="form-group">
+                    <label asp-for="GardeningTool.AdImage" class="control-label"></label>
+                    <input asp-for="GardeningTool.AdImage" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="GardeningTool.Name" class="control-label"></label>
+                    <input asp-for="GardeningTool.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="GardeningTool.Description" class="control-label"></label>
+                    <input asp-for="GardeningTool.Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="GardeningTool.Price" class="control-label"></label>
+                    <input asp-for="GardeningTool.Price" class="form-control" />
+                </div>
+
+            }
+            else if (Model.Category == "Tool")
+            {
+                <div class="form-group">
+                    <label asp-for="Tool.AdImage" class="control-label"></label>
+                    <input asp-for="Tool.AdImage" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tool.Name" class="control-label"></label>
+                    <input asp-for="Tool.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tool.Description" class="control-label"></label>
+                    <input asp-for="Tool.Description" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tool.Price" class="control-label"></label>
+                    <input asp-for="Tool.Price" class="form-control" />
+                </div>
+
+            }
+            else
+            {
+                <br />
+                <h3>Vælg en kategori for at oprette en annonce</h3>
+                <br />
+
+            }
+        </div>
+        <br />
+        @if (!string.IsNullOrEmpty(Model.Category))
+        {
+            <div>
+                <button class="btn btn-primary" type="submit" asp-page-handler="Create" asp-route-category="@Model.Category">Lav</button>
+            </div>
+        }
+    </form>
+</div>

@@ -1,9 +1,17 @@
 using HandelsRaketten.Areas.Identity.Data;
+using HandelsRaketten.Catalogs;
 using HandelsRaketten.Data;
+using HandelsRaketten.Models.AdModels;
+using HandelsRaketten.Models.AdModels.SubCategories.PlantAccessories;
+using HandelsRaketten.Models.AdModels.SubCategories.Plants;
 using HandelsRaketten.Services;
+using HandelsRaketten.Services.AdServices;
+using HandelsRaketten.Services.DbServices;
+using HandelsRaketten.Services.GenericServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +34,32 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
         emailSenderConfig["UserName"],
         emailSenderConfig["Password"]);
 });
+
+// Add services to the container.
+builder.Services.AddSingleton<IAdService, AdService>();
+
+// json file services
+builder.Services.AddSingleton<GenericJsonFileService<Fertilizer>>();
+builder.Services.AddSingleton<GenericJsonFileService<GardeningTool>>();
+builder.Services.AddSingleton<GenericJsonFileService<Tool>>();
+builder.Services.AddSingleton<GenericJsonFileService<Soil>>();
+builder.Services.AddSingleton<GenericJsonFileService<IndoorPlant>>();
+builder.Services.AddSingleton<GenericJsonFileService<OutdoorPlant>>();
+
+// Database services
+builder.Services.AddSingleton<IService<Ad>, DbGenericService<Ad>>();
+
+// Repositories
+builder.Services.AddSingleton<AdCatalog>();
+builder.Services.AddSingleton<PlantCatalog>();
+builder.Services.AddSingleton<PlantAccessoryCatalog>();
+
+builder.Services.AddSingleton<GenericCatalog<IndoorPlant>>();
+builder.Services.AddSingleton<GenericCatalog<OutdoorPlant>>();
+builder.Services.AddSingleton<GenericCatalog<Fertilizer>>();
+builder.Services.AddSingleton<GenericCatalog<GardeningTool>>();
+builder.Services.AddSingleton<GenericCatalog<Soil>>();
+builder.Services.AddSingleton<GenericCatalog<Tool>>();
 
 var app = builder.Build();
 
