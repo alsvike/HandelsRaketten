@@ -4,7 +4,13 @@
     {
         private static int _nextId = 1;
 
-        public string? UniqueProperty { get; set; }
+        public string Species { get; set; }
+        public string RecommenededTemperature { get; set; }
+        public string WateringNeeds { get; set; }
+        public string SunlightNeeds { get; set; }
+        public string RecommendedSoil { get; set; }
+        public string Size { get; set; }
+        public string PotSize { get; set; }
         public IndoorPlant()
         {
             Active = true;

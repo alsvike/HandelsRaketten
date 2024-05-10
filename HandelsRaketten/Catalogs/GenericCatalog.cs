@@ -1,4 +1,5 @@
 ﻿using HandelsRaketten.Models.AdModels;
+using HandelsRaketten.Services.DbServices;
 using HandelsRaketten.Services.GenericServices;
 
 namespace HandelsRaketten.Catalogs
@@ -12,6 +13,7 @@ namespace HandelsRaketten.Catalogs
         {
             _objJsonService = ftJsonService;
             Objs = _objJsonService.GetJson().ToList();
+            //Objs = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         public List<Ad> GetAll()
@@ -23,6 +25,8 @@ namespace HandelsRaketten.Catalogs
             if (obj != null)
             {
                 Objs.Add(obj);
+                //_dbService.SaveObjects(Objs);
+
                 _objJsonService.SaveJson(Objs);
                 return obj;
             }
@@ -34,6 +38,8 @@ namespace HandelsRaketten.Catalogs
             if (obj != null)
             {
                 Objs.Remove(obj);
+                //_dbService.SaveObjects(Objs);
+
                 _objJsonService.SaveJson(Objs);
                 return obj;
             }
@@ -54,6 +60,8 @@ namespace HandelsRaketten.Catalogs
                 }
 
                 // Save changes to the JSON file
+                //_dbService.SaveObjects(Objs);
+
                 _objJsonService.SaveJson(Objs);
 
                 return objToEdit;

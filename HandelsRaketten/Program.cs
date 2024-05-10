@@ -35,7 +35,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
         emailSenderConfig["Password"]);
 });
 
-// Add services to the container.
+// Add services
 builder.Services.AddSingleton<IAdService, AdService>();
 
 // json file services
@@ -46,8 +46,8 @@ builder.Services.AddSingleton<GenericJsonFileService<Soil>>();
 builder.Services.AddSingleton<GenericJsonFileService<IndoorPlant>>();
 builder.Services.AddSingleton<GenericJsonFileService<OutdoorPlant>>();
 
-// Database services
-builder.Services.AddSingleton<IService<Ad>, DbGenericService<Ad>>();
+//// Database services
+//builder.Services.AddSingleton<IService<Ad>, AdDbService>();
 
 // Repositories
 builder.Services.AddSingleton<AdCatalog>();
