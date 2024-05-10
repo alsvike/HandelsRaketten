@@ -11,6 +11,7 @@ using HandelsRaketten.Services.GenericServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using NuGet.Protocol.Core.Types;
 using System.Configuration;
 
@@ -23,6 +24,15 @@ builder.Services.AddDbContext<HandelsRakettenContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<HandelsRakettenContext>();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+});
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
 {
