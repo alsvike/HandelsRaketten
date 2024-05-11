@@ -1,8 +1,11 @@
-﻿namespace HandelsRaketten.Models.AdModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HandelsRaketten.Models.AdModels
 {
     public class Ad
     {
-        public int? Id { get; set; }
+        [Key]
+        public int Id { get; set; }
         public string? Category { get; set; }
         public string Name { get; set; }
         public bool? Active { get; set; }
