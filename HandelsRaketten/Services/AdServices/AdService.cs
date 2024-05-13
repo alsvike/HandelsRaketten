@@ -36,24 +36,24 @@ namespace HandelsRaketten.Services.AdServices
             _objs = _adCatalog.GetAll();
         }
 
-        public Ad Add(Ad obj, string category)
+        public async Task<Ad> AddAsync(Ad obj, string category)
         {
             if (obj != null)
             {
                 switch (category)
                 {
                     case "IndoorPlant":
-                        return _indoorPlantCatalog.Add((IndoorPlant)obj);
+                        return await _indoorPlantCatalog.AddAsync((IndoorPlant)obj);
                     case "OutdoorPlant":
-                        return _outdoorPlantCatalog.Add((OutdoorPlant)obj);
+                        return await _outdoorPlantCatalog.AddAsync((OutdoorPlant)obj);
                     case "Tool":
-                        return _toolCatalog.Add((Tool)obj);
+                        return await _toolCatalog.AddAsync((Tool)obj);
                     case "GardeningTool":
-                        return _gardeningToolCatalog.Add((GardeningTool)obj);
+                        return await _gardeningToolCatalog.AddAsync((GardeningTool)obj);
                     case "Fertilizer":
-                        return _fertilizerCatalog.Add((Fertilizer)obj);
+                        return await _fertilizerCatalog.AddAsync((Fertilizer)obj);
                     case "Soil":
-                        return _soilCatalog.Add((Soil)obj);
+                        return await _soilCatalog.AddAsync((Soil)obj);
                     default:
                         return null;
                 }
@@ -62,22 +62,22 @@ namespace HandelsRaketten.Services.AdServices
 
         }
 
-        public Ad Delete(int adId, string category)
+        public async Task<Ad> DeleteAsync(int adId, string category)
         {
             switch (category)
             {
                 case "IndoorPlant":
-                    return _indoorPlantCatalog.Delete((IndoorPlant)Get(adId, category));
+                    return await _indoorPlantCatalog.DeleteAsync((IndoorPlant)Get(adId, category));
                 case "OutdoorPlant":
-                    return _outdoorPlantCatalog.Delete((OutdoorPlant)Get(adId, category));
+                    return await _outdoorPlantCatalog.DeleteAsync((OutdoorPlant)Get(adId, category));
                 case "Tool":
-                    return _toolCatalog.Delete((Tool)Get(adId, category));
+                    return await _toolCatalog.DeleteAsync((Tool)Get(adId, category));
                 case "GardeningTool":
-                    return _gardeningToolCatalog.Delete((GardeningTool)Get(adId, category));
+                    return await _gardeningToolCatalog.DeleteAsync((GardeningTool)Get(adId, category));
                 case "Fertilizer":
-                    return _fertilizerCatalog.Delete((Fertilizer)Get(adId, category));
+                    return await _fertilizerCatalog.DeleteAsync((Fertilizer)Get(adId, category));
                 case "Soil":
-                    return _soilCatalog.Delete((Soil)Get(adId, category));
+                    return await _soilCatalog.DeleteAsync((Soil)Get(adId, category));
                 default:
                     return null;
             }
@@ -105,29 +105,29 @@ namespace HandelsRaketten.Services.AdServices
             }
         }
 
-        public void Edit(int adId, Ad obj, string category)
+        public async Task UpdateAsync(int adId, Ad obj, string category)
         {
             if (obj != null)
             {
                 switch (category)
                 {
                     case "IndoorPlant":
-                        _indoorPlantCatalog.Edit((IndoorPlant)obj, adId);
+                        await _indoorPlantCatalog.EditAsync((IndoorPlant)obj, adId);
                         break;
                     case "OutdoorPlant":
-                        _outdoorPlantCatalog.Edit((OutdoorPlant)obj, adId);
+                        await _outdoorPlantCatalog.EditAsync((OutdoorPlant)obj, adId);
                         break;
                     case "Tool":
-                        _toolCatalog.Edit((Tool)obj, adId);
+                        await _toolCatalog.EditAsync((Tool)obj, adId);
                         break;
                     case "GardeningTool":
-                        _gardeningToolCatalog.Edit((GardeningTool)obj, adId);
+                        await _gardeningToolCatalog.EditAsync((GardeningTool)obj, adId);
                         break;
                     case "Fertilizer":
-                        _fertilizerCatalog.Edit((Fertilizer)obj, adId);
+                        await _fertilizerCatalog.EditAsync((Fertilizer)obj, adId);
                         break;
                     case "Soil":
-                        _soilCatalog.Edit((Soil)obj, adId);
+                        await _soilCatalog.EditAsync((Soil)obj, adId);
                         break;
                     default:
                         break;
@@ -163,6 +163,7 @@ namespace HandelsRaketten.Services.AdServices
         }
 
         public List<Ad> GetAllAds() => _objs = _adCatalog.GetAll();
+
 
 
         // sorting and filtering

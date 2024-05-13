@@ -4,10 +4,10 @@ namespace HandelsRaketten.Services.AdServices
 {
     public interface IAdService
     {
-        Ad Add(Ad ad, string category);
-        Ad Delete(int adId, string category);
+        Task<Ad> AddAsync(Ad ad, string category);
+        Task<Ad> DeleteAsync(int adId, string category);
         Ad Get(int adId, string category);
-        void Edit(int adId, Ad ad, string category);
+        Task UpdateAsync(int adId, Ad ad, string category);
         List<Ad> GetAll(string category);
         List<Ad> GetAllAds();
 

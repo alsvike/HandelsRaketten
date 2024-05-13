@@ -36,7 +36,7 @@ namespace HandelsHjornet.Pages.AdPages
             {
                 return Page();
             }
-            _adService.Delete(adId, category);
+            _adService.DeleteAsync(adId, category);
 
             return RedirectToPage("ShowAllAds");
         }
