@@ -4,11 +4,93 @@
     ViewData["Title"] = "Home page";
 }
 
-@if (Model._signInManager.IsSignedIn(User))
+@* @if (Model._signInManager.IsSignedIn(User))
 {
     <p>DU ER LOGGET IND DIT FEDE LÆS LORT!</p>
 }
 @if (!Model._signInManager.IsSignedIn(User))
 {
     <p>DU ER IKKE LOGGET IND DIT FEDE LÆS SVINEFODDER!</p>
-}
+} *@
+
+
+<div class="main_div">
+    <div id="navigation_div">
+        <div id="navigation_div_navbar">
+            <div class="logo-container">
+                <img src="https://i.pinimg.com/736x/89/7e/5f/897e5f35da967be1ae2e8e3f37767757.jpg" alt="Logo">
+            </div>
+            <div class="nav-buttons">
+                <a href="login.html" class="login">Login</a>
+                <a href="create_ad.html" class="create-ad">Opret annonce</a>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Find Plante">
+            <button type="submit">Search</button>
+        </div>
+    </div>
+
+    <div id="category_navbar">
+        <ul>
+            <li><a asp-page="PageContext" asp-route-category="Plants">Planter</a></li>
+            <li><a asp-page="PageContext" asp-route-category="PlantAccessories">Plante Tilbehør</a></li>
+            <!-- Add more list items for additional categories -->
+        </ul>
+    </div>
+
+    <div id="highlighted_ads">
+        <h2>Highlighted Ads</h2>
+        <div id="ads_container">
+            <ul id="ads_list">
+                <!-- Ads will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script>
+    // Sample ads data (replace this with your actual ads data)
+    const adsData = [
+        { title: "Ad 1", image: "ad1.jpg", description: "Description of Ad 1", price: "$100" },
+        { title: "Ad 2", image: "ad2.jpg", description: "Description of Ad 2", price: "$150" },
+        { title: "Ad 3", image: "ad3.jpg", description: "Description of Ad 3", price: "$120" },
+        { title: "Ad 4", image: "ad4.jpg", description: "Description of Ad 4", price: "$90" },
+        // Add more ads as needed
+    ];
+
+    // Function to randomly pick ads
+    function getRandomAds(numAds) {
+        const shuffledAds = adsData.sort(() => 0.5 - Math.random());
+        return shuffledAds.slice(0, numAds);
+    }
+
+    // Function to display ads in the UI
+    function displayAds() {
+        const adsList = document.getElementById("ads_list");
+        adsList.innerHTML = ""; // Clear previous ads
+
+        const numAdsToShow = 4; // Number of ads to display
+        const randomAds = getRandomAds(numAdsToShow);
+
+        randomAds.forEach(ad => {
+            const li = document.createElement("li");
+            li.classList.add("ad");
+            li.innerHTML = `
+                <img src="${ad.image}" alt="${ad.title}">
+                <h3>${ad.title}</h3>
+                <p>${ad.description}</p>
+                <p class="price">${ad.price}</p>
+            `;
+            adsList.appendChild(li);
+        });
+    }
+
+    // Call the displayAds function to initially display ads
+    displayAds();
+
+</script>

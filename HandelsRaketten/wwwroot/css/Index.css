@@ -1,0 +1,202 @@
+﻿body {
+}
+
+/* --- MAIN SECTION --- */
+.main_div {
+    max-width: 1200px; /* Set maximum width */
+    margin: 0 auto; /* Center the div horizontally */
+    border: 2px solid black; /* Add a 2px solid green border */
+}
+
+    .main_div > div {
+        margin-bottom: 20px; /* Add bottom margin between divs */
+    }
+
+/* --- START OF NAVIGATION SECTION --- */
+.banner_img {
+    height: 600px;
+    text-align: center;
+}
+
+#navigation_div {
+    position: relative;
+    height: 600px;
+    background-image: url(https://images.pexels.com/photos/927414/pexels-photo-927414.jpeg?cs=srgb&dl=pexels-arnie-chou-304906-927414.jpg&fm=jpg);
+    background-size: cover;
+}
+
+/* Navigation bar specific styles */
+#navigation_div_navbar {
+    color: rgba(0, 128, 0, 0.8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: relative; /* Make the parent container for absolute positioning */
+}
+
+.logo-container {
+    position: relative;
+    opacity: .8;
+
+}
+
+    .logo-container img {
+        height: 40px; /* Adjust height as needed */
+        display: block;
+        margin: 0 auto; /* Center the image */
+    }
+
+.nav-buttons {
+    display: flex;
+}
+
+.login,
+.create-ad {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 10px; /* Add margin between buttons */
+    background-color: rgba(0, 128, 0, 0.8);
+    border-radius: 90px;
+}
+
+.create-ad {
+    margin-right: 0; /* No margin for the last button */
+}
+
+    .login:hover,
+    .create-ad:hover {
+        background-color: rgba(255, 255, 255, .8);
+        color: forestgreen;
+    }
+
+
+/* --- SEARCH BAR --- */
+.search-bar {
+    position: absolute; /* Position absolutely */
+    top: 50%; /* Center vertically */
+    left: 20px; /* 20px from the left side */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    text-align: center;
+}
+
+    .search-bar input[type="text"],
+    .search-bar button {
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        background-color: hsl(0, 0%, 100%, 100%);
+        border-radius: 90px;
+    }
+
+    .search-bar input[type="text"] {
+        width: 500px;
+    }
+
+    .search-bar button {
+        background-color: rgba(0, 128, 0, 0.8);
+        color: white;
+        border: none;
+        cursor: pointer;
+        width: 75px;
+    }
+
+        .search-bar button:hover {
+            background-color: rgba(0, 128, 0, 0.9); /* Slightly darker green on hover */
+        }
+
+
+
+
+
+/* --- END OF NAVIGATION SECTION --- */
+
+/* --- CATEGORY SECTION --- */
+#category_navbar {
+    background-color: forestgreen; /* Background color of the navbar */
+    overflow: hidden; /* Ensure content does not overflow */
+}
+
+    #category_navbar ul {
+        list-style-type: none; /* Remove bullet points from the list */
+        margin: 0;
+        padding: 0;
+    }
+
+    #category_navbar li {
+        float: left; /* Arrange list items horizontally */
+    }
+
+        #category_navbar li a {
+            display: block;
+            color: white; /* Text color */
+            text-align: center;
+            padding: 14px 16px; /* Padding around each category */
+            text-decoration: none;
+        }
+
+            #category_navbar li a:hover {
+                background-color: #111; /* Darker background color on hover */
+            }
+
+/* --- END OF CATEGORY SECTION --- */
+
+/* --- START OF HIGHLIGHTED ADS --- */
+/* CSS for ads */
+#highlighted_ads h2{
+    padding-left: 30px;
+}
+
+/* CSS for ads container */
+#ads_container {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* CSS for ads */
+#ad_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.ad {
+    display: inline-block;
+    width: calc(33.33% - 20px); /* Adjust width and margin as needed */
+    margin-right: 20px; /* Adjust margin as needed */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+    .ad img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .ad h3 {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    .ad p {
+        margin: 0;
+    }
+
+    .ad .price {
+        font-weight: bold;
+        color: #0077cc;
+    }
+
+
+
+
+
+/* --- END OF HIGHLIGHTED ADS --- */

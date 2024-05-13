@@ -1,4 +1,5 @@
 ﻿using HandelsRaketten.Models.AdModels;
+using HandelsRaketten.Services.DbServices;
 using HandelsRaketten.Services.GenericServices;
 
 namespace HandelsRaketten.Catalogs
@@ -8,10 +9,13 @@ namespace HandelsRaketten.Catalogs
         public List<T> Objs { get; set; }
         private GenericJsonFileService<T> _objJsonService;
 
-        public GenericCatalog(GenericJsonFileService<T> ftJsonService)
+        IService<T> _dbService;
+        public GenericCatalog(GenericJsonFileService<T> ftJsonService, IService<T> dbService)
         {
+            _dbService = dbService;
             _objJsonService = ftJsonService;
-            Objs = _objJsonService.GetJson().ToList();
+            //Objs = _objJsonService.GetJson().ToList();
+            Objs = _dbService.GetObjectsAsync().Result.ToList();
         }
 
         public List<Ad> GetAll()
@@ -23,7 +27,9 @@ namespace HandelsRaketten.Catalogs
             if (obj != null)
             {
                 Objs.Add(obj);
-                _objJsonService.SaveJson(Objs);
+                _dbService.SaveObjects(Objs);
+
+                //_objJsonService.SaveJson(Objs);
                 return obj;
             }
             return default(T);
@@ -34,7 +40,9 @@ namespace HandelsRaketten.Catalogs
             if (obj != null)
             {
                 Objs.Remove(obj);
-                _objJsonService.SaveJson(Objs);
+                _dbService.SaveObjects(Objs);
+
+                //_objJsonService.SaveJson(Objs);
                 return obj;
             }
             return default(T);
@@ -54,7 +62,9 @@ namespace HandelsRaketten.Catalogs
                 }
 
                 // Save changes to the JSON file
-                _objJsonService.SaveJson(Objs);
+                _dbService.SaveObjects(Objs);
+
+                //_objJsonService.SaveJson(Objs);
 
                 return objToEdit;
             }
