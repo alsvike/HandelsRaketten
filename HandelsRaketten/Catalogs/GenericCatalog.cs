@@ -22,12 +22,12 @@ namespace HandelsRaketten.Catalogs
         {
             return Objs.Cast<Ad>().ToList();
         }
-        public T Add(T obj)
+        public async Task<T> AddAsync(T obj)
         {
             if (obj != null)
             {
                 Objs.Add(obj);
-                _dbService.SaveObjects(Objs);
+                await _dbService.AddObjectAsync(obj);
 
                 //_objJsonService.SaveJson(Objs);
                 return obj;
@@ -35,12 +35,12 @@ namespace HandelsRaketten.Catalogs
             return default(T);
         }
 
-        public T Delete(T obj)
+        public async Task<T> DeleteAsync(T obj)
         {
             if (obj != null)
             {
                 Objs.Remove(obj);
-                _dbService.SaveObjects(Objs);
+                await _dbService.DeleteObjectAsync(obj);
 
                 //_objJsonService.SaveJson(Objs);
                 return obj;
@@ -48,7 +48,7 @@ namespace HandelsRaketten.Catalogs
             return default(T);
         }
 
-        public T Edit(T obj, int id)
+        public async Task<T> EditAsync(T obj, int id)
         {
             var objToEdit = Objs.FirstOrDefault(o => o.Id == id);
 
@@ -62,7 +62,7 @@ namespace HandelsRaketten.Catalogs
                 }
 
                 // Save changes to the JSON file
-                _dbService.SaveObjects(Objs);
+                await _dbService.UpdateObjectAsync(obj);
 
                 //_objJsonService.SaveJson(Objs);
 

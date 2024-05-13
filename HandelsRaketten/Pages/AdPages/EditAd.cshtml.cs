@@ -62,22 +62,22 @@ namespace HandelsHjornet.Pages.AdPages
             switch (category)
             {
                 case "IndoorPlant":
-                    _adService.Edit(adId, IndoorPlant, category);
+                    _adService.UpdateAsync(adId, IndoorPlant, category);
                     break;
                 case "OutdoorPlant":
-                    _adService.Edit(adId, OutdoorPlant, category);
+                    _adService.UpdateAsync(adId, OutdoorPlant, category);
                     break;
                 case "Tool":
-                    _adService.Edit(adId, Tool, category);
+                    _adService.UpdateAsync(adId, Tool, category);
                     break;
                 case "GardeningTool":
-                    _adService.Edit(adId, GardeningTool, category);
+                    _adService.UpdateAsync(adId, GardeningTool, category);
                     break;
                 case "Fertilizer":
-                    _adService.Edit(adId, Fertilizer, category);
+                    _adService.UpdateAsync(adId, Fertilizer, category);
                     break;
                 case "Soil":
-                    _adService.Edit(adId, Soil, category);
+                    _adService.UpdateAsync(adId, Soil, category);
                     break;
                 default:
                     return RedirectToPage("/Error");

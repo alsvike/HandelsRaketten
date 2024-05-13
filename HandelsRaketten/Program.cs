@@ -2,6 +2,7 @@ using HandelsRaketten.Areas.Identity.Data;
 using HandelsRaketten.Catalogs;
 using HandelsRaketten.Data;
 using HandelsRaketten.EFDBContext;
+using HandelsRaketten.Models;
 using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Models.AdModels.SubCategories.PlantAccessories;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
@@ -48,6 +49,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
 
 // Add services
 builder.Services.AddSingleton<IAdService, AdService>();
+builder.Services.AddSingleton<ISellerService, SellerService>();
 
 // json file services
 builder.Services.AddSingleton<GenericJsonFileService<Fertilizer>>();
@@ -57,13 +59,14 @@ builder.Services.AddSingleton<GenericJsonFileService<Soil>>();
 builder.Services.AddSingleton<GenericJsonFileService<IndoorPlant>>();
 builder.Services.AddSingleton<GenericJsonFileService<OutdoorPlant>>();
 
-//// Database services
+// Database services
 builder.Services.AddSingleton<IService<Fertilizer>, DbGenericService<Fertilizer>>();
 builder.Services.AddSingleton<IService<GardeningTool>, DbGenericService<GardeningTool>>();
 builder.Services.AddSingleton<IService<Tool>, DbGenericService<Tool>>();
 builder.Services.AddSingleton<IService<Soil>, DbGenericService<Soil>>();
 builder.Services.AddSingleton<IService<IndoorPlant>, DbGenericService<IndoorPlant>>();
 builder.Services.AddSingleton<IService<OutdoorPlant>, DbGenericService<OutdoorPlant>>();
+builder.Services.AddSingleton<IService<Seller>, DbGenericService<Seller>>();
 
 // DbContext
 builder.Services.AddDbContext<DbContextGeneric<Fertilizer>>();
@@ -72,6 +75,7 @@ builder.Services.AddDbContext<DbContextGeneric<Tool>>();
 builder.Services.AddDbContext<DbContextGeneric<IndoorPlant>>();
 builder.Services.AddDbContext<DbContextGeneric<OutdoorPlant>>();
 builder.Services.AddDbContext<DbContextGeneric<Soil>>();
+builder.Services.AddDbContext<DbContextGeneric<Seller>>();
 
 // Repositories
 builder.Services.AddSingleton<AdCatalog>();
