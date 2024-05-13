@@ -5,7 +5,7 @@ namespace HandelsRaketten.Models.AdModels
     public class Ad
     {
         [Key]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
         public string? Category { get; set; }
         public string Name { get; set; }
         public bool? Active { get; set; }
@@ -14,20 +14,5 @@ namespace HandelsRaketten.Models.AdModels
         public int Price { get; set; }
         public string AdImage { get; set; }
 
-        public Ad(string name, string description, int price, string adImage)
-        {
-            Name = name;
-            Active = true;
-            CreatedOn = DateTime.Now;
-            Description = description;
-            Price = price;
-            AdImage = adImage;
-        }
-
-        public Ad()
-        {
-            CreatedOn = DateTime.Now;
-            Active = true;
-        }
     }
 }

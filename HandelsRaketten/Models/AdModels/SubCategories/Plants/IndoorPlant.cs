@@ -1,9 +1,9 @@
-﻿namespace HandelsRaketten.Models.AdModels.SubCategories.Plants
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HandelsRaketten.Models.AdModels.SubCategories.Plants
 {
     public class IndoorPlant : Ad
     {
-        //private static int _nextId = 1;
-
         public string? Species { get; set; }
         public string? RecommendedTemperature { get; set; }
         public string? WateringNeeds { get; set; }
@@ -15,7 +15,6 @@
         {
             Active = true;
             CreatedOn = DateTime.Now;
-            //Id = _nextId++;
             Category = "IndoorPlant";
 
         }

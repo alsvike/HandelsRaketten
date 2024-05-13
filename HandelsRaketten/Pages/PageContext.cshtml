@@ -1,0 +1,30 @@
+﻿@page
+@model HandelsRaketten.Pages.PageContextModel
+@{
+}
+
+
+<div>
+    <div>
+        <table>
+        <tbody>
+            @foreach (var ad in Model._ads)
+            {
+                <tr>
+                    <td>@ad.Name</td>
+                    <td>@ad.Description</td>
+                    <td>@ad.Price</td>
+                    <td>@ad.Active</td>
+                    <td>@ad.CreatedOn</td>
+                    <td class="d-inline-flex">
+                        <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a>
+                        <a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a>
+                        <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+</div>
