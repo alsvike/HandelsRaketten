@@ -8,6 +8,17 @@ namespace HandelsRaketten.Pages
     public class PageContextModel : PageModel
     {
         IAdService _adService;
+        [BindProperty]
+        public string SelectedOption { get; set; }
+
+        [BindProperty]
+        public string? SearchString { get; set; }
+
+        [BindProperty]
+        public int MinPrice { get; set; }
+
+        [BindProperty]
+        public int MaxPrice { get; set; }
 
         public List<Ad> _ads;
         public PageContextModel(IAdService adService)
@@ -50,7 +61,6 @@ namespace HandelsRaketten.Pages
                     _ads = _adService.GetAllAds();
                     break;
             }
-
             return Page();
         }
     }
