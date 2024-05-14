@@ -3,28 +3,36 @@
 @{
 }
 
-
-<div>
+<style>
+    .white-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+    }
+</style>
+<div class="white-container">
     <div>
-        <table>
-        <tbody>
-            @foreach (var ad in Model._ads)
-            {
-                <tr>
-                    <td>@ad.Title</td>
-                    <td>@ad.Description</td>
-                    <td>@ad.Price</td>
-                    <td>@ad.Active</td>
-                    <td>@ad.CreatedOn</td>
-                    <td class="d-inline-flex">
-                        <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a>
-                        <a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a>
-                        <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a>
-                    </td>
+        <div>
+            <table>
+                <tbody>
+                    @foreach (var ad in Model._ads)
+                    {
+                        <tr>
+                            <td>@ad.Title</td>
+                            <td>@ad.Description</td>
+                            <td>@ad.Price</td>
+                            <td>@ad.Active</td>
+                            <td>@ad.CreatedOn</td>
+                            <td class="d-inline-flex">
+                                <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a>
+                                <a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a>
+                                <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a>
+                            </td>
 
-                </tr>
-            }
-        </tbody>
-        </table>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
