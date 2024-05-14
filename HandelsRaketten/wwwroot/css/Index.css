@@ -1,6 +1,6 @@
 ﻿body {
     background-image: url(https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-    background-size: contain;
+    background-size:auto 100%;
 }
 
 /* --- MAIN SECTION --- */
