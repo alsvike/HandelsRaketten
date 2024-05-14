@@ -13,22 +13,26 @@
     <p>DU ER IKKE LOGGET IND DIT FEDE LÆS SVINEFODDER!</p>
 } *@
 
-<style>
-    body {
-        background-image: url(https://i.ibb.co/tcWnm3J/image.png);
-        background-size: cover;
-    }
-</style>
-
-<div class="main_div">
+<div class="main_div" style="margin-top:65px;">
     <div id="navigation_div">
         <div id="navigation_div_navbar">
             <div class="logo-container">
-@*                 <img src="https://i.pinimg.com/736x/89/7e/5f/897e5f35da967be1ae2e8e3f37767757.jpg" alt="Logo"> *@
+                 <img src="https://i.pinimg.com/736x/89/7e/5f/897e5f35da967be1ae2e8e3f37767757.jpg" alt="Logo">
             </div>
             <div class="nav-buttons">
-                <a href="login.html" class="login">Login</a>
+                @if (!Model._signInManager.IsSignedIn(User))
+                {
+                    <a href="Identity/Account/Login" class="login">Login</a>
+                    <a href="Identity/Account/Register" class="login">Registrer</a>
+                }
+                else if (Model._signInManager.IsSignedIn(User))
+                {
+                <a class="login nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
                 <a href="create_ad.html" class="create-ad">Opret annonce</a>
+                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                        <button type="submit" class="login nav-link btn btn-link text-light">Logout</button>
+                    </form>
+                }
             </div>
         </div>
         <div class="search-bar">
