@@ -13,11 +13,12 @@
     <p>DU ER IKKE LOGGET IND DIT FEDE LÆS SVINEFODDER!</p>
 } *@
 
+
 <div class="main_div" style="margin-top:65px;">
     <div id="navigation_div">
         <div id="navigation_div_navbar">
             <div class="logo-container">
-                 <img src="https://i.pinimg.com/736x/89/7e/5f/897e5f35da967be1ae2e8e3f37767757.jpg" alt="Logo">
+                 <img src="https://i.pinimg.com/736x/89/7e/5f/897e5f35da967be1ae2e8e3f37767757.jpg" alt="Logo"> <span style="color: white;">HandelsRaketten</span>
             </div>
             <div class="nav-buttons">
                 @if (!Model._signInManager.IsSignedIn(User))
@@ -38,6 +39,7 @@
         <div class="search-bar">
             <input type="text" placeholder="Find Plante">
             <button type="submit">Search</button>
+            <br /><a href="AdPages/ShowAllAds" class="show-ads">Vis Alle Annoncer</a>
         </div>
     </div>
 
