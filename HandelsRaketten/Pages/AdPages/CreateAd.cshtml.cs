@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace HandelsHjornet.Pages.AdPages
 {
@@ -21,6 +22,7 @@ namespace HandelsHjornet.Pages.AdPages
         SignInManager<User> _signInManager;
         UserManager<User> _userManager;
 
+        [Required(ErrorMessage = "Tilføj Billede")]
         [BindProperty] public IFormFile? Photo { get; set; }
 
         [BindProperty] public IndoorPlant IndoorPlant { get; set; }
@@ -30,7 +32,6 @@ namespace HandelsHjornet.Pages.AdPages
         [BindProperty] public GardeningTool GardeningTool { get; set; }
         [BindProperty] public Fertilizer Fertilizer { get; set; }
 
-        // information about the user that is to be displayed on the ShowAd page
         [BindProperty] public Seller Seller { get; set; }
 
         [BindProperty] public string Category { get; set; }
@@ -67,10 +68,10 @@ namespace HandelsHjornet.Pages.AdPages
 
         public async Task<IActionResult> OnPostCreate(string category)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
             var createdAd = await CreateAdAsync(category);
 

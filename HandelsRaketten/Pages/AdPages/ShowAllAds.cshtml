@@ -4,7 +4,7 @@
 }
 
 
-<div>
+<div class="white-background">
     <div>
         <h3>Vælg Kategori</h3>
         <a asp-page="/AdPages/CreateAd">Opret Annonce</a>
@@ -111,8 +111,14 @@
                 @foreach (var ad in Model._ads)
                 {
                     <tr>
-                        <td>@ad.Name</td>
-                        <td>@ad.Description</td>
+                        <td>@ad.Title</td>
+                        <td>
+                            <p>
+                                @(ad.Description.Length > 50
+                                    ? ad.Description.Substring(0, 40) + "..."
+                                    : ad.Description)
+                            </p>
+                        </td>
                         <td>@ad.Price</td>
                         <td>@ad.Active</td>
                         <td>@ad.CreatedOn</td>

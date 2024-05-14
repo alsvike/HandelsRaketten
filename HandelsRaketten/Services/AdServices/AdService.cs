@@ -175,7 +175,7 @@ namespace HandelsRaketten.Services.AdServices
                 return _objs;
             }
             var objsQuery = from obj in _objs
-                            where obj.Name.ToLower().Contains(str.ToLower())
+                            where obj.Title.ToLower().Contains(str.ToLower())
                             select obj;
 
             return objsQuery;
@@ -198,7 +198,7 @@ namespace HandelsRaketten.Services.AdServices
 
             // Sort Name With Linq
             var namesQuery = from obj in _objs
-                             orderby obj.Name
+                             orderby obj.Title
                              select obj;
             return namesQuery;
         }
@@ -212,7 +212,7 @@ namespace HandelsRaketten.Services.AdServices
 
             // With Linq
             var namesQuery = from obj in _objs
-                             orderby obj.Name descending
+                             orderby obj.Title descending
                              select obj;
             return namesQuery;
         }
