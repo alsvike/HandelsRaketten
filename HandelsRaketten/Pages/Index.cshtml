@@ -28,7 +28,7 @@
                 else if (Model._signInManager.IsSignedIn(User))
                 {
                 <a class="login nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-                <a href="create_ad.html" class="create-ad">Opret annonce</a>
+                <a href="AdPages/CreateAd" class="create-ad">Opret annonce</a>
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                         <button type="submit" class="login nav-link btn btn-link text-light">Logout</button>
                     </form>
