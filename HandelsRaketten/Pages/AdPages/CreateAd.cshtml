@@ -4,241 +4,244 @@
 }
 
 
+<div class="white-background">
+    <div class="">
+        <form method="post">
+            <div>
+                <p>Vælg Kategori</p>
+                <select name="category" class="form-control">
+                    <option value="IndoorPlant">Indedørs Planter</option>
+                    <option value="OutdoorPlant">Udendørs Planter</option>
+                    <option value="Soil">Jord</option>
+                    <option value="Fertilizer">Gødning</option>
+                    <option value="Tool">Værktøj</option>
+                    <option value="GardeningTool">Have værktøj</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Vælg</button>
+            </div>
+        </form>
+    </div>
 
-<div>
-    <form method="post">
-        <div>
-            <p>Vælg Kategori</p>
-            <select name="category" class="form-control">
-                <option value="IndoorPlant">Indedørs Planter</option>
-                <option value="OutdoorPlant">Udendørs Planter</option>
-                <option value="Soil">Jord</option>
-                <option value="Fertilizer">Gødning</option>
-                <option value="Tool">Værktøj</option>
-                <option value="GardeningTool">Have værktøj</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Vælg</button>
-        </div>
-    </form>
-</div>
+    <div>
+        <form method="post" enctype="multipart/form-data">
 
-<div>
-    <form method="post" enctype="multipart/form-data">
+            <div>
+                @if (Model.Category != null)
+                {
+                    <div class="form-group">
+                        <label asp-for="@Model.Photo" class="control-label"></label>
+                        <div class="custom-file">
+                            <input asp-for="@Model.Photo" class="custom-file-input form-control" />
+                            <span asp-validation-for="@Model.Photo" class="fst-italic fs-6"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <br />
+            <div>
+                @if (Model.Category == "IndoorPlant")
+                {
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.Title" class="control-label"></label>
+                        <input asp-for="IndoorPlant.Title" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.Description" class="control-label"></label>
+                        <textarea asp-for="@Model.IndoorPlant.Description" rows="4"></textarea>
+                        <span asp-validation-for="IndoorPlant.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.Price" class="control-label"></label>
+                        <input asp-for="IndoorPlant.Price" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.PotSize" class="control-label"></label>
+                        <input asp-for="IndoorPlant.PotSize" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.PotSize" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.Size" class="control-label"></label>
+                        <input asp-for="IndoorPlant.Size" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.Size" class="text-danger"></span>
 
-        <div>
-            @if (Model.Category != null)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.RecommendedSoil" class="control-label"></label>
+                        <input asp-for="IndoorPlant.RecommendedSoil" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.RecommendedSoil" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.RecommendedTemperature" class="control-label"></label>
+                        <input asp-for="IndoorPlant.RecommendedTemperature" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.RecommendedTemperature" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.WateringNeeds" class="control-label"></label>
+                        <input asp-for="IndoorPlant.WateringNeeds" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.WateringNeeds" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.SunlightNeeds" class="control-label"></label>
+                        <input asp-for="IndoorPlant.SunlightNeeds" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.SunlightNeeds" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlant.Species" class="control-label"></label>
+                        <input asp-for="IndoorPlant.Species" class="form-control" />
+                        <span asp-validation-for="IndoorPlant.Species" class="text-danger"></span>
+
+                    </div>
+
+                }
+                else if (Model.Category == "OutdoorPlant")
+                {
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlant.AdImage" class="control-label"></label>
+                        <input asp-for="OutdoorPlant.AdImage" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlant.Title" class="control-label"></label>
+                        <input asp-for="OutdoorPlant.Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlant.Description" class="control-label"></label>
+                        <input asp-for="OutdoorPlant.Description" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlant.Price" class="control-label"></label>
+                        <input asp-for="OutdoorPlant.Price" class="form-control" />
+                    </div>
+                }
+                else if (Model.Category == "Soil")
+                {
+                    <div class="form-group">
+                        <label asp-for="Soil.AdImage" class="control-label"></label>
+                        <input asp-for="Soil.AdImage" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Soil.Title" class="control-label"></label>
+                        <input asp-for="Soil.Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Soil.Description" class="control-label"></label>
+                        <input asp-for="Soil.Description" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Soil.Price" class="control-label"></label>
+                        <input asp-for="Soil.Price" class="form-control" />
+                    </div>
+
+                }
+                else if (Model.Category == "Fertilizer")
+                {
+                    <div class="form-group">
+                        <label asp-for="Fertilizer.AdImage" class="control-label"></label>
+                        <input asp-for="Fertilizer.AdImage" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Fertilizer.Title" class="control-label"></label>
+                        <input asp-for="Fertilizer.Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Fertilizer.Description" class="control-label"></label>
+                        <input asp-for="Fertilizer.Description" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Fertilizer.Price" class="control-label"></label>
+                        <input asp-for="Fertilizer.Price" class="form-control" />
+                    </div>
+
+                }
+                else if (Model.Category == "GardeningTool")
+                {
+                    <div class="form-group">
+                        <label asp-for="GardeningTool.AdImage" class="control-label"></label>
+                        <input asp-for="GardeningTool.AdImage" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GardeningTool.Title" class="control-label"></label>
+                        <input asp-for="GardeningTool.Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GardeningTool.Description" class="control-label"></label>
+                        <input asp-for="GardeningTool.Description" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GardeningTool.Price" class="control-label"></label>
+                        <input asp-for="GardeningTool.Price" class="form-control" />
+                    </div>
+
+                }
+                else if (Model.Category == "Tool")
+                {
+                    <div class="form-group">
+                        <label asp-for="Tool.AdImage" class="control-label"></label>
+                        <input asp-for="Tool.AdImage" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tool.Title" class="control-label"></label>
+                        <input asp-for="Tool.Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tool.Description" class="control-label"></label>
+                        <input asp-for="Tool.Description" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tool.Price" class="control-label"></label>
+                        <input asp-for="Tool.Price" class="form-control" />
+                    </div>
+
+                }
+                else
+                {
+                    <br />
+                    <h3>Vælg en kategori for at oprette en annonce</h3>
+                    <br />
+
+                }
+            </div>
+
+            <br />
+            @if (!string.IsNullOrEmpty(Model.Category))
             {
-                <div class="form-group">
-                    <label asp-for="@Model.Photo" class="control-label"></label>
-                    <div class="custom-file">
-                        <input asp-for="@Model.Photo" class="custom-file-input form-control" />
+                <h3>Kontaktoplysninger</h3>
+                <div>
+                    <div class="form-group">
+                        <label asp-for="Seller.Email" class="control-label"></label>
+                        <input asp-for="Seller.Email" class="form-control" />
+                        <span asp-validation-for="Seller.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Seller.Address" class="control-label"></label>
+                        <input asp-for="Seller.Address" class="form-control" />
+                        <span asp-validation-for="Seller.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Seller.Phone" class="control-label"></label>
+                        <input asp-for="Seller.Phone" class="form-control" />
+                        <span asp-validation-for="Seller.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Seller.ZipCode" class="control-label"></label>
+                        <input asp-for="Seller.ZipCode" class="form-control" />
+                        <span asp-validation-for="Seller.ZipCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Seller.City" class="control-label"></label>
+                        <input asp-for="Seller.City" class="form-control" />
+                        <span asp-validation-for="Seller.City" class="text-danger"></span>
                     </div>
                 </div>
-            }
-        </div>
-        <div>
-            @if (Model.Category == "IndoorPlant")
-            {
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.Name" class="control-label"></label>
-                    <input asp-for="IndoorPlant.Name" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.Description" class="control-label"></label>
-                    <input asp-for="IndoorPlant.Description" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.Price" class="control-label"></label>
-                    <input asp-for="IndoorPlant.Price" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.PotSize" class="control-label"></label>
-                    <input asp-for="IndoorPlant.PotSize" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.PotSize" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.Size" class="control-label"></label>
-                    <input asp-for="IndoorPlant.Size" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.Size" class="text-danger"></span>
 
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.RecommendedSoil" class="control-label"></label>
-                    <input asp-for="IndoorPlant.RecommendedSoil" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.RecommendedSoil" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.RecommendedTemperature" class="control-label"></label>
-                    <input asp-for="IndoorPlant.RecommendedTemperature" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.RecommendedTemperature" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.WateringNeeds" class="control-label"></label>
-                    <input asp-for="IndoorPlant.WateringNeeds" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.WateringNeeds" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.SunlightNeeds" class="control-label"></label>
-                    <input asp-for="IndoorPlant.SunlightNeeds" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.SunlightNeeds" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlant.Species" class="control-label"></label>
-                    <input asp-for="IndoorPlant.Species" class="form-control" />
-                    <span asp-validation-for="IndoorPlant.Species" class="text-danger"></span>
 
-                </div>
-
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <div class="form-group">
-                    <label asp-for="OutdoorPlant.AdImage" class="control-label"></label>
-                    <input asp-for="OutdoorPlant.AdImage" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="OutdoorPlant.Name" class="control-label"></label>
-                    <input asp-for="OutdoorPlant.Name" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="OutdoorPlant.Description" class="control-label"></label>
-                    <input asp-for="OutdoorPlant.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="OutdoorPlant.Price" class="control-label"></label>
-                    <input asp-for="OutdoorPlant.Price" class="form-control" />
+                <div>
+                    <button class="btn btn-primary" type="submit" asp-page-handler="Create" asp-route-category="@Model.Category">Lav</button>
                 </div>
             }
-            else if (Model.Category == "Soil")
-            {
-                <div class="form-group">
-                    <label asp-for="Soil.AdImage" class="control-label"></label>
-                    <input asp-for="Soil.AdImage" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Soil.Name" class="control-label"></label>
-                    <input asp-for="Soil.Name" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Soil.Description" class="control-label"></label>
-                    <input asp-for="Soil.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Soil.Price" class="control-label"></label>
-                    <input asp-for="Soil.Price" class="form-control" />
-                </div>
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <div class="form-group">
-                    <label asp-for="Fertilizer.AdImage" class="control-label"></label>
-                    <input asp-for="Fertilizer.AdImage" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Fertilizer.Name" class="control-label"></label>
-                    <input asp-for="Fertilizer.Name" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Fertilizer.Description" class="control-label"></label>
-                    <input asp-for="Fertilizer.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Fertilizer.Price" class="control-label"></label>
-                    <input asp-for="Fertilizer.Price" class="form-control" />
-                </div>
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <div class="form-group">
-                    <label asp-for="GardeningTool.AdImage" class="control-label"></label>
-                    <input asp-for="GardeningTool.AdImage" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="GardeningTool.Name" class="control-label"></label>
-                    <input asp-for="GardeningTool.Name" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="GardeningTool.Description" class="control-label"></label>
-                    <input asp-for="GardeningTool.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="GardeningTool.Price" class="control-label"></label>
-                    <input asp-for="GardeningTool.Price" class="form-control" />
-                </div>
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <div class="form-group">
-                    <label asp-for="Tool.AdImage" class="control-label"></label>
-                    <input asp-for="Tool.AdImage" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Tool.Name" class="control-label"></label>
-                    <input asp-for="Tool.Name" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Tool.Description" class="control-label"></label>
-                    <input asp-for="Tool.Description" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Tool.Price" class="control-label"></label>
-                    <input asp-for="Tool.Price" class="form-control" />
-                </div>
-
-            }
-            else
-            {
-                <br />
-                <h3>Vælg en kategori for at oprette en annonce</h3>
-                <br />
-
-            }
-        </div>
-
-        <br />
-        @if (!string.IsNullOrEmpty(Model.Category))
-        {
-            <h3>Kontaktoplysninger</h3>
-            <div>
-                <div class="form-group">
-                    <label asp-for="Seller.Email" class="control-label"></label>
-                    <input asp-for="Seller.Email" class="form-control" />
-                    <span asp-validation-for="Seller.Email" class="text-danger"></span>    
-                </div>
-                <div class="form-group">
-                    <label asp-for="Seller.Address" class="control-label"></label>
-                    <input asp-for="Seller.Address" class="form-control" />
-                    <span asp-validation-for="Seller.Address" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Seller.Phone" class="control-label"></label>
-                    <input asp-for="Seller.Phone" class="form-control" />
-                    <span asp-validation-for="Seller.Phone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Seller.ZipCode" class="control-label"></label>
-                    <input asp-for="Seller.ZipCode" class="form-control" />
-                    <span asp-validation-for="Seller.ZipCode" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Seller.City" class="control-label"></label>
-                    <input asp-for="Seller.City" class="form-control" />
-                    <span asp-validation-for="Seller.City" class="text-danger"></span>
-                </div>
-            </div>
-
-
-            <div>
-                <button class="btn btn-primary" type="submit" asp-page-handler="Create" asp-route-category="@Model.Category">Lav</button>
-            </div>
-        }
-    </form>
+        </form>
+    </div>
 </div>
