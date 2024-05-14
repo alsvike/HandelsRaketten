@@ -4,14 +4,17 @@
 }
 
 
-
+<style>
+    .test-img {
+        width: 500px;
+    }
+</style>
 
 <div>
     @if (Model.Category == "IndoorPlant")
     {
-        <div class="form-group">
-            <label asp-for="IndoorPlant.AdImage" class="control-label"></label>
-            <input asp-for="IndoorPlant.AdImage" class="form-control" />
+        <div>
+            <img src="/Images/@Model.IndoorPlant.AdImage" class="test-img"/>
         </div>
         <div class="form-group">
             <label asp-for="IndoorPlant.Name" class="control-label"></label>

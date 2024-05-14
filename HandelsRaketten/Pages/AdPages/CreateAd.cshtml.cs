@@ -50,8 +50,9 @@ namespace HandelsHjornet.Pages.AdPages
             {
                 return Page();
             }
+
             // this should route to the login side if the user is not logged in
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
         }
 
         public IActionResult OnPost(string category)
@@ -66,7 +67,39 @@ namespace HandelsHjornet.Pages.AdPages
 
         public async Task<IActionResult> OnPostCreate(string category)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
 
+            var createdAd = await CreateAdAsync(category);
+
+            if(createdAd == null)
+            {
+                return Page();
+            }
+
+            return RedirectToPage("ShowAllAds");
+        }
+
+        private string ProcessUploadedFile()
+        {
+            string uniqueFileName = null;
+            if (Photo != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
+
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                { Photo.CopyTo(fileStream); }
+            }
+            return uniqueFileName;
+        }
+
+        private async Task<Ad> CreateAdAsync(string category)
+        {
             var userId = _userManager.GetUserId(User);
 
             if (!string.IsNullOrEmpty(category))
@@ -88,8 +121,7 @@ namespace HandelsHjornet.Pages.AdPages
                         }
                         IndoorPlant.AdImage = ProcessUploadedFile();
 
-                        await _adService.AddAsync(IndoorPlant, category);
-                        break;
+                        return await _adService.AddAsync(IndoorPlant, category);
 
 
                     case "OutdoorPlant":
@@ -107,8 +139,7 @@ namespace HandelsHjornet.Pages.AdPages
                         }
                         OutdoorPlant.AdImage = ProcessUploadedFile();
 
-                        await _adService.AddAsync(OutdoorPlant, category);
-                        break;
+                        return await _adService.AddAsync(OutdoorPlant, category);
 
 
                     case "Soil":
@@ -126,8 +157,7 @@ namespace HandelsHjornet.Pages.AdPages
                         }
                         Soil.AdImage = ProcessUploadedFile();
 
-                        await _adService.AddAsync(Soil, category);
-                        break;
+                        return await _adService.AddAsync(Soil, category);
 
 
                     case "Tool":
@@ -145,8 +175,7 @@ namespace HandelsHjornet.Pages.AdPages
                         }
                         Tool.AdImage = ProcessUploadedFile();
 
-                        await _adService.AddAsync(Tool, category);
-                        break;
+                        return await _adService.AddAsync(Tool, category);
 
 
                     case "GardeningTool":
@@ -164,9 +193,7 @@ namespace HandelsHjornet.Pages.AdPages
                         }
                         GardeningTool.AdImage = ProcessUploadedFile();
 
-                        await _adService.AddAsync(GardeningTool, category);
-                        break;
-
+                        return await _adService.AddAsync(GardeningTool, category);
 
                     case "Fertilizer":
                         var fertilizerSeller = await _sellerService.AddAsync(Seller);
@@ -183,8 +210,7 @@ namespace HandelsHjornet.Pages.AdPages
                         }
                         Fertilizer.AdImage = ProcessUploadedFile();
 
-                        await _adService.AddAsync(Fertilizer, category);
-                        break;
+                        return await _adService.AddAsync(Fertilizer, category);
 
 
                     // Add more categories
@@ -193,24 +219,7 @@ namespace HandelsHjornet.Pages.AdPages
                         break;
                 }
             }
-
-            return RedirectToPage("ShowAllAds");
-        }
-
-        private string ProcessUploadedFile()
-        {
-            string uniqueFileName = null;
-            if (Photo != null)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + Photo.FileName;
-
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                { Photo.CopyTo(fileStream); }
-            }
-            return uniqueFileName;
+            return null;
         }
 
     }
