@@ -5,7 +5,8 @@
 
 /* --- MAIN SECTION --- */
 .main_div {
-    max-width: 1400px; /* Increase max-width for a larger container */
+    align-content: center;
+    width: 1400px; /* Increase max-width for a larger container */
     margin: 0 auto;
     border: 2px solid black;
     background-color: white;
