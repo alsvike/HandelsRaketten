@@ -22,7 +22,8 @@ namespace HandelsRaketten.Models.AdModels.SubCategories.Plants
         {
             Active = true;
             CreatedOn = DateTime.Now;
-            Category = "IndoorPlant";
+            Category = "Plants";
+            Discriminator = "IndoorPlant";
 
         }
 

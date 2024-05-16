@@ -1,4 +1,5 @@
 ﻿@page
+@using HandelsRaketten.Models.AdModels.SubCategories.Plants
 @model HandelsHjornet.Pages.AdPages.CreateAdModel
 @{
 }
@@ -43,19 +44,61 @@
                     }
                 </div>
                 <br />
-                <div>
-
-
-
-
-                else
+                @if (Model.Category == "IndoorPlant")
+                {
+                    <div class="form-group">
+                        <label asp-for="IndoorPlantAd.Title" class="control-label"></label>
+                        <input asp-for="IndoorPlantAd.Title" class="form-control" />
+                        <span asp-validation-for="IndoorPlantAd.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlantAd.Description" class="control-label"></label>
+                        <input asp-for="IndoorPlantAd.Description" class="form-control" />
+                        <span asp-validation-for="IndoorPlantAd.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlantAd.Price" class="control-label"></label>
+                        <input asp-for="IndoorPlantAd.Price" class="form-control" />
+                        <span asp-validation-for="IndoorPlantAd.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IndoorPlantAd.Species" class="control-label"></label>
+                        <input asp-for="IndoorPlantAd.Species" class="form-control" />
+                        <span asp-validation-for="IndoorPlantAd.Species" class="text-danger"></span>
+                    </div>
+                    <!-- Add more fields for IndoorPlantAd as needed -->
+                }
+                else if (Model.Category == "OutdoorPlant")
+                {                    
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlantAd.Title" class="control-label"></label>
+                        <input asp-for="OutdoorPlantAd.Title" class="form-control" />
+                        <span asp-validation-for="OutdoorPlantAd.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlantAd.Description" class="control-label"></label>
+                        <input asp-for="OutdoorPlantAd.Description" class="form-control" />
+                        <span asp-validation-for="OutdoorPlantAd.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlantAd.Price" class="control-label"></label>
+                        <input asp-for="OutdoorPlantAd.Price" class="form-control" />
+                        <span asp-validation-for="OutdoorPlantAd.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutdoorPlantAd.RecommendedSoil" class="control-label"></label>
+                        <input asp-for="OutdoorPlantAd.RecommendedSoil" class="form-control" />
+                        <span asp-validation-for="OutdoorPlantAd.RecommendedSoil" class="text-danger"></span>
+                    </div>
+                    <!-- Add more fields for OutdoorPlantAd as needed -->
+                }
+                @if(Model.Category == null)
                 {
                     <br />
                     <h3>Vælg en kategori for at oprette en annonce</h3>
                     <br />
 
-                    }
-                </div>
+                }
 
                 <br />
                 @if (!string.IsNullOrEmpty(Model.Category))

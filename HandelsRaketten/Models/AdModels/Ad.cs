@@ -10,6 +10,8 @@ namespace HandelsRaketten.Models.AdModels
         public virtual int Id { get; set; }
         [Required]
         public string Category { get; set; }
+        [Required]
+        public string Discriminator { get; set; }
 
         //[Required(ErrorMessage = "Navn skal udfyldes")]
         [StringLength(50, ErrorMessage = "Navn må ikke være over 50 tegn")]
@@ -30,7 +32,7 @@ namespace HandelsRaketten.Models.AdModels
         public string? UserId { get; set; }
         public Seller? Seller { get; set; }
         public int SellerId { get; set; }
-        public ICollection<Message> Messages { get; set; }
+        public ICollection<Message>? Messages { get; set; }
 
 
     }

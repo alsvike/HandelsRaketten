@@ -24,7 +24,11 @@ namespace HandelsHjornet.Pages.AdPages
         [Required(ErrorMessage = "Tilføj Billede")]
         [BindProperty] public IFormFile? Photo { get; set; }
 
-        [BindProperty] public Ad Ad { get; set; }
+        [BindProperty]
+        public IndoorPlantAd IndoorPlantAd { get; set; }
+
+        [BindProperty]
+        public OutdoorPlantAd OutdoorPlantAd { get; set; }
 
         [BindProperty] public Seller Seller { get; set; }
 
@@ -41,6 +45,7 @@ namespace HandelsHjornet.Pages.AdPages
 
         public IActionResult OnGet()
         {
+            // check if user is signed in
             if (_signInManager.IsSignedIn(User))
             {
                 return Page();
@@ -54,8 +59,6 @@ namespace HandelsHjornet.Pages.AdPages
         {
 
             Category = category;
-            // Execute method based on the selected category
-
 
             return Page();
         }
@@ -67,6 +70,7 @@ namespace HandelsHjornet.Pages.AdPages
                 return Page();
             }
 
+            await CreateAd(category);
 
             return RedirectToPage("ShowAllAds");
         }
@@ -87,6 +91,49 @@ namespace HandelsHjornet.Pages.AdPages
             return uniqueFileName;
         }
 
+        private async Task CreateAd(string category)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            switch (category)
+            {
+                case "IndoorPlant":
+                    
+                    if (Photo != null)
+                    {
+                        IndoorPlantAd.Owner = user;
+                        IndoorPlantAd.UserId = user.Id;
+                        await _sellerService.AddAsync(Seller);
+                        IndoorPlantAd.Seller = Seller;
+                        IndoorPlantAd.SellerId = Seller.Id;
+                        if (IndoorPlantAd.AdImage != null)
+                        {
+                            string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", IndoorPlantAd.AdImage);
+                            System.IO.File.Delete(filepath);
+                        }
+                    }
+                    IndoorPlantAd.AdImage = ProcessUploadedFile();
 
+                    await _adService.AddAsync(IndoorPlantAd);
+                    break;
+                case "OutdoorPlant":
+                    OutdoorPlantAd.Owner = user;
+                    OutdoorPlantAd.UserId = user.Id;
+                    await _sellerService.AddAsync(Seller);
+                    OutdoorPlantAd.Seller = Seller;
+                    OutdoorPlantAd.SellerId = Seller.Id;
+                    if (Photo != null)
+                    {
+                        if (OutdoorPlantAd.AdImage != null)
+                        {
+                            string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", OutdoorPlantAd.AdImage);
+                            System.IO.File.Delete(filepath);
+                        }
+                    }
+                    OutdoorPlantAd.AdImage = ProcessUploadedFile();
+
+                    await _adService.AddAsync(OutdoorPlantAd);
+                    break;
+            }
+        }
     }
 }

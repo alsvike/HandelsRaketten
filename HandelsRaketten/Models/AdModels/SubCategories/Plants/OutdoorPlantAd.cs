@@ -12,7 +12,8 @@
             Active = true;
             CreatedOn = DateTime.Now;
             //Id = _nextId++;
-            Category = "OutdoorPlant";
+            Category = "Plants";
+            Discriminator = "OutdoorPlant";
 
         }
 
