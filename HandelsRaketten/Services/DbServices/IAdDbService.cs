@@ -11,9 +11,6 @@ namespace HandelsRaketten.Services.DbServices
         Task<Ad> GetObjectByIdAsync(int id);
         Task SaveObjects(List<Ad> objs);
 
-        Task<Ad> GetAdConversationAsync(int id);
-
-        Task<List<Ad>> GetAllByCategoryAsync(string category);
-        Task<List<Ad>> GetAllBySubcategoryAsync(string dicriminator);
+        Task<Ad> GetAdConversationAsync(int id, string category);
     }
 }

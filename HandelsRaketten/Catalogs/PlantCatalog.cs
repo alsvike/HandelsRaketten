@@ -19,7 +19,15 @@ namespace HandelsRaketten.Catalogs
         //public async Task<List<Ad>> GetAllAsync()
         //{
 
-        //    var allPlantsAds = await _adService.GetAllByCategoryAsync("Plants");
+        //    var allPlantsAds = new List<Ad>();
+
+        //    var indoorPlants = _context.IndoorPlant.ToList();
+        //    if (indoorPlants != null)
+        //        allPlantsAds.AddRange(indoorPlants);
+
+        //    var outdoorPlants = _context.OutdoorPlant.ToList();
+        //    if (outdoorPlants != null)
+        //        allPlantsAds.AddRange(outdoorPlants);
 
         //    return allPlantsAds;
         //}

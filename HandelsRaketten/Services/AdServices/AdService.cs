@@ -1,6 +1,5 @@
 ﻿using HandelsRaketten.Catalogs;
 using HandelsRaketten.Data;
-using HandelsRaketten.EFDBContext;
 using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
 using HandelsRaketten.Services.DbServices;
@@ -14,12 +13,18 @@ namespace HandelsRaketten.Services.AdServices
     public class AdService : IAdService
     {
         private List<Ad> _objs;
+        AdCatalog _adCatalog;
+        PlantCatalog _plantCatalog;
 
+        HandelsRakettenContext _context;
         IAdDbService _dbService;
 
-        public AdService(AdCatalog adRepository, IAdDbService dbService)
+        public AdService(AdCatalog adRepository, PlantCatalog plantRepository, HandelsRakettenContext context, IAdDbService dbService)
         {
             _dbService = dbService;
+            _context = context;
+            _adCatalog = adRepository;
+            _plantCatalog = plantRepository;
             _objs = _dbService.GetObjectsAsync().Result.ToList();
         }
 
@@ -49,87 +54,51 @@ namespace HandelsRaketten.Services.AdServices
 
         public Ad Get(int adId)
         {
-
-            return _objs.FirstOrDefault(a => a.Id == adId);
+            //switch (category)
+            //{
+            //    case "IndoorPlant":
+            //        return _indoorPlantCatalog.Get(adId);
+            //    case "OutdoorPlant":
+            //        return _outdoorPlantCatalog.Get(adId);
+            //    default:
+            //        return null;
+            //}
+            return null;
         }
-
-        // --- START OF UPDATE METHOD --- //
 
         public async Task UpdateAsync(int adId, Ad obj)
         {
-            var ad = _objs.FirstOrDefault(a => a.Id == adId);
-
-            if (ad != null)
-            {
-                UpdateCommonFields(ad, obj);
-                UpdateSpecificFields(ad, obj);
-                await _dbService.UpdateObjectAsync(ad);
-            }
-
+            //if (obj != null)
+            //{
+            //    switch (category)
+            //    {
+            //        case "IndoorPlant":
+            //            await _indoorPlantCatalog.EditAsync((IndoorPlantAd)obj, adId);
+            //            break;
+            //        case "OutdoorPlant":
+            //            await _outdoorPlantCatalog.EditAsync((OutdoorPlantAd)obj, adId);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
         }
 
-        // Update fields common to all ads
-        private void UpdateCommonFields(Ad ad, Ad obj)
+        public async Task<List<Ad>> GetAllAsync(string category)
         {
-            ad.Title = obj.Title;
-            ad.Price = obj.Price;
-            ad.Description = obj.Description;
-            ad.AdImage = obj.AdImage;
-        }
+            var ads = await _context.Set<Ad>()
+                .Where(m => m.Category == category)
+                .ToListAsync();
 
-        // Update Fields specific to each category of ad
-        private void UpdateSpecificFields(Ad ad, Ad obj)
-        {
-            switch (ad)
-            {
-                case OutdoorPlantAd outdoorPlantAd when obj is OutdoorPlantAd newOutdoorPlantAd:
-                    UpdateOutdoorPlantAdFields(outdoorPlantAd, newOutdoorPlantAd);
-                    break;
-                case IndoorPlantAd indoorPlantAd when obj is IndoorPlantAd newIndoorPlantAd:
-                    UpdateIndoorPlantAdFields(indoorPlantAd, newIndoorPlantAd);
-                    break;
-            }
-        }
-
-        // Category Outdoorplant
-        private void UpdateOutdoorPlantAdFields(OutdoorPlantAd ad, OutdoorPlantAd obj)
-        {
-            ad.Species = obj.Species;
-            ad.RecommendedSoil = obj.RecommendedSoil;
-            ad.FloweringSeason = obj.FloweringSeason;
-            ad.Size = obj.Size;
-        }
-
-        // Category IndoorPlant
-        private void UpdateIndoorPlantAdFields(IndoorPlantAd ad, IndoorPlantAd obj)
-        {
-            ad.PotSize = obj.PotSize;
-            ad.Size = obj.Size;
-            ad.WateringNeeds = obj.WateringNeeds;
-            ad.SunlightNeeds = obj.SunlightNeeds;
-            ad.Species = obj.Species;
-            ad.RecommendedSoil = obj.RecommendedSoil;
-            ad.RecommendedTemperature = obj.RecommendedTemperature;
-        }
-
-        // --- END OF UPDATE METHOD --- //
-
-        public async Task<List<Ad>> GetAllByCategoryAsync(string category)
-        {
-            return await _dbService.GetAllByCategoryAsync(category);
-        }
-
-        public async Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator)
-        {
-            return await _dbService.GetAllBySubcategoryAsync(discriminator);
+            return ads;
         }
 
         public async Task<List<Ad>> GetAllAdsAsync() => _objs = _dbService.GetObjectsAsync().Result.ToList();
 
 
-        public async Task<Ad> GetAdConversationAsync(int adId)
+        public async Task<Ad> GetAdConversationAsync(int adId, string category)
         {
-            return await _dbService.GetAdConversationAsync(adId);
+            return await _dbService.GetAdConversationAsync(adId, category);
         }
 
 

@@ -55,31 +55,31 @@ namespace HandelsHjornet.Pages.TestPages
             switch (selectedOption)
             {
                 case "All":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Plants":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "IndoorPlant":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "OutdoorPlant":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Tool":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "GardeningTool":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "PlantAccessories":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Soil":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Fertilizer":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 default:
                     _ads = await _adService.GetAllAdsAsync();

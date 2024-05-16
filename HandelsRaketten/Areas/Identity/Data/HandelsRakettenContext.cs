@@ -10,10 +10,10 @@ namespace HandelsRaketten.Data;
 
 public class HandelsRakettenContext : IdentityDbContext<User>
 {
-    public DbSet<IndoorPlantAd> IndoorPlantAd { get; set; }
-    public DbSet<OutdoorPlantAd> OutdoorPlantAd { get; set; }
-    public DbSet<Message> Messages { get; set; }
     public DbSet<User> user { get; set; }
+    public DbSet<IndoorPlantAd> IndoorPlant { get; set; }
+    public DbSet<OutdoorPlantAd> OutdoorPlant { get; set; }
+    public DbSet<Message> Messages { get; set; }
     public HandelsRakettenContext(DbContextOptions<HandelsRakettenContext> options)
         : base(options)
     {
@@ -28,9 +28,9 @@ public class HandelsRakettenContext : IdentityDbContext<User>
         builder.Entity<User>();
 
         builder.Entity<Ad>()
-    .HasDiscriminator<string>("Discriminator")
-    .HasValue<IndoorPlantAd>("IndoorPlantAd")
-    .HasValue<OutdoorPlantAd>("OutdoorPlantAd");
+        .HasDiscriminator<string>("Discriminator")
+        .HasValue<IndoorPlantAd>("IndoorPlantAd")
+        .HasValue<OutdoorPlantAd>("OutdoorPlantAd");
     }
 
 }
