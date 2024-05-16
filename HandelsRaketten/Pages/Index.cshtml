@@ -12,7 +12,19 @@
 {
     <p>DU ER IKKE LOGGET IND DIT FEDE LÆS SVINEFODDER!</p>
 } *@
-
+<div class="text-white">
+    @if (Model._signInManager.IsSignedIn(User))
+    {
+        if (Model.IsAdmin)
+        {
+            <p>DU ER ADMIN!</p>
+        }
+        else
+        {
+            <p>DU ER IKKE ADMIN DIN PISPOT!</p>
+        }
+    }
+</div>
 
 <div class="main_div" style="margin-top:65px;">
     <div id="navigation_div">
