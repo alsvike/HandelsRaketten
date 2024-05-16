@@ -3,28 +3,121 @@
 @{
 }
 
+<style>
+    .white-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px; /* Add margin between sidebar and main content */
+    }
 
-<div>
-    <div>
-        <table>
-        <tbody>
-            @foreach (var ad in Model._ads)
-            {
-                <tr>
-                    <td>@ad.Title</td>
-                    <td>@ad.Description</td>
-                    <td>@ad.Price</td>
-                    <td>@ad.Active</td>
-                    <td>@ad.CreatedOn</td>
-                    <td class="d-inline-flex">
-                        <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a>
-                        <a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a>
-                        <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a>
-                    </td>
+    .sidebar {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px; /* Add margin between sidebar and main content */
+    }
 
-                </tr>
-            }
-        </tbody>
-        </table>
+    .search-form {
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        width: calc(100% - 100px); /* Adjust width to fit button */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .search-button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 10px; /* Add margin between input and button */
+    }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
+    .category-dropdown {
+        margin-bottom: 20px;
+    }
+
+        .category-dropdown select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+</style>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="sidebar">
+            <!-- Sidebar Content -->
+            <div class="category-dropdown">
+                <select>
+                    <option value="">Select Category</option>
+                    <option value="1">Category 1</option>
+                    <option value="2">Category 2</option>
+                    <option value="3">Category 3</option>
+                    <!-- Add more categories as needed -->
+                </select>
+            </div>
+
+            <!-- Search Form -->
+            <div class="search-form">
+                <form method="get" action="#">
+                    <input type="text" name="search" class="search-input" placeholder="Search...">
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="white-container">
+            <div>
+                <div>
+                    <div class="row">
+                        @foreach (var ad in Model._ads)
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <img src="https://cdn.pixabay.com/photo/2024/02/21/15/28/dahlia-8587940_1280.jpg" class="card-img-top" alt="Ad Image" style="max-width: auto;max-height:150px;background-size: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@ad.Title</h5>
+                                        <p class="card-text">@Truncate(ad.Description, 100)</p>
+                                        @* <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a> *@
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Pris: @ad.Price</li>
+                                        <li class="list-group-item">Oprettet: @ad.CreatedOn.ToShortDateString()</li>
+                                        <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+@functions {
+    string Truncate(string value, int maxLength)
+    {
+        if (value.Length <= maxLength)
+            return value;
+        return value.Substring(0, maxLength) + "...";
+    }
+}
