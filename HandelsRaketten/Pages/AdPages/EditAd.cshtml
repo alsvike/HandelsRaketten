@@ -1,4 +1,5 @@
 ﻿@page
+@using HandelsRaketten.Models.AdModels.SubCategories.Plants
 @model HandelsHjornet.Pages.AdPages.EditAdModel
 @{
 }
@@ -6,16 +7,47 @@
 <div class="white-background">
     <form method="post">
         <div>
+            @if (Model.SubCategory == Model.IndoorPlantAd.Discriminator)
+            {
+                <div class="form-group">
+                    <label asp-for="IndoorPlantAd.Title" class="control-label"></label>
+                    <input asp-for="IndoorPlantAd.Title" class="form-control" />
+                    <span asp-validation-for="IndoorPlantAd.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlantAd.Description" class="control-label"></label>
+                    <input asp-for="IndoorPlantAd.Description" class="form-control" />
+                    <span asp-validation-for="IndoorPlantAd.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlantAd.Price" class="control-label"></label>
+                    <input asp-for="IndoorPlantAd.Price" class="form-control" />
+                    <span asp-validation-for="IndoorPlantAd.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlantAd.Species" class="control-label"></label>
+                    <input asp-for="IndoorPlantAd.Species" class="form-control" />
+                    <span asp-validation-for="IndoorPlantAd.Species" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IndoorPlantAd.PotSize" class="control-label"></label>
+                    <input asp-for="IndoorPlantAd.PotSize" class="form-control" />
+                    <span asp-validation-for="IndoorPlantAd.PotSize" class="text-danger"></span>
+                </div>
+            }
 
+            else if(Model.SubCategory == Model.OutdoorPlantAd.Discriminator)
+            {
+                
+            }
 
         </div>
         <br />
-        @if (!string.IsNullOrEmpty(Model.Category))
-        {
-            <div>
-                <button class="btn btn-primary" type="submit" asp-route-adId="@Model.AdId" asp-route-category="@Model.Category">Gem</button>
-            </div>
-        }
+
+        <div>
+            <button class="btn btn-primary" type="submit">Gem</button>
+        </div>
+
     </form>
 
 </div>

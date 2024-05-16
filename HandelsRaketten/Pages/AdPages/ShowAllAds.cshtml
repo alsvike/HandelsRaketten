@@ -123,9 +123,9 @@
                         <td>@ad.Active</td>
                         <td>@ad.CreatedOn</td>
                         <td class="d-inline-flex">
-                            <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Slet</a>
+                            <a asp-page="DeleteAd" class="btn btn-danger" asp-route-adId="@ad.Id">Slet</a>
                             <a asp-page="ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis</a>
-                            <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Rediger</a>
+                            <a asp-page="EditAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-subCategory="@ad.Discriminator">Rediger</a>
                         </td>
 
                     </tr>

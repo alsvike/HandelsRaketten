@@ -22,8 +22,8 @@ namespace HandelsRaketten.EFDBContext
 
             modelBuilder.Entity<Ad>()
             .HasDiscriminator<string>("Discriminator")
-            .HasValue<IndoorPlantAd>("IndoorPlantAd")
-            .HasValue<OutdoorPlantAd>("OutdoorPlantAd");
+            .HasValue<IndoorPlantAd>("IndoorPlant")
+            .HasValue<OutdoorPlantAd>("OutdoorPlant");
         }
     }
 }

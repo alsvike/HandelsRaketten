@@ -10,28 +10,47 @@ namespace HandelsHjornet.Pages.AdPages
     {
         IAdService _adService;
 
-        public string Category { get; set; }
-        public int AdId { get; set; }
+        [BindProperty]public IndoorPlantAd IndoorPlantAd { get; set; }
+        [BindProperty]public OutdoorPlantAd OutdoorPlantAd { get; set; }
 
-
-        [BindProperty] public Ad Ad { get; set; }
-
+        public string SubCategory { get; set; }
         public EditAdModel(IAdService adService)
         {
             _adService = adService;
         }
 
-        public IActionResult OnGet(int adId, string category)
+        public IActionResult OnGet(int adId, string subCategory)
         {
-            Category = category;
-            AdId = adId;
-
-
+            SubCategory = subCategory;
+            switch (subCategory)
+            {
+                case "IndoorPlant":
+                    IndoorPlantAd = (IndoorPlantAd)_adService.Get(adId);
+                    break;
+                case "OutdoorPlant":
+                    OutdoorPlantAd = (OutdoorPlantAd)_adService.Get(adId);
+                    break;
+            }
             return Page();
         }
 
-        public IActionResult OnPost(int adId, string category)
+        public IActionResult OnPost(int adId, string subCategory)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            switch (subCategory)
+            {
+                case "IndoorPlant":
+                    _adService.UpdateAsync(adId, IndoorPlantAd);
+                    break;
+                case "OutdoorPlant":
+                    _adService.UpdateAsync(adId, OutdoorPlantAd);
+                    break;
+            }
 
 
             return RedirectToPage("ShowAllAds");
