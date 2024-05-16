@@ -1,10 +1,12 @@
-﻿using HandelsRaketten.Models.AdModels;
+﻿using HandelsRaketten.Areas.Identity.Data;
+using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HandelsRaketten.EFDBContext
 {
-    public class AdDbContext : DbContext
+    public class AdDbContext : IdentityDbContext<User>
     {
         public DbSet<IndoorPlantAd> IndoorPlant { get; set; }
         public DbSet<OutdoorPlantAd> OutdoorPlant { get; set; }

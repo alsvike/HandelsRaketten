@@ -10,14 +10,7 @@ namespace HandelsRaketten.Services.DbServices
 {
     public class AdDbService : IAdDbService
     {
-        private readonly IConfiguration _configuration;
 
-
-
-        public AdDbService(IConfiguration configuration)
-        {
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        }
 
         public async Task AddObjectAsync(Ad obj)
         {
@@ -77,22 +70,6 @@ namespace HandelsRaketten.Services.DbServices
                 return context.Set<Ad>().Find(id);
 
             }
-        }
-
-
-        public async Task<Ad> GetAdConversationAsync(int adId, string category)
-        {
-            Ad ad;
-            using (var context = new AdDbContext())
-            {
-                 ad = await context.Set<Ad>()
-                    .Include(a => a.Owner)
-                    .Include(a => a.Messages)
-                    .ThenInclude(m => m.Sender)
-                    .FirstOrDefaultAsync(m => m.Id == adId && m.Category == category);
-
-            }
-            return ad;
         }
 
         public async Task<Ad> GetAdConversationAsync(int adId)

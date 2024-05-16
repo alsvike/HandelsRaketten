@@ -30,6 +30,11 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<HandelsRakettenContext>();
 
+
+// ApplicationDbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+       options.UseSqlServer(connectionString));
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -52,7 +57,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
 });
 
 // Add services
-builder.Services.AddScoped<IAdService, AdService>();
+builder.Services.AddSingleton<IAdService, AdService>();
 builder.Services.AddSingleton<ISellerService, SellerService>();
 
 // json file services

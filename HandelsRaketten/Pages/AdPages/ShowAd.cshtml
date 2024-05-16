@@ -1,4 +1,4 @@
-﻿@page "{id:int}"
+﻿@page
 @using System.Globalization
 @using HandelsRaketten.Models.AdModels.SubCategories.Plants
 @model HandelsHjornet.Pages.AdPages.ShowAdModel
@@ -7,26 +7,28 @@
 }
 
 
+<div class="white-background">
+    <h2>@Model.Ad.Title</h2>
+    <p>@Model.Ad.Description</p>
 
-<h2>@Model.Ad.Title</h2>
-<p>@Model.Ad.Description</p>
+    @if (Model.Ad is IndoorPlantAd indoorPlantAd)
+    {
+        <p>Species: @indoorPlantAd.Species</p>
+        <p>SunlightNeeds: @indoorPlantAd.SunlightNeeds</p>
+    }
+    else if (Model.Ad is OutdoorPlantAd outdoorPlantAd)
+    {
+        <p>FloweringSeason: @outdoorPlantAd.FloweringSeason</p>
+        <p>RecommendedSoil: @outdoorPlantAd.RecommendedSoil</p>
+    }
 
-@if (Model.Ad is IndoorPlantAd indoorPlantAd)
-{
-    <p>Model: @indoorPlantAd.Species</p>
-    <p>Year: @indoorPlantAd.SunlightNeeds</p>
-}
-else if (Model.Ad is OutdoorPlantAd outdoorPlantAd)
-{
-    <p>Location: @outdoorPlantAd.FloweringSeason</p>
-    <p>Square Feet: @outdoorPlantAd.RecommendedSoil</p>
-}
-
-<div id="chatBox">
-    <ul id="messagesList"></ul>
+    <div id="chatBox">
+        <ul id="messagesList"></ul>
+    </div>
+    <input type="text" id="messageInput" placeholder="Type a message..." />
+    <button id="sendButton">Send</button>
 </div>
-<input type="text" id="messageInput" placeholder="Type a message..." />
-<button id="sendButton">Send</button>
+
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
