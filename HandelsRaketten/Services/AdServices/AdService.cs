@@ -6,6 +6,7 @@ using HandelsRaketten.Services.DbServices;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.Remoting;
 
 namespace HandelsRaketten.Services.AdServices
 {
@@ -27,40 +28,31 @@ namespace HandelsRaketten.Services.AdServices
             _objs = _dbService.GetObjectsAsync().Result.ToList();
         }
 
-        public async Task<Ad> AddAsync(Ad obj, string category)
+        public async Task AddAsync(Ad obj)
         {
-            //if (obj != null)
-            //{
-            //    switch (category)
-            //    {
-            //        case "IndoorPlant":
-            //            return await _indoorPlantCatalog.AddAsync((IndoorPlantAd)obj);
-            //        case "OutdoorPlant":
-            //            return await _outdoorPlantCatalog.AddAsync((OutdoorPlantAd)obj);
-            //        default:
-            //            return null;
-            //    }
-            //}
+            if(obj != null)
+            {
+                _objs.Add(obj);
+                await _dbService.AddObjectAsync(obj);
+            }
+
+        }
+
+        public async Task<Ad> DeleteAsync(int adId)
+        {
+            var ad = _objs.FirstOrDefault(a => a.Id == adId);
+
+            if(ad != null)
+            {
+                _objs.Remove(ad);
+                await _dbService.DeleteObjectAsync(ad);
+                return ad;
+            }
             return null;
 
         }
 
-        public async Task<Ad> DeleteAsync(int adId, string category)
-        {
-            //switch (category)
-            //{
-            //    case "IndoorPlant":
-            //        return await _indoorPlantCatalog.DeleteAsync((IndoorPlantAd)Get(adId, category));
-            //    case "OutdoorPlant":
-            //        return await _outdoorPlantCatalog.DeleteAsync((OutdoorPlantAd)Get(adId, category));
-            //    default:
-            //        return null;
-            //}
-            return null;
-
-        }
-
-        public Ad Get(int adId, string category)
+        public Ad Get(int adId)
         {
             //switch (category)
             //{
@@ -74,7 +66,7 @@ namespace HandelsRaketten.Services.AdServices
             return null;
         }
 
-        public async Task UpdateAsync(int adId, Ad obj, string category)
+        public async Task UpdateAsync(int adId, Ad obj)
         {
             //if (obj != null)
             //{
@@ -136,11 +128,7 @@ namespace HandelsRaketten.Services.AdServices
         }
         public IEnumerable<Ad> SortByName()
         {
-            // Sort Name Without Linq
-            //_items.Sort(new NameComperator());
-            //return _items;
 
-            // Sort Name With Linq
             var namesQuery = from obj in _objs
                              orderby obj.Title
                              select obj;
@@ -149,12 +137,7 @@ namespace HandelsRaketten.Services.AdServices
 
         public IEnumerable<Ad> SortByNameDescending()
         {
-            // Without linq
-            //_items.Sort(new NameComperator());
-            //return _items.Reverse<Item>();
 
-
-            // With Linq
             var namesQuery = from obj in _objs
                              orderby obj.Title descending
                              select obj;
@@ -163,11 +146,6 @@ namespace HandelsRaketten.Services.AdServices
 
         public IEnumerable<Ad> SortByPrice()
         {
-            // Without Linq
-            //_items.Sort(new PriceComperator());
-            //return _items;
-
-            // With Linq
             var priceQuery = from obj in _objs
                              orderby obj.Price
                              select obj;
@@ -176,11 +154,7 @@ namespace HandelsRaketten.Services.AdServices
 
         public IEnumerable<Ad> SortByPriceDescending()
         {
-            // Without Linq
-            //_items.Sort(new PriceComperator());
-            //return _items.Reverse<Item>();
 
-            // With Linq
             var priceQuery = from obj in _objs
                              orderby obj.Price descending
                              select obj;

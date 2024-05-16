@@ -24,8 +24,7 @@ namespace HandelsHjornet.Pages.AdPages
         [Required(ErrorMessage = "Tilføj Billede")]
         [BindProperty] public IFormFile? Photo { get; set; }
 
-        [BindProperty] public IndoorPlantAd IndoorPlant { get; set; }
-        [BindProperty] public OutdoorPlantAd OutdoorPlant { get; set; }
+        [BindProperty] public Ad Ad { get; set; }
 
         [BindProperty] public Seller Seller { get; set; }
 
@@ -68,12 +67,6 @@ namespace HandelsHjornet.Pages.AdPages
                 return Page();
             }
 
-            var createdAd = await CreateAdAsync(category);
-
-            if(createdAd == null)
-            {
-                return Page();
-            }
 
             return RedirectToPage("ShowAllAds");
         }
@@ -94,57 +87,6 @@ namespace HandelsHjornet.Pages.AdPages
             return uniqueFileName;
         }
 
-        private async Task<Ad> CreateAdAsync(string category)
-        {
-            var userId = _userManager.GetUserId(User);
-
-            if (!string.IsNullOrEmpty(category))
-            {
-                switch (category)
-                {
-                    case "IndoorPlant":
-                        var indoorPlantSeller = await _sellerService.AddAsync(Seller);
-                        IndoorPlant.SellerId = indoorPlantSeller.Id;
-                        IndoorPlant.UserId = userId;
-
-                        if (Photo != null)
-                        {
-                            if (IndoorPlant.AdImage != null)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", IndoorPlant.AdImage);
-                                System.IO.File.Delete(filepath);
-                            }
-                        }
-                        IndoorPlant.AdImage = ProcessUploadedFile();
-
-                        return await _adService.AddAsync(IndoorPlant, category);
-
-
-                    case "OutdoorPlant":
-                        var outdoorPlantSeller = await _sellerService.AddAsync(Seller);
-                        OutdoorPlant.SellerId = outdoorPlantSeller.Id;
-                        OutdoorPlant.UserId = userId;
-
-                        if (Photo != null)
-                        {
-                            if (OutdoorPlant.AdImage != null)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", OutdoorPlant.AdImage);
-                                System.IO.File.Delete(filepath);
-                            }
-                        }
-                        OutdoorPlant.AdImage = ProcessUploadedFile();
-
-                        return await _adService.AddAsync(OutdoorPlant, category);
-
-                    // Add more categories
-                    default:
-                        // Handle unknown category
-                        break;
-                }
-            }
-            return null;
-        }
 
     }
 }

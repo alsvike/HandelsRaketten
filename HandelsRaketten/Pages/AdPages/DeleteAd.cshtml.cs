@@ -20,7 +20,7 @@ namespace HandelsHjornet.Pages.AdPages
         public IActionResult OnGet(int adId, string category)
         {
 
-            AdToBeDeleted = _adService.Get(adId, category);
+            AdToBeDeleted = _adService.Get(adId);
 
             if(AdToBeDeleted == null)
             {
@@ -30,13 +30,13 @@ namespace HandelsHjornet.Pages.AdPages
             return Page();
         }
 
-        public IActionResult OnPost(int adId, string category)
+        public IActionResult OnPost(int adId)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            _adService.DeleteAsync(adId, category);
+            _adService.DeleteAsync(adId);
 
             return RedirectToPage("ShowAllAds");
         }
