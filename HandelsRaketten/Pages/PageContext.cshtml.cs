@@ -15,39 +15,24 @@ namespace HandelsRaketten.Pages
             _adService = adService;
         }
 
-        public IActionResult OnGet(string category)
+        public async Task<IActionResult> OnGetAsync(string category)
         {
             switch (category)
             {
                 case "All":
-                    _ads = _adService.GetAll(category);
+                    _ads = await _adService.GetAllAsync(category);
                     break;
                 case "Plants":
-                    _ads = _adService.GetAll(category);
+                    _ads = await _adService.GetAllAsync(category);
                     break;
                 case "IndoorPlant":
-                    _ads = _adService.GetAll(category);
+                    _ads = await _adService.GetAllAsync(category);
                     break;
                 case "OutdoorPlant":
-                    _ads = _adService.GetAll(category);
-                    break;
-                case "Tool":
-                    _ads = _adService.GetAll(category);
-                    break;
-                case "GardeningTool":
-                    _ads = _adService.GetAll(category);
-                    break;
-                case "PlantAccessories":
-                    _ads = _adService.GetAll(category);
-                    break;
-                case "Soil":
-                    _ads = _adService.GetAll(category);
-                    break;
-                case "Fertilizer":
-                    _ads = _adService.GetAll(category);
+                    _ads = await _adService.GetAllAsync(category);
                     break;
                 default:
-                    _ads = _adService.GetAllAds();
+                    _ads = await _adService.GetAllAdsAsync();
                     break;
             }
 

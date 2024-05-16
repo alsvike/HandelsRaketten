@@ -2,7 +2,7 @@
 
 namespace HandelsRaketten.Models.AdModels.SubCategories.Plants
 {
-    public class IndoorPlant : Ad
+    public class IndoorPlantAd : Ad
     {
         [StringLength(50, ErrorMessage = "Må ikke være mere end 50 tegn")]
         public string? Species { get; set; }
@@ -18,7 +18,7 @@ namespace HandelsRaketten.Models.AdModels.SubCategories.Plants
         public string? Size { get; set; }
         [StringLength(50, ErrorMessage = "Må ikke være mere end 50 tegn")]
         public string? PotSize { get; set; }
-        public IndoorPlant()
+        public IndoorPlantAd()
         {
             Active = true;
             CreatedOn = DateTime.Now;

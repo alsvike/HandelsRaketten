@@ -1,37 +1,35 @@
 ﻿using HandelsRaketten.Models.AdModels.SubCategories.Plants;
 using HandelsRaketten.Models.AdModels;
+using HandelsRaketten.Data;
+using Microsoft.EntityFrameworkCore;
+using HandelsRaketten.Services.AdServices;
 
 namespace HandelsRaketten.Catalogs
 {
     public class PlantCatalog
     {
-        public GenericCatalog<IndoorPlant> IndoorPlantCatalog { get; set; }
-        public GenericCatalog<OutdoorPlant> OutdoorPlantCatalog { get; set; }
 
-        public PlantCatalog(GenericCatalog<IndoorPlant> indoorPlantCatalog, GenericCatalog<OutdoorPlant> outdoorPlantCatalog)
-        {
-            IndoorPlantCatalog = indoorPlantCatalog;
-            OutdoorPlantCatalog = outdoorPlantCatalog;
-        }
+        //IAdService _adService;
 
-        public List<Ad> GetAll()
-        {
+        //public PlantCatalog(IAdService adService)
+        //{
+        //    _adService = adService;
+        //}
 
-            var allPlantsAds = new List<Ad>();
+        //public async Task<List<Ad>> GetAllAsync()
+        //{
 
-            var indoorAds = IndoorPlantCatalog.GetAll();
-            if (indoorAds.Any())
-            {
-                allPlantsAds.AddRange(indoorAds);
-            }
+        //    var allPlantsAds = new List<Ad>();
 
-            var outdoorAds = OutdoorPlantCatalog.GetAll();
-            if (outdoorAds.Any())
-            {
-                allPlantsAds.AddRange(outdoorAds);
-            }
+        //    var indoorPlants = _context.IndoorPlant.ToList();
+        //    if (indoorPlants != null)
+        //        allPlantsAds.AddRange(indoorPlants);
 
-            return allPlantsAds;
-        }
+        //    var outdoorPlants = _context.OutdoorPlant.ToList();
+        //    if (outdoorPlants != null)
+        //        allPlantsAds.AddRange(outdoorPlants);
+
+        //    return allPlantsAds;
+        //}
     }
 }

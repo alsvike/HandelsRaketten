@@ -26,10 +26,12 @@ namespace HandelsRaketten.Models.AdModels
 
         //[Required(ErrorMessage = "Annoncen skal have et billede")]
         public string? AdImage { get; set; }
-        public User? User { get; set; }
+        public User? Owner { get; set; }
         public string? UserId { get; set; }
         public Seller? Seller { get; set; }
-        public int SellerId { get; set; }   
+        public int SellerId { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
-    }   
+
+    }
 }

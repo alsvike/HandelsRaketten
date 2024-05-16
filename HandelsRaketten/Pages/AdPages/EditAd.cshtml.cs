@@ -1,4 +1,3 @@
-using HandelsRaketten.Models.AdModels.SubCategories.PlantAccessories;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
 using HandelsRaketten.Services.AdServices;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +13,8 @@ namespace HandelsHjornet.Pages.AdPages
         public int AdId { get; set; }
 
 
-        [BindProperty] public IndoorPlant IndoorPlant { get; set; }
-        [BindProperty] public OutdoorPlant OutdoorPlant { get; set; }
-        [BindProperty] public Soil Soil { get; set; }
-        [BindProperty] public Tool Tool { get; set; }
-        [BindProperty] public GardeningTool GardeningTool { get; set; }
-        [BindProperty] public Fertilizer Fertilizer { get; set; }
+        [BindProperty] public IndoorPlantAd IndoorPlant { get; set; }
+        [BindProperty] public OutdoorPlantAd OutdoorPlant { get; set; }
 
         public EditAdModel(IAdService adService)
         {
@@ -33,22 +28,10 @@ namespace HandelsHjornet.Pages.AdPages
             switch (category)
             {
                 case "IndoorPlant":
-                    IndoorPlant = (IndoorPlant)_adService.Get(adId, category);
+                    IndoorPlant = (IndoorPlantAd)_adService.Get(adId, category);
                     break;
                 case "OutdoorPlant":
-                    OutdoorPlant = (OutdoorPlant)_adService.Get(adId, category);
-                    break;
-                case "Tool":
-                    Tool = (Tool)_adService.Get(adId, category);
-                    break;
-                case "GardeningTool":
-                    GardeningTool = (GardeningTool)_adService.Get(adId, category);
-                    break;
-                case "Fertilizer":
-                    Fertilizer = (Fertilizer)_adService.Get(adId, category);
-                    break;
-                case "Soil":
-                    Soil = (Soil)_adService.Get(adId, category);
+                    OutdoorPlant = (OutdoorPlantAd)_adService.Get(adId, category);
                     break;
                 default:
                     return RedirectToPage("/Error");
@@ -66,18 +49,6 @@ namespace HandelsHjornet.Pages.AdPages
                     break;
                 case "OutdoorPlant":
                     _adService.UpdateAsync(adId, OutdoorPlant, category);
-                    break;
-                case "Tool":
-                    _adService.UpdateAsync(adId, Tool, category);
-                    break;
-                case "GardeningTool":
-                    _adService.UpdateAsync(adId, GardeningTool, category);
-                    break;
-                case "Fertilizer":
-                    _adService.UpdateAsync(adId, Fertilizer, category);
-                    break;
-                case "Soil":
-                    _adService.UpdateAsync(adId, Soil, category);
                     break;
                 default:
                     return RedirectToPage("/Error");

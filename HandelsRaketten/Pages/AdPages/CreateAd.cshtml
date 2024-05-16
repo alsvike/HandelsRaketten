@@ -12,10 +12,6 @@
                 <select name="category" class="form-control">
                     <option value="IndoorPlant">Indedørs Planter</option>
                     <option value="OutdoorPlant">Udendørs Planter</option>
-                    <option value="Soil">Jord</option>
-                    <option value="Fertilizer">Gødning</option>
-                    <option value="Tool">Værktøj</option>
-                    <option value="GardeningTool">Have værktøj</option>
                 </select>
             </div>
             <div>
@@ -116,86 +112,7 @@
                         <input asp-for="OutdoorPlant.Price" class="form-control" />
                     </div>
                 }
-                else if (Model.Category == "Soil")
-                {
-                    <div class="form-group">
-                        <label asp-for="Soil.AdImage" class="control-label"></label>
-                        <input asp-for="Soil.AdImage" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Soil.Title" class="control-label"></label>
-                        <input asp-for="Soil.Title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Soil.Description" class="control-label"></label>
-                        <input asp-for="Soil.Description" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Soil.Price" class="control-label"></label>
-                        <input asp-for="Soil.Price" class="form-control" />
-                    </div>
 
-                }
-                else if (Model.Category == "Fertilizer")
-                {
-                    <div class="form-group">
-                        <label asp-for="Fertilizer.AdImage" class="control-label"></label>
-                        <input asp-for="Fertilizer.AdImage" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Fertilizer.Title" class="control-label"></label>
-                        <input asp-for="Fertilizer.Title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Fertilizer.Description" class="control-label"></label>
-                        <input asp-for="Fertilizer.Description" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Fertilizer.Price" class="control-label"></label>
-                        <input asp-for="Fertilizer.Price" class="form-control" />
-                    </div>
-
-                }
-                else if (Model.Category == "GardeningTool")
-                {
-                    <div class="form-group">
-                        <label asp-for="GardeningTool.AdImage" class="control-label"></label>
-                        <input asp-for="GardeningTool.AdImage" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="GardeningTool.Title" class="control-label"></label>
-                        <input asp-for="GardeningTool.Title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="GardeningTool.Description" class="control-label"></label>
-                        <input asp-for="GardeningTool.Description" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="GardeningTool.Price" class="control-label"></label>
-                        <input asp-for="GardeningTool.Price" class="form-control" />
-                    </div>
-
-                }
-                else if (Model.Category == "Tool")
-                {
-                    <div class="form-group">
-                        <label asp-for="Tool.AdImage" class="control-label"></label>
-                        <input asp-for="Tool.AdImage" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Tool.Title" class="control-label"></label>
-                        <input asp-for="Tool.Title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Tool.Description" class="control-label"></label>
-                        <input asp-for="Tool.Description" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Tool.Price" class="control-label"></label>
-                        <input asp-for="Tool.Price" class="form-control" />
-                    </div>
-
-                }
                 else
                 {
                     <br />

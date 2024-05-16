@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HandelsRaketten.EFDBContext.AdDbContext
 {
-    public class IndoorPlantDbContext : DbContextGeneric<IndoorPlant>
+    public class IndoorPlantDbContext : DbContextGeneric<IndoorPlantAd>
     {
-        public DbSet<IndoorPlant> IndoorPlant { get; set; }
+        public DbSet<IndoorPlantAd> IndoorPlant { get; set; }
     }
 }

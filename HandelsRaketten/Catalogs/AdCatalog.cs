@@ -4,29 +4,23 @@ namespace HandelsRaketten.Catalogs
 {
     public class AdCatalog
     {
-        PlantCatalog Plants;
-        PlantAccessoryCatalog PlantAccessories;
+        //PlantCatalog Plants;
 
-        public AdCatalog(PlantCatalog plants, PlantAccessoryCatalog plantAccessories)
-        {
-            Plants = plants;
-            PlantAccessories = plantAccessories;
-        }
+        //public AdCatalog(PlantCatalog plants)
+        //{
+        //    Plants = plants;
+        //}
 
-        public List<Ad> GetAll()
-        {
-            var allAds = new List<Ad>();
+        //public async Task<List<Ad>> GetAllAsync()
+        //{
+        //    var allAds = new List<Ad>();
 
-            var allPlants = Plants.GetAll();
-            if (allPlants.Any())
-                allAds.AddRange(allPlants);
+        //    var allPlants = await Plants.GetAllAsync();
+        //    if (allPlants.Any())
+        //        allAds.AddRange(allPlants);
 
-            var allPlantAccessories = PlantAccessories.GetAll();
-            if (allPlantAccessories.Any())
-                allAds.AddRange(allPlantAccessories);
-
-            return allAds;
-        }
+        //    return allAds;
+        //}
 
 
     }

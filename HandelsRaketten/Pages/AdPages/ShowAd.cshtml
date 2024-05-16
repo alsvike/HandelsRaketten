@@ -1,320 +1,62 @@
-﻿@page
+﻿@page "{id:int}"
 @using System.Globalization
+@using HandelsRaketten.Models.AdModels.SubCategories.Plants
 @model HandelsHjornet.Pages.AdPages.ShowAdModel
 @{
+    ViewData["Title"] = Model.Ad.Title;
 }
 
 
-<style>
-    .test-img {
-        width: 500px;
-    }
-</style>
 
+<h2>@Model.Ad.Title</h2>
+<p>@Model.Ad.Description</p>
 
+@if (Model.Ad is IndoorPlantAd indoorPlantAd)
+{
+    <p>Model: @indoorPlantAd.Species</p>
+    <p>Year: @indoorPlantAd.SunlightNeeds</p>
+}
+else if (Model.Ad is OutdoorPlantAd outdoorPlantAd)
+{
+    <p>Location: @outdoorPlantAd.FloweringSeason</p>
+    <p>Square Feet: @outdoorPlantAd.RecommendedSoil</p>
+}
 
-
-
-<div class="show-ad-page">
-
-    <div class="show-ad-page-section-ad-info">
-        <div class="show-ad-page-title">
-            @if (Model.Category == "IndoorPlant")
-            {
-                <h2>@Model.IndoorPlant.Title</h2>
-
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <h2>@Model.OutdoorPlant.Title</h2>
-
-            }
-            else if (Model.Category == "Soil")
-            {
-
-                <h2>@Model.Soil.Title</h2>
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <h2>@Model.Fertilizer.Title</h2>
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <h2>@Model.GardeningTool.Title</h2>
-
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <h2>@Model.Tool.Title</h2>
-
-
-            }
-        </div>
-        <div class="show-ad-page-price">
-            @if (Model.Category == "IndoorPlant")
-            {
-                <p>@Model.IndoorPlant.Price kr  </p>
-
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <p>@Model.OutdoorPlant.Price</p>
-
-            }
-            else if (Model.Category == "Soil")
-            {
-
-                <p>@Model.Soil.Price</p>
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <p>@Model.Fertilizer.Price</p>
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <p>@Model.GardeningTool.Price</p>
-
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <p>@Model.Tool.Price</p>
-
-
-            }
-        </div>
-        <div class="show-ad-page-img">
-            @if (Model.Category == "IndoorPlant")
-            {
-                <img src="/images/@Model.IndoorPlant.AdImage"/>
-
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <img src="/images/@Model.OutdoorPlant.AdImage" />
-
-            }
-            else if (Model.Category == "Soil")
-            {
-
-                <img src="/images/@Model.Soil.AdImage" />
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <img src="/images/@Model.Fertilizer.AdImage" />
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <img src="/images/@Model.GardeningTool.AdImage" />
-
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <img src="/images/@Model.Tool.AdImage" />
-
-
-            }
-        </div>
-        <div class="show-ad-page-description">
-            @if (Model.Category == "IndoorPlant")
-            {
-                <p>@Model.IndoorPlant.Description</p>
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <p>@Model.OutdoorPlant.Description</p>
-
-            }
-            else if (Model.Category == "Soil")
-            {
-
-                <p>@Model.Soil.Description</p>
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <p>@Model.Fertilizer.Description</p>
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <p>@Model.GardeningTool.Description</p>
-
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <p>@Model.Tool.Description</p>
-
-
-            }
-        </div>
-        <div class="show-ad-page-ad-created-on">
-            @if (Model.Category == "IndoorPlant")
-            {
-                <p>
-                    Annonce Oprettet:
-                    @{
-                        var createdOn = Model.IndoorPlant.CreatedOn;
-                        var formattedDate = createdOn.ToString("dd.MMMM yyyy 'kl.'HH:mm", new CultureInfo("da-DK"));
-                        @formattedDate
-                    }
-                </p>
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <p>@Model.OutdoorPlant.CreatedOn</p>
-
-            }
-            else if (Model.Category == "Soil")
-            {
-
-                <p>@Model.Soil.CreatedOn</p>
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <p>@Model.Fertilizer.CreatedOn</p>
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <p>@Model.GardeningTool.CreatedOn</p>
-
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <p>@Model.Tool.CreatedOn</p>
-
-
-            }
-        </div>
-        <div class="show-ad-page-ad-info">
-            @if (Model.Category == "IndoorPlant")
-            {
-                <table>
-                    <tbody>
-                        @if (Model.IndoorPlant.SunlightNeeds != null)
-                        {
-                            <tr>
-                                <td><p>LysKrav</p></td>
-                                <td><p>@Model.IndoorPlant.SunlightNeeds</p></td>    
-                            </tr>
-                        }
-
-
-                        @if (Model.IndoorPlant.WateringNeeds != null)
-                                {
-                            <tr>
-                                <td><p>VandKrav</p></td>
-                                <td>
-                                    <p>@Model.IndoorPlant.WateringNeeds</p>
-                                </td>
-                            </tr>
-                        }
-                        @if (Model.IndoorPlant.Species != null)
-                        {
-                            <tr>
-                                <td><p>Art</p></td>
-                                <td><p>@Model.IndoorPlant.Species</p> </td>
-                            </tr>
-                        }
-                        @if (Model.IndoorPlant.Size != null)
-                        {
-
-                            <tr>
-                                <td><p>Størrelse</p></td>
-                                <td>
-                                    <p>@Model.IndoorPlant.Size</p>
-                                </td>
-                            </tr>
-                        }
-                        @if (Model.IndoorPlant.PotSize != null)
-                        {
-
-                            <tr>
-                                <td><p>Potte Størrelse</p></td>
-                                <td>
-                                    <p>@Model.IndoorPlant.PotSize</p>
-                                </td>
-                            </tr>
-                        }
-                        @if (Model.IndoorPlant.RecommendedSoil != null)
-                        {
-
-                            <tr>
-                                <td><p>Jord</p></td>
-                                <td>
-                                    <p>@Model.IndoorPlant.RecommendedSoil</p>
-                                </td>
-                            </tr>
-                        }
-                        @if (Model.IndoorPlant.RecommendedTemperature != null)
-                        {
-                            <tr>
-                                <td><p>Temperature</p></td>
-                                <td>
-                                    <p>@Model.IndoorPlant.RecommendedTemperature</p>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else if (Model.Category == "OutdoorPlant")
-            {
-                <p>@Model.OutdoorPlant.Description</p>
-
-            }
-            else if (Model.Category == "Soil")
-            {
-
-                <p>@Model.Soil.Description</p>
-
-            }
-            else if (Model.Category == "Fertilizer")
-            {
-                <p>@Model.Fertilizer.Description</p>
-
-            }
-            else if (Model.Category == "GardeningTool")
-            {
-                <p>@Model.GardeningTool.Description</p>
-
-
-            }
-            else if (Model.Category == "Tool")
-            {
-                <p>@Model.Tool.Description</p>
-
-
-            }
-        </div>
-        <div class="show-ad-page-message">
-            
-        </div>
-    </div>
-        <div class="show-ad-page-section-seller-info">
-        <div class="show-ad-page-seller-info">
-            <p>@Model.User.UserName</p>
-            <p>@Model.Seller.ZipCode @Model.Seller.City</p>
-            @if(Model.Seller.Address != null)
-            {
-                <p>@Model.Seller.Address</p>
-            }
-            @if(Model.Seller.Phone != null)
-            {
-                <p>Tlf: @Model.Seller.Phone</p>
-            }
-        </div>
-    </div>
+<div id="chatBox">
+    <ul id="messagesList"></ul>
 </div>
+<input type="text" id="messageInput" placeholder="Type a message..." />
+<button id="sendButton">Send</button>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.12/signalr.min.js"></script>
+    <script>
+        const adId = @Model.Ad.Id;
+        const userId = '@Model.CurrentUser.Id';
+
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chathub")
+            .build();
+
+        connection.on("ReceiveMessage", function (user, message) {
+            const msg = `${user}: ${message}`;
+            const li = document.createElement("li");
+            li.textContent = msg;
+            document.getElementById("messagesList").appendChild(li);
+        });
+
+        connection.start().then(() => {
+            connection.invoke("JoinAdGroup", adId);
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            const message = document.getElementById("messageInput").value;
+            connection.invoke("SendMessage", userId, message, adId).catch(function (err) {
+                return console.error(err.toString());
+            });
+            event.preventDefault();
+        });
+    </script>
+}

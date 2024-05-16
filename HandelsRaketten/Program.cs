@@ -2,9 +2,9 @@ using HandelsRaketten.Areas.Identity.Data;
 using HandelsRaketten.Catalogs;
 using HandelsRaketten.Data;
 using HandelsRaketten.EFDBContext;
+using HandelsRaketten.Hubs;
 using HandelsRaketten.Models;
 using HandelsRaketten.Models.AdModels;
-using HandelsRaketten.Models.AdModels.SubCategories.PlantAccessories;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
 using HandelsRaketten.Services;
 using HandelsRaketten.Services.AdServices;
@@ -21,11 +21,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<HandelsRakettenContext>(options =>
     options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<HandelsRakettenContext>();
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -48,46 +52,33 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
 });
 
 // Add services
-builder.Services.AddSingleton<IAdService, AdService>();
+builder.Services.AddScoped<IAdService, AdService>();
 builder.Services.AddSingleton<ISellerService, SellerService>();
 
 // json file services
-builder.Services.AddSingleton<GenericJsonFileService<Fertilizer>>();
-builder.Services.AddSingleton<GenericJsonFileService<GardeningTool>>();
-builder.Services.AddSingleton<GenericJsonFileService<Tool>>();
-builder.Services.AddSingleton<GenericJsonFileService<Soil>>();
-builder.Services.AddSingleton<GenericJsonFileService<IndoorPlant>>();
-builder.Services.AddSingleton<GenericJsonFileService<OutdoorPlant>>();
+builder.Services.AddSingleton<GenericJsonFileService<IndoorPlantAd>>();
+builder.Services.AddSingleton<GenericJsonFileService<OutdoorPlantAd>>();
 
 // Database services
-builder.Services.AddSingleton<IService<Fertilizer>, DbGenericService<Fertilizer>>();
-builder.Services.AddSingleton<IService<GardeningTool>, DbGenericService<GardeningTool>>();
-builder.Services.AddSingleton<IService<Tool>, DbGenericService<Tool>>();
-builder.Services.AddSingleton<IService<Soil>, DbGenericService<Soil>>();
-builder.Services.AddSingleton<IService<IndoorPlant>, DbGenericService<IndoorPlant>>();
-builder.Services.AddSingleton<IService<OutdoorPlant>, DbGenericService<OutdoorPlant>>();
+builder.Services.AddSingleton<IService<IndoorPlantAd>, DbGenericService<IndoorPlantAd>>();
+builder.Services.AddSingleton<IService<OutdoorPlantAd>, DbGenericService<OutdoorPlantAd>>();
 builder.Services.AddSingleton<IService<Seller>, DbGenericService<Seller>>();
 
+builder.Services.AddSingleton<IAdDbService, AdDbService>();
+
 // DbContext
-builder.Services.AddDbContext<DbContextGeneric<Fertilizer>>();
-builder.Services.AddDbContext<DbContextGeneric<GardeningTool>>();
-builder.Services.AddDbContext<DbContextGeneric<Tool>>();
-builder.Services.AddDbContext<DbContextGeneric<IndoorPlant>>();
-builder.Services.AddDbContext<DbContextGeneric<OutdoorPlant>>();
-builder.Services.AddDbContext<DbContextGeneric<Soil>>();
+builder.Services.AddDbContext<DbContextGeneric<IndoorPlantAd>>();
+builder.Services.AddDbContext<DbContextGeneric<OutdoorPlantAd>>();
 builder.Services.AddDbContext<DbContextGeneric<Seller>>();
 
-// Repositories
+// Catalogs
 builder.Services.AddSingleton<AdCatalog>();
 builder.Services.AddSingleton<PlantCatalog>();
-builder.Services.AddSingleton<PlantAccessoryCatalog>();
 
-builder.Services.AddSingleton<GenericCatalog<IndoorPlant>>();
-builder.Services.AddSingleton<GenericCatalog<OutdoorPlant>>();
-builder.Services.AddSingleton<GenericCatalog<Fertilizer>>();
-builder.Services.AddSingleton<GenericCatalog<GardeningTool>>();
-builder.Services.AddSingleton<GenericCatalog<Soil>>();
-builder.Services.AddSingleton<GenericCatalog<Tool>>();
+
+// service for messages
+builder.Services.AddSignalR();
+
 
 var app = builder.Build();
 
@@ -111,5 +102,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

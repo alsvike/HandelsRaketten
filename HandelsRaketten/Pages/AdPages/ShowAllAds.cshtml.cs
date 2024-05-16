@@ -31,9 +31,9 @@ namespace HandelsHjornet.Pages.TestPages
             _adService = adService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            _ads = _adService.GetAllAds();
+            _ads = await _adService.GetAllAdsAsync();
 
             return Page();
         }
@@ -45,44 +45,44 @@ namespace HandelsHjornet.Pages.TestPages
                 return Page();
             }
 
-            ChangeCategory(SelectedOption);
+            ChangeCategoryAsync(SelectedOption);
 
             return Page();
         }
 
-        private void ChangeCategory(string selectedOption)
+        private async Task ChangeCategoryAsync(string selectedOption)
         {
             switch (selectedOption)
             {
                 case "All":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Plants":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "IndoorPlant":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "OutdoorPlant":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Tool":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "GardeningTool":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "PlantAccessories":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Soil":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 case "Fertilizer":
-                    _ads = _adService.GetAll(selectedOption);
+                    _ads = await _adService.GetAllAsync(selectedOption);
                     break;
                 default:
-                    _ads = _adService.GetAllAds();
+                    _ads = await _adService.GetAllAdsAsync();
                     break;
             }
         }

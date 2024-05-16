@@ -2,7 +2,6 @@
 using HandelsRaketten.Areas.Identity.Data;
 using HandelsRaketten.Models;
 using HandelsRaketten.Models.AdModels;
-using HandelsRaketten.Models.AdModels.SubCategories.PlantAccessories;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
 using HandelsRaketten.Services.AdServices;
 using Microsoft.AspNetCore.Hosting;
@@ -25,12 +24,8 @@ namespace HandelsHjornet.Pages.AdPages
         [Required(ErrorMessage = "Tilføj Billede")]
         [BindProperty] public IFormFile? Photo { get; set; }
 
-        [BindProperty] public IndoorPlant IndoorPlant { get; set; }
-        [BindProperty] public OutdoorPlant OutdoorPlant { get; set; }
-        [BindProperty] public Soil Soil { get; set; }
-        [BindProperty] public Tool Tool { get; set; }
-        [BindProperty] public GardeningTool GardeningTool { get; set; }
-        [BindProperty] public Fertilizer Fertilizer { get; set; }
+        [BindProperty] public IndoorPlantAd IndoorPlant { get; set; }
+        [BindProperty] public OutdoorPlantAd OutdoorPlant { get; set; }
 
         [BindProperty] public Seller Seller { get; set; }
 
@@ -141,78 +136,6 @@ namespace HandelsHjornet.Pages.AdPages
                         OutdoorPlant.AdImage = ProcessUploadedFile();
 
                         return await _adService.AddAsync(OutdoorPlant, category);
-
-
-                    case "Soil":
-                        var soilSeller = await _sellerService.AddAsync(Seller);
-                        Soil.SellerId = soilSeller.Id;
-                        Soil.UserId = userId;
-
-                        if (Photo != null)
-                        {
-                            if (Soil.AdImage != null)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", Soil.AdImage);
-                                System.IO.File.Delete(filepath);
-                            }
-                        }
-                        Soil.AdImage = ProcessUploadedFile();
-
-                        return await _adService.AddAsync(Soil, category);
-
-
-                    case "Tool":
-                        var toolSeller = await _sellerService.AddAsync(Seller);
-                        Tool.SellerId = toolSeller.Id;
-                        Tool.UserId = userId;
-
-                        if (Photo != null)
-                        {
-                            if (Tool.AdImage != null)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", Tool.AdImage);
-                                System.IO.File.Delete(filepath);
-                            }
-                        }
-                        Tool.AdImage = ProcessUploadedFile();
-
-                        return await _adService.AddAsync(Tool, category);
-
-
-                    case "GardeningTool":
-                        var gardeningToolSeller = await _sellerService.AddAsync(Seller);
-                        GardeningTool.SellerId = gardeningToolSeller.Id;
-                        GardeningTool.UserId = userId;
-
-                        if (Photo != null)
-                        {
-                            if (GardeningTool.AdImage != null)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", GardeningTool.AdImage);
-                                System.IO.File.Delete(filepath);
-                            }
-                        }
-                        GardeningTool.AdImage = ProcessUploadedFile();
-
-                        return await _adService.AddAsync(GardeningTool, category);
-
-                    case "Fertilizer":
-                        var fertilizerSeller = await _sellerService.AddAsync(Seller);
-                        Fertilizer.SellerId = fertilizerSeller.Id;
-                        Fertilizer.UserId = userId;
-
-                        if (Photo != null)
-                        {
-                            if (Fertilizer.AdImage != null)
-                            {
-                                string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", Fertilizer.AdImage);
-                                System.IO.File.Delete(filepath);
-                            }
-                        }
-                        Fertilizer.AdImage = ProcessUploadedFile();
-
-                        return await _adService.AddAsync(Fertilizer, category);
-
 
                     // Add more categories
                     default:
