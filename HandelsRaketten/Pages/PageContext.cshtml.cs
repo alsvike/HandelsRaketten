@@ -31,16 +31,16 @@ namespace HandelsRaketten.Pages
             switch (category)
             {
                 case "All":
-                    _ads = await _adService.GetAllAsync(category);
+                    _ads = await _adService.GetAllByCategoryAsync(category);
                     break;
                 case "Plants":
-                    _ads = await _adService.GetAllAsync(category);
+                    _ads = await _adService.GetAllByCategoryAsync(category);
                     break;
                 case "IndoorPlant":
-                    _ads = await _adService.GetAllAsync(category);
+                    _ads = await _adService.GetAllBySubcategoryAsync(category);
                     break;
                 case "OutdoorPlant":
-                    _ads = await _adService.GetAllAsync(category);
+                    _ads = await _adService.GetAllBySubcategoryAsync(category);
                     break;
                 default:
                     _ads = await _adService.GetAllAdsAsync();

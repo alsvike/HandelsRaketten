@@ -8,9 +8,11 @@ namespace HandelsRaketten.Services.AdServices
         Task<Ad> DeleteAsync(int adId);
         Ad Get(int adId);
         Task UpdateAsync(int adId, Ad ad);
-        Task<List<Ad>> GetAllAsync(string category);
+        Task<List<Ad>> GetAllByCategoryAsync(string category);
+        Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator);
+
         Task<List<Ad>> GetAllAdsAsync();
-        Task<Ad> GetAdConversationAsync(int id, string category);
+        Task<Ad> GetAdConversationAsync(int id);
 
         IEnumerable<Ad> NameSearch(string str);
         IEnumerable<Ad> PriceFilter(int maxPrice, int minPrice = 0);
@@ -18,6 +20,7 @@ namespace HandelsRaketten.Services.AdServices
         IEnumerable<Ad> SortByPriceDescending();
         IEnumerable<Ad> SortByName();
         IEnumerable<Ad> SortByNameDescending();
+
 
 
     }

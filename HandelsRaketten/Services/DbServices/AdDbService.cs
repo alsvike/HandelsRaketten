@@ -21,12 +21,9 @@ namespace HandelsRaketten.Services.DbServices
 
         public async Task AddObjectAsync(Ad obj)
         {
-            var connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-            var optionsBuilder = new DbContextOptionsBuilder<HandelsRakettenContext>();
-            optionsBuilder.UseSqlServer(connectionString);
 
-            using (var context = new HandelsRakettenContext(optionsBuilder.Options))
+            using (var context = new AdDbContext())
             {
                 context.Set<Ad>().Add(obj);
                 await context.SaveChangesAsync();
@@ -121,6 +118,64 @@ namespace HandelsRaketten.Services.DbServices
 
             }
             return ad;
+        }
+
+        public async Task<Ad> GetAdConversationAsync(int adId)
+        {
+            var connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            var optionsBuilder = new DbContextOptionsBuilder<HandelsRakettenContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            Ad ad;
+            using (var context = new HandelsRakettenContext(optionsBuilder.Options))
+            {
+                ad = await context.Set<Ad>()
+                   .Include(a => a.Owner)
+                   .Include(a => a.Messages)
+                   .ThenInclude(m => m.Sender)
+                   .FirstOrDefaultAsync(m => m.Id == adId);
+
+            }
+            return ad;
+        }
+
+        public async Task<List<Ad>> GetAllByCategoryAsync(string category)
+        {
+
+            List<Ad> ads;
+            var connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            var optionsBuilder = new DbContextOptionsBuilder<HandelsRakettenContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            using (var context = new HandelsRakettenContext(optionsBuilder.Options))
+            {
+                ads = await context.Set<Ad>()
+                        .Where(m => m.Category == category)
+                        .ToListAsync();
+
+                return ads;
+            }
+
+        }
+
+        public async Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator)
+        {
+            List<Ad> ads;
+            var connectionString = _configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            var optionsBuilder = new DbContextOptionsBuilder<HandelsRakettenContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+
+            using (var context = new HandelsRakettenContext(optionsBuilder.Options))
+            {
+                ads = await context.Set<Ad>()
+                        .Where(m => m.Discriminator == discriminator)
+                        .ToListAsync();
+
+                return ads;
+            }
         }
     }
 }

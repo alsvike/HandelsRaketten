@@ -31,9 +31,9 @@ namespace HandelsHjornet.Pages.AdPages
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(int adId, string category)
+        public async Task<IActionResult> OnGetAsync(int adId)
         {
-            Ad = await _adService.GetAdConversationAsync(adId, category);
+            Ad = await _adService.GetAdConversationAsync(adId);
 
             if (Ad == null)
             {

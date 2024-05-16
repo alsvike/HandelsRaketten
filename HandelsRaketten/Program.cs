@@ -70,6 +70,7 @@ builder.Services.AddSingleton<IAdDbService, AdDbService>();
 builder.Services.AddDbContext<DbContextGeneric<IndoorPlantAd>>();
 builder.Services.AddDbContext<DbContextGeneric<OutdoorPlantAd>>();
 builder.Services.AddDbContext<DbContextGeneric<Seller>>();
+builder.Services.AddDbContext<AdDbContext>();
 
 // Catalogs
 builder.Services.AddSingleton<AdCatalog>();

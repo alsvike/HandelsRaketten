@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HandelsRaketten.Models.AdModels
 {
-    public abstract class Ad
+    public class Ad
     {
         [Key]
         public virtual int Id { get; set; }
         [Required]
         public string Category { get; set; }
-
+        public string Discriminator { get; set; }
         //[Required(ErrorMessage = "Navn skal udfyldes")]
         [StringLength(50, ErrorMessage = "Navn må ikke være over 50 tegn")]
         public string? Title { get; set; }
@@ -30,7 +30,7 @@ namespace HandelsRaketten.Models.AdModels
         public string? UserId { get; set; }
         public Seller? Seller { get; set; }
         public int SellerId { get; set; }
-        public ICollection<Message> Messages { get; set; }
+        public ICollection<Message>? Messages { get; set; }
 
 
     }

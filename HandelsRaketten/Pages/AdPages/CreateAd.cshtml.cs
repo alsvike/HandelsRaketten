@@ -24,7 +24,10 @@ namespace HandelsHjornet.Pages.AdPages
         [Required(ErrorMessage = "Tilføj Billede")]
         [BindProperty] public IFormFile? Photo { get; set; }
 
-        [BindProperty] public Ad Ad { get; set; }
+        [BindProperty]
+        public IndoorPlantAd IndoorPlantAd { get; set; }
+        [BindProperty]
+        public OutdoorPlantAd OutdoorPlantAd { get; set; }
 
         [BindProperty] public Seller Seller { get; set; }
 
@@ -67,6 +70,45 @@ namespace HandelsHjornet.Pages.AdPages
                 return Page();
             }
 
+            var user = await _userManager.GetUserAsync(User);
+            switch (category)
+            {
+                case "IndoorPlant":
+                    IndoorPlantAd.UserId = user.Id;
+                    await _sellerService.AddAsync(Seller);
+                    IndoorPlantAd.SellerId = Seller.Id;
+
+                    if (Photo != null)
+                    {
+                        if (IndoorPlantAd.AdImage != null)
+                        {
+                            string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", IndoorPlantAd.AdImage);
+                            System.IO.File.Delete(filepath);
+                        }
+                    }
+                    IndoorPlantAd.AdImage = ProcessUploadedFile();
+
+                    await _adService.AddAsync(IndoorPlantAd);
+                    break;
+                case "OutdoorPlant":
+                    OutdoorPlantAd.UserId = user.Id;
+                    await _sellerService.AddAsync(Seller);
+                    OutdoorPlantAd.SellerId = Seller.Id;
+
+                    if (Photo != null)
+                    {
+                        if (OutdoorPlantAd.AdImage != null)
+                        {
+                            string filepath = Path.Combine(_webHostEnvironment.WebRootPath, "Images", OutdoorPlantAd.AdImage);
+                            System.IO.File.Delete(filepath);
+                        }
+                    }
+                    OutdoorPlantAd.AdImage = ProcessUploadedFile();
+
+                    await _adService.AddAsync(OutdoorPlantAd);
+                    break;
+
+            }
 
             return RedirectToPage("ShowAllAds");
         }
