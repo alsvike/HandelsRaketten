@@ -43,12 +43,12 @@ namespace HandelsHjornet.Pages.AdPages
                 return NotFound();
             }
 
-            if (Ad.Owner != CurrentUser)
+            if (Ad.Owner.Id != CurrentUser.Id)
             {
                 var msg = Ad.Messages.Where(m => m.Sender.Id == CurrentUser.Id && m.AdId == Ad.Id);
                 Messages = msg;
             } 
-            else if(Ad.Owner == CurrentUser)
+            else if(Ad.Owner.Id == CurrentUser.Id)
             {
                 var msg = Ad.Messages;
                 Messages = msg;
