@@ -77,9 +77,11 @@
 
             <!-- Search Form -->
             <div class="search-form">
-                <form method="get" action="#">
-                    <input type="text" name="search" class="search-input" placeholder="Search...">
-                    <button type="submit" class="search-button">Search</button>
+                <form method="post" class="form-inline">
+                    <div class="input-group mb-3">
+                        <input asp-for="SearchString" class="form-control mr-1" placeholder="Enter search term" />
+                        <input type="submit" asp-page-handler="NameSearch" value="Search" class="btn btn-primary" />
+                    </div>
                 </form>
             </div>
         </div>
@@ -92,28 +94,23 @@
                     <div class="row">
                         @foreach (var ad in Model._ads)
                         {
-                            if (Model.SelectedOption == "Plants" ||
-                            Model.SelectedOption == "IndoorPlant" ||
-                            Model.SelectedOption == "OutdoorPlant" ||
-                            string.IsNullOrEmpty(Model.SelectedOption))
-                            {
-                                <div class="col-md-4 mb-4">
-                                    <div class="card h-100">
-                                        <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="max-width: auto; max-height:150px; background-size: cover;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@ad.Title</h5>
-                                            <p class="card-text">@Truncate(@ad.Description, 38)</p>
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">Pris: @ad.Price</li>
-                                            <li class="list-group-item">Oprettet: @ad.CreatedOn.ToShortDateString()</li>
-                                            <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a>
-                                        </ul>
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="max-width: auto; max-height:150px; background-size: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@ad.Title</h5>
+                                        <p class="card-text">@Truncate(@ad.Description, 38)</p>
                                     </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Pris: @ad.Price</li>
+                                        <li class="list-group-item">Oprettet: @ad.CreatedOn.ToShortDateString()</li>
+                                        <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a>
+                                    </ul>
                                 </div>
-                            }
+                            </div>
                         }
                     </div>
+
                 </div>
             </div>
         </div>

@@ -32,6 +32,7 @@ namespace HandelsRaketten.Pages
             return Page();
         }
 
+
         public async Task<IActionResult> OnPostAsync(string category)
         {
             category = SelectedOption;
@@ -53,6 +54,12 @@ namespace HandelsRaketten.Pages
                     _ads = await _adService.GetAllAdsAsync();
                     break;
             }
+            return Page();
+        }
+
+        public IActionResult OnPostNameSearch()
+        {
+            _ads = _adService.NameSearch(SearchString).ToList();
             return Page();
         }
     }
