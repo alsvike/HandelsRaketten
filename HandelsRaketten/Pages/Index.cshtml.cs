@@ -22,10 +22,6 @@ namespace HandelsRaketten.Pages
             _userManager = userManager;
         }
 
-        //public void OnGet()
-        //{
-        //}
-
         public async Task OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
