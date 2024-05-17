@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace HandelsHjornet.Pages.AdPages
 {
@@ -17,16 +18,19 @@ namespace HandelsHjornet.Pages.AdPages
         IAdService _adService;
         IMessageService _messageService;
         private readonly UserManager<User> _userManager;
-
+        AdDbContext _context;
 
         public Ad Ad { get; set; }
         public User CurrentUser { get; set; }
-        public IEnumerable<Message> Messages { get; set; }
+        public IEnumerable<HandelsRaketten.Models.AdModels.Message> Messages { get; set; }
 
-        [BindProperty] public Message NewMessage { get; set; }
+        public AdConversation AdConversation { get; set; }
 
-        public ShowAdModel(IAdService adService, IMessageService messageService, UserManager<User> userManager)
+        [BindProperty] public HandelsRaketten.Models.AdModels.Message NewMessage { get; set; }
+
+        public ShowAdModel(IAdService adService, IMessageService messageService, UserManager<User> userManager, AdDbContext context)
         {
+            _context = context;
             _messageService = messageService;
             _adService = adService;
             _userManager = userManager;
@@ -43,17 +47,23 @@ namespace HandelsHjornet.Pages.AdPages
                 return NotFound();
             }
 
-            if (Ad.Owner.Id != CurrentUser.Id)
+            AdConversation = _context.AdConversations
+                               .Include(c => c.Messages)
+                               .ThenInclude(m => m.Sender)
+                               .FirstOrDefault(c => c.AdId == Ad.Id && c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id);
+
+            if(AdConversation == null)
             {
-                var msg = Ad.Messages.Where(m => m.Sender.Id == CurrentUser.Id && m.AdId == Ad.Id);
-                Messages = msg;
-            } 
-            else if(Ad.Owner.Id == CurrentUser.Id)
-            {
-                var msg = Ad.Messages;
-                Messages = msg;
+                AdConversation = new AdConversation();
+                AdConversation.AdId = Ad.Id;
+                AdConversation.OwnerId = Ad.Owner.Id;
+                AdConversation.SenderId = CurrentUser.Id;
+
+                _context.AdConversations.Add(AdConversation);
+                await _context.SaveChangesAsync();
             }
 
+            Messages = AdConversation.Messages;
 
             return Page();
         }
@@ -69,21 +79,37 @@ namespace HandelsHjornet.Pages.AdPages
                 return NotFound();
             }
 
-            Messages = Ad.Messages.Where(m => m.Sender.Id == CurrentUser.Id);
+            AdConversation = _context.AdConversations
+                   .Include(c => c.Messages)
+                   .ThenInclude(m => m.Sender)
+                   .FirstOrDefault(c => c.AdId == Ad.Id && c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id);
+
+            if (AdConversation == null)
+            {
+                AdConversation = new AdConversation();
+                AdConversation.AdId = Ad.Id;
+                AdConversation.OwnerId = Ad.Owner.Id;
+                AdConversation.SenderId = CurrentUser.Id;
+
+                _context.AdConversations.Add(AdConversation);
+                await _context.SaveChangesAsync();
+            }
+
+            Messages = AdConversation.Messages;
 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            NewMessage.AdId = Ad.Id;
-            NewMessage.SenderId = CurrentUser.Id;
+
+
+
+            NewMessage.AdConversationId = AdConversation.Id;
             NewMessage.Timestamp = DateTime.Now;
-              
-
-
-            await _messageService.AddAsync(NewMessage);
-
+            NewMessage.SenderId = CurrentUser.Id;
+            _context.Messages.Add(NewMessage);
+            _context.SaveChanges();
 
             return RedirectToPage(new { adId = Ad.Id });
         }
