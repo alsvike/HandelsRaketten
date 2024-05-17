@@ -156,7 +156,6 @@ namespace HandelsRaketten.Services.AdServices
 
 
         // sorting and filtering
-
         public IEnumerable<Ad> NameSearch(string str)
         {
             if (string.IsNullOrEmpty(str))

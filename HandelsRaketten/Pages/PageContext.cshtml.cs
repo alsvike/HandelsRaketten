@@ -26,7 +26,13 @@ namespace HandelsRaketten.Pages
             _adService = adService;
         }
 
-        public async Task<IActionResult> OnGetAsync(string category)
+        public async Task<IActionResult> OnGetAsync()
+        {
+            _ads = await _adService.GetAllAdsAsync();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(string category)
         {
             switch (category)
             {

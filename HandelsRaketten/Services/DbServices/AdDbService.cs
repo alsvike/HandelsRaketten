@@ -100,6 +100,7 @@ namespace HandelsRaketten.Services.DbServices
             return ad;
         }
 
+        //Skal have kategori som parameter - Viser alle planter
         public async Task<List<Ad>> GetAllByCategoryAsync(string category)
         {
 
@@ -115,6 +116,7 @@ namespace HandelsRaketten.Services.DbServices
 
         }
 
+        //Viser underkategorier såsom (Udendørsplanter/Indendørsplanter)
         public async Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator)
         {
             List<Ad> ads;
