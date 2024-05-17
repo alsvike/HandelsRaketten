@@ -65,13 +65,14 @@
             <!-- Sidebar Content -->
             <div class="category-dropdown">
                 <form method="post">
-                <select name="Category">
+                <select asp-for="SelectedOption">
                     <option value="">Vælg Kategori</option>
                     <option value="Plants">Alle Planter</option>
                     <option value="IndoorPlant">Indendørs</option>
                     <option value="OutdoorPlant">Udendørs</option>
                     <!-- Add more categories as needed -->
                 </select>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 
@@ -92,21 +93,26 @@
                     <div class="row">
                         @foreach (var ad in Model._ads)
                         {
-                            <div class="col-md-4 mb-4">
-                                <div class="card h-100">
-                                    <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="max-width: auto;max-height:150px;background-size: cover;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@ad.Title</h5>
-                                        <p class="card-text">@Truncate(ad.Description, 38)</p>
-                                        @* <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a> *@
+                            if (Model.SelectedOption == "Plants" ||
+                            Model.SelectedOption == "IndoorPlant" ||
+                            Model.SelectedOption == "OutdoorPlant" ||
+                            string.IsNullOrEmpty(Model.SelectedOption))
+                            {
+                                <div class="col-md-4 mb-4">
+                                    <div class="card h-100">
+                                        <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="max-width: auto; max-height:150px; background-size: cover;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@ad.Title</h5>
+                                            <p class="card-text">@Truncate(ad.Description, 38)</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Pris: @ad.Price</li>
+                                            <li class="list-group-item">Oprettet: @ad.CreatedOn.ToShortDateString()</li>
+                                            <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a>
+                                        </ul>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Pris: @ad.Price</li>
-                                        <li class="list-group-item">Oprettet: @ad.CreatedOn.ToShortDateString()</li>
-                                        <a href="@Url.Page("ShowAd", new { adId = ad.Id })" class="btn btn-primary stretched-link">Show Ad</a>
-                                    </ul>
                                 </div>
-                            </div>
+                            }
                         }
                     </div>
                 </div>

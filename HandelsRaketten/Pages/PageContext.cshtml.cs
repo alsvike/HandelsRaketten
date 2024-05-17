@@ -7,7 +7,7 @@ namespace HandelsRaketten.Pages
 {
     public class PageContextModel : PageModel
     {
-        IAdService _adService;
+        private readonly IAdService _adService;
         [BindProperty]
         public string SelectedOption { get; set; }
 
@@ -34,7 +34,8 @@ namespace HandelsRaketten.Pages
 
         public async Task<IActionResult> OnPostAsync(string category)
         {
-            switch (category)
+            category = SelectedOption;
+            switch (SelectedOption)
             {
                 case "All":
                     _ads = await _adService.GetAllByCategoryAsync(category);
