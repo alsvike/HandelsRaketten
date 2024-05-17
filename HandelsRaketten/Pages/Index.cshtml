@@ -12,7 +12,8 @@
 {
     <p>DU ER IKKE LOGGET IND DIT FEDE LÆS SVINEFODDER!</p>
 } *@
-<div class="text-white">
+
+@* <div class="text-white">
     @if (Model._signInManager.IsSignedIn(User))
     {
         if (Model.IsAdmin)
@@ -24,7 +25,7 @@
             <p>DU ER IKKE ADMIN DIN PISPOT!</p>
         }
     }
-</div>
+</div> *@
 
 <div class="main_div" style="margin-top:65px;">
     <div id="navigation_div">
@@ -40,11 +41,16 @@
                 }
                 else if (Model._signInManager.IsSignedIn(User))
                 {
-                <a class="login nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                    <a class="login nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name
+                        !</a>
                 <a href="AdPages/CreateAd" class="create-ad">Opret annonce</a>
                     <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                         <button type="submit" class="login nav-link btn btn-link text-light">Logout</button>
                     </form>
+                    if (Model.IsAdmin)
+                    {
+                <a class="login">Role: Admin</a>
+                    }
                 }
             </div>
         </div>
