@@ -23,6 +23,17 @@ namespace HandelsRaketten.Services.DbServices
             }
         }
 
+        public async Task AddMessage(Message message)
+        {
+
+            using (var context = new AdDbContext())
+            {
+                context.Message.Add(message);
+                await context.SaveChangesAsync();
+            }
+            
+        }
+
         public async Task<IEnumerable<Ad>> GetObjectsAsync()
         {
             using (var context = new AdDbContext())

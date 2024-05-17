@@ -2,7 +2,6 @@ using HandelsRaketten.Areas.Identity.Data;
 using HandelsRaketten.Catalogs;
 using HandelsRaketten.Data;
 using HandelsRaketten.EFDBContext;
-using HandelsRaketten.Hubs;
 using HandelsRaketten.Models;
 using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Models.AdModels.SubCategories.Plants;
@@ -30,11 +29,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<HandelsRakettenContext>();
 
-
-// ApplicationDbContext
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-       options.UseSqlServer(connectionString));
-
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireDigit = true;
@@ -59,6 +53,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
 // Add services
 builder.Services.AddSingleton<IAdService, AdService>();
 builder.Services.AddSingleton<ISellerService, SellerService>();
+builder.Services.AddSingleton<IMessageService, MessageService>();
 
 // json file services
 builder.Services.AddSingleton<GenericJsonFileService<IndoorPlantAd>>();
@@ -68,6 +63,7 @@ builder.Services.AddSingleton<GenericJsonFileService<OutdoorPlantAd>>();
 builder.Services.AddSingleton<IService<IndoorPlantAd>, DbGenericService<IndoorPlantAd>>();
 builder.Services.AddSingleton<IService<OutdoorPlantAd>, DbGenericService<OutdoorPlantAd>>();
 builder.Services.AddSingleton<IService<Seller>, DbGenericService<Seller>>();
+builder.Services.AddSingleton<IService<Message>, DbGenericService<Message>>();
 
 builder.Services.AddSingleton<IAdDbService, AdDbService>();
 
@@ -75,6 +71,7 @@ builder.Services.AddSingleton<IAdDbService, AdDbService>();
 builder.Services.AddDbContext<DbContextGeneric<IndoorPlantAd>>();
 builder.Services.AddDbContext<DbContextGeneric<OutdoorPlantAd>>();
 builder.Services.AddDbContext<DbContextGeneric<Seller>>();
+builder.Services.AddDbContext<DbContextGeneric<Message>>();
 builder.Services.AddDbContext<AdDbContext>();
 
 // Catalogs
@@ -108,6 +105,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapHub<ChatHub>("/chathub");
 
 app.Run();
