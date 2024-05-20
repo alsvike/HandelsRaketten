@@ -15,6 +15,7 @@ namespace HandelsRaketten.Services.AdServices
         Task<List<Ad>> GetAllAdsAsync();
         Task<Ad> GetAdConversationAsync(int id);
 
+
         IEnumerable<Ad> NameSearch(string str);
         IEnumerable<Ad> PriceFilter(int maxPrice, int minPrice = 0);
         IEnumerable<Ad> SortByPrice();

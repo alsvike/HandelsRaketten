@@ -54,7 +54,7 @@ builder.Services.AddTransient<IEmailSender, EmailSender>(i =>
 // Add services
 builder.Services.AddSingleton<IAdService, AdService>();
 builder.Services.AddSingleton<ISellerService, SellerService>();
-builder.Services.AddSingleton<IMessageService, MessageService>();
+//builder.Services.AddSingleton<IMessageService, MessageService>();
 
 // json file services
 builder.Services.AddSingleton<GenericJsonFileService<IndoorPlantAd>>();

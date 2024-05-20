@@ -93,8 +93,8 @@ namespace HandelsRaketten.Services.DbServices
                 ad = await context.Set<Ad>()
                    .Include(o => o.Owner)
                    .Include(a => a.AdConversations)
-                   .ThenInclude(m => m.Messages)
-                   .ThenInclude(s => s.Sender)
+                        .ThenInclude(m => m.Messages)
+                            .ThenInclude(s => s.Sender)
                    .FirstOrDefaultAsync(m => m.Id == adId);
 
             }
