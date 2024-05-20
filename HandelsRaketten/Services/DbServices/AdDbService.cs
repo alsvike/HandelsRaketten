@@ -28,7 +28,7 @@ namespace HandelsRaketten.Services.DbServices
 
             using (var context = new AdDbContext())
             {
-                context.Message.Add(message);
+                context.Messages.Add(message);
                 await context.SaveChangesAsync();
             }
             
@@ -91,9 +91,10 @@ namespace HandelsRaketten.Services.DbServices
             using (var context = new AdDbContext())
             {
                 ad = await context.Set<Ad>()
-                   .Include(a => a.Owner)
-                   .Include(a => a.Messages)
-                   .ThenInclude(m => m.Sender)
+                   .Include(o => o.Owner)
+                   .Include(a => a.AdConversations)
+                   .ThenInclude(m => m.Messages)
+                   .ThenInclude(s => s.Sender)
                    .FirstOrDefaultAsync(m => m.Id == adId);
 
             }

@@ -28,7 +28,7 @@ namespace HandelsRaketten.Models.AdModels
         public string? UserId { get; set; }
         public Seller? Seller { get; set; }
         public int SellerId { get; set; }
-        public ICollection<Message>? Messages { get; set; }
+        public ICollection<AdConversation>? AdConversations { get; set; }
 
 
     }

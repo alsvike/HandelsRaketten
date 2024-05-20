@@ -8,9 +8,10 @@ namespace HandelsRaketten.EFDBContext
 {
     public class AdDbContext : IdentityDbContext<User>
     {
-        public DbSet<IndoorPlantAd> IndoorPlant { get; set; }
-        public DbSet<OutdoorPlantAd> OutdoorPlant { get; set; }
-        public DbSet<Message> Message { get; set; }
+        public DbSet<IndoorPlantAd> IndoorPlants { get; set; }
+        public DbSet<OutdoorPlantAd> OutdoorPlants { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<AdConversation> AdConversations { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlServer(@"Data Source=mssql2.unoeuro.com;Initial Catalog=handelsraketten_dk_db_kandis;User Id=handelsraketten_dk; Password=Drw6etgH9bfnGF3Bypza; Integrated Security=False; Connect Timeout=30; Encrypt=false");

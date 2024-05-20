@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HandelsRaketten.Models.AdModels
 {
+    [Table("Message")]
     public class Message
     {
         [Key]
@@ -11,9 +12,10 @@ namespace HandelsRaketten.Models.AdModels
         public string Content { get; set; }
         public DateTime? Timestamp { get; set; }
         public string? SenderId { get; set; }
+        public int? AdConversationId { get; set; }
         public User? Sender { get; set; }
-        public int? AdId { get; set; }
-        public Ad? Ad { get; set; }
+        public AdConversation? AdConversation { get; set; }
+
 
         public Message()
         {

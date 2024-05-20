@@ -36,22 +36,22 @@ namespace HandelsRaketten.Services.AdServices
         // Ad A Message to the Ad
         public async Task AdMessageAsync(int adId, Message message)
         {
-            if(message != null)
-            {
-                // get the Ad where the message should be added
-                var ad = Get(adId);
+            //if(message != null)
+            //{
+            //    // get the Ad where the message should be added
+            //    var ad = Get(adId);
 
-                if(ad.Messages == null)
-                {
-                    ad.Messages = new List<Message>();
-                }
-                // ad the message directly to the ads messages, so that it can be displayed without a restart
-                ad.Messages.Add(message);
+            //    if(ad.Messages == null)
+            //    {
+            //        ad.Messages = new List<Message>();
+            //    }
+            //    // ad the message directly to the ads messages, so that it can be displayed without a restart
+            //    ad.Messages.Add(message);
 
 
-                // save the message in the database
-                await _dbService.AddMessage(message);
-            }
+            //    // save the message in the database
+            //    await _dbService.AddMessage(message);
+            //}
         }
 
 
