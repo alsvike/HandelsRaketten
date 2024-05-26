@@ -34,6 +34,21 @@ namespace HandelsRaketten.Services.DbServices
             
         }
 
+        public async Task<List<Ad>> GetAllByUserIdAsync(string userId)
+        {
+            List<Ad> _ads;
+
+            using (var context = new AdDbContext())
+            {
+                _ads = await context.Set<Ad>()
+                    .Include(o => o.Owner)
+                    .Where(a => a.Owner.Id == userId)
+                    .ToListAsync();
+            }
+            return _ads;
+        }
+
+
         public async Task<IEnumerable<Ad>> GetObjectsAsync()
         {
             using (var context = new AdDbContext())

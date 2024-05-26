@@ -1,0 +1,47 @@
+﻿@page
+@model HandelsRaketten.Pages.AdPages.PersonalAdsModel
+@{
+}
+
+
+<div class="col-md-9">
+    <div class="white-container">
+        <div>
+            <div>
+                <div class="row">
+
+                    @if (Model.PersonalAds != null)
+                    {
+                        @foreach (var ad in Model.PersonalAds)
+                        {
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="width: 100%; height: 150px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@ad.Title</h5>
+                                        <p class="card-text">@Truncate(@ad.Description, 38)</p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Pris: @ad.Price</li>
+                                        <li class="list-group-item">Oprettet: @ad.CreatedOn.ToShortDateString()</li>
+                                        <a asp-page="/AdPages/ShowAd" class="btn btn-primary" asp-route-adId="@ad.Id" asp-route-category="@ad.Category">Vis Annonce</a>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+@functions {
+    string Truncate(string value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value))
+            return string.Empty;
+        if (value.Length <= maxLength)
+            return value;
+        return value.Substring(0, maxLength) + "...";
+    }
+}

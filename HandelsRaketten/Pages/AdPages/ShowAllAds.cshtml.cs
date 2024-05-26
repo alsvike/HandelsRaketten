@@ -1,6 +1,8 @@
 
+using HandelsRaketten.Areas.Identity.Data;
 using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Services.AdServices;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,6 +11,9 @@ namespace HandelsHjornet.Pages.TestPages
     public class ViewCategoriesTestPageModel : PageModel
     {
         IAdService _adService;
+
+        UserManager<User> _userManager;
+
         [BindProperty]
         public string SelectedOption { get; set; }
 
@@ -26,14 +31,23 @@ namespace HandelsHjornet.Pages.TestPages
 
         bool _isNameSorted;
         bool _isPriceSorted;
-        public ViewCategoriesTestPageModel(IAdService adService)
+        public ViewCategoriesTestPageModel(IAdService adService, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _adService = adService;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
             _ads = await _adService.GetAllAdsAsync();
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (!user.IsAdmin)
+            {
+                return RedirectToPage("/Index");
+            }
+
 
             return Page();
         }

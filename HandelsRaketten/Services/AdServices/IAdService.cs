@@ -10,6 +10,7 @@ namespace HandelsRaketten.Services.AdServices
         Task UpdateAsync(int adId, Ad ad);
         Task<List<Ad>> GetAllByCategoryAsync(string category);
         Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator);
+        Task<List<Ad>> GetAllByUserIdAsync(string userId);
 
         Task AddMessageAsync(int adId, Message message);
         Task<List<Ad>> GetAllAdsAsync();

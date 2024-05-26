@@ -225,4 +225,6 @@
 .white-background{
     background-color: white;
     padding: 10px;
+    margin: auto;
+    margin-top: 50px;
 }

@@ -38,9 +38,9 @@ namespace HandelsHjornet.Pages.AdPages
 
         public async Task<IActionResult> OnGetAsync(int adId)
         {
-            if (adId <= 0)
+            if (adId < 0)
             {
-                return BadRequest("Invalid Ad ID.");
+                return BadRequest("Annonce id må ikke være negativ");
             }
 
             CurrentUser = await _userManager.GetUserAsync(User);
@@ -49,12 +49,7 @@ namespace HandelsHjornet.Pages.AdPages
 
             if (Ad == null)
             {
-                return NotFound();
-            }
-
-            if (_context == null)
-            {
-                throw new InvalidOperationException("Database context is not initialized.");
+                return NotFound("Annonce findes ikke");
             }
 
             if(CurrentUser.Id != Ad.Owner.Id)
@@ -64,18 +59,7 @@ namespace HandelsHjornet.Pages.AdPages
                 await GetAdConversations();
 
 
-            if(AdConversation == null && CurrentUser != null && CurrentUser.Id != Ad.Owner.Id)
-            {
-                AdConversation = new AdConversation();
-                AdConversation.AdId = Ad.Id;
-                AdConversation.OwnerId = Ad.Owner.Id;
-                AdConversation.SenderId = CurrentUser.Id;
-
-                _context.AdConversations.Add(AdConversation);
-                await _context.SaveChangesAsync();
-            }
-
-            if(AdConversation != null && CurrentUser != Ad.Owner)
+            if(AdConversation != null && CurrentUser.Id != Ad.Owner.Id)
             Messages = AdConversation.Messages;
 
             return Page();
@@ -91,7 +75,20 @@ namespace HandelsHjornet.Pages.AdPages
                 // Ensure AdConversation is loaded
                 if (AdConversation == null)
                 {
+                    // If a AdConversation exists load it
                     await GetAdConversation();
+
+                    // If it doesn't exist create a new
+                    if (AdConversation == null && CurrentUser != null && CurrentUser.Id != Ad.Owner.Id)
+                    {
+                        AdConversation = new AdConversation();
+                        AdConversation.AdId = Ad.Id;
+                        AdConversation.OwnerId = Ad.Owner.Id;
+                        AdConversation.SenderId = CurrentUser.Id;
+
+                        _context.AdConversations.Add(AdConversation);
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
                 // Check if AdConversation is found
@@ -111,7 +108,7 @@ namespace HandelsHjornet.Pages.AdPages
                 }
                 else
                 {
-                    return NotFound("Conversation not found.");
+                    return NotFound("Samtale eksisterer ikke.");
                 }
             }
             else if(CurrentUser != null && CurrentUser.Id == Ad.Owner.Id)
@@ -137,15 +134,15 @@ namespace HandelsHjornet.Pages.AdPages
                 }
                 else
                 {
-                    return NotFound("Conversation not found.");
+                    return NotFound("Samtale eksisterer ikke.");
                 }
             }
             else
             {
                 // Show message that says you must be logged in
-                string errorMessage = "You must be logged in to send a message.";
+                string errorMessage = "Du skal være logget ind for at skrive en besked.";
 
-                // Show message that says you must be logged in
+                // Add message to ModelState
                 if (!string.IsNullOrEmpty(errorMessage))
                 {
                     ModelState.AddModelError(string.Empty, errorMessage);

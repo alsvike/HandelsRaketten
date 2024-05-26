@@ -141,6 +141,10 @@ namespace HandelsRaketten.Services.AdServices
             return await _dbService.GetAllByCategoryAsync(category);
         }
 
+        public async Task<List<Ad>> GetAllByUserIdAsync(string userId)
+        {
+            return await _dbService.GetAllByUserIdAsync(userId);
+        }
         public async Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator)
         {
             return await _dbService.GetAllBySubcategoryAsync(discriminator);

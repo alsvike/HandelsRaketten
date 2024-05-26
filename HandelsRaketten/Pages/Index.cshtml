@@ -41,6 +41,7 @@
                 }
                 else if (Model._signInManager.IsSignedIn(User))
                 {
+                    <a asp-page="AdPages/PersonalAds" class="login nav-link text-light">Mine Annoncer</a>
                     <a class="login nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name
                         !</a>
                 <a href="AdPages/CreateAd" class="create-ad">Opret annonce</a>
@@ -57,7 +58,11 @@
         <div class="search-bar">
             <input type="text" placeholder="Find Plante">
             <button type="submit">Search</button>
-            <br /><a href="AdPages/ShowAllAds" class="show-ads">Vis Alle Annoncer</a>
+            <br />
+            @if(Model.IsAdmin)
+            {
+                <a href="AdPages/ShowAllAds" class="show-ads">Vis Alle Annoncer</a>
+            }
         </div>
     </div>
 
