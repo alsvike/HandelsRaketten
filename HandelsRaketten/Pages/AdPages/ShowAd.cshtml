@@ -136,12 +136,42 @@
                     </div>
                 }
             }
-        </div>
 
+            @if(Model.AdConversations != null)
+            {
+                    <div>
+                        @foreach (var adc in Model.AdConversations)
+                        {
+                            <div>
+                                @foreach (var msg in adc.Messages)
+                                {
+                                    <div class="message">
+                                        <p>@msg.Sender.UserName</p>
+                                        <p>@msg.Content</p>
+                                        <p>@msg.Timestamp</p>
+                                    </div>
+                                }
+                            </div>
+                            <form method="post">
+                                @if(Model.CurrentUser.Id == Model.Ad.Owner.Id)
+                                {
+                                    <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
+                                    <input type="hidden" name="adId" value="@Model.Ad.Id" />
+                                    <input type="submit" value="Send" asp-route-AdConversationId="@adc.Id" />
+                                }
+                            </form>
+                        }
+                    </div>
+            }
+        </div>
         <form method="post">
-            <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
-            <input type="submit" value="Send" />
+            @if (Model.CurrentUser.Id != Model.Ad.Owner.Id)
+            {
+                <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
+                <input type="submit" value="Send" />
+            }
         </form>
+
 
         @if (!ModelState.IsValid)
         {

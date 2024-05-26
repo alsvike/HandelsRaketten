@@ -57,14 +57,14 @@ namespace HandelsHjornet.Pages.AdPages
                 throw new InvalidOperationException("Database context is not initialized.");
             }
 
-            if(CurrentUser != Ad.Owner)
+            if(CurrentUser.Id != Ad.Owner.Id)
                 await GetAdConversation();
 
-            if (CurrentUser == Ad.Owner)
+            if (CurrentUser.Id == Ad.Owner.Id)
                 await GetAdConversations();
 
 
-            if(AdConversation == null && CurrentUser != null)
+            if(AdConversation == null && CurrentUser != null && CurrentUser.Id != Ad.Owner.Id)
             {
                 AdConversation = new AdConversation();
                 AdConversation.AdId = Ad.Id;
@@ -81,21 +81,17 @@ namespace HandelsHjornet.Pages.AdPages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int adId)
+        public async Task<IActionResult> OnPostAsync(int adId, int AdConversationId)
         {
             // Check if CurrentUser is logged in
             CurrentUser = await _userManager.GetUserAsync(User);
             Ad = await _adService.GetAdConversationAsync(adId);
-            if (CurrentUser != null)
+            if (CurrentUser != null && CurrentUser.Id != Ad.Owner.Id)
             {
                 // Ensure AdConversation is loaded
                 if (AdConversation == null)
                 {
-                    AdConversation = await _context.AdConversations
-                                                   .Include(c => c.Messages)
-                                                       .ThenInclude(m => m.Sender)
-                                                   .FirstOrDefaultAsync(c => c.AdId == Ad.Id &&
-                                                                             (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id));
+                    await GetAdConversation();
                 }
 
                 // Check if AdConversation is found
@@ -103,6 +99,32 @@ namespace HandelsHjornet.Pages.AdPages
                 {
                     // Set properties of the new message
                     NewMessage.AdConversationId = AdConversation.Id;
+                    NewMessage.Timestamp = DateTime.Now;
+                    NewMessage.SenderId = CurrentUser.Id;
+
+                    // Add the new message to the context
+                    _context.Messages.Add(NewMessage);
+                    await _context.SaveChangesAsync();
+
+                    // Redirect or return a success message/page
+                    return RedirectToPage("./ShowAd", new { adId = Ad.Id });
+                }
+                else
+                {
+                    return NotFound("Conversation not found.");
+                }
+            }
+            else if(CurrentUser != null && CurrentUser.Id == Ad.Owner.Id)
+            {
+                if(AdConversations == null)
+                {
+                    await GetAdConversations();
+                }
+
+                if(AdConversations != null)
+                {
+                    // Set properties of the new message
+                    NewMessage.AdConversationId = AdConversationId;
                     NewMessage.Timestamp = DateTime.Now;
                     NewMessage.SenderId = CurrentUser.Id;
 
