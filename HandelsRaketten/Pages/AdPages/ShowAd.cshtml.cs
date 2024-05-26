@@ -27,6 +27,7 @@ namespace HandelsHjornet.Pages.AdPages
         public AdConversation? AdConversation { get; set; }
 
         [BindProperty] public HandelsRaketten.Models.AdModels.Message NewMessage { get; set; }
+        public List<AdConversation>? AdConversations { get; set; }
 
         public ShowAdModel(IAdService adService, UserManager<User> userManager, AdDbContext context)
         {
@@ -56,8 +57,12 @@ namespace HandelsHjornet.Pages.AdPages
                 throw new InvalidOperationException("Database context is not initialized.");
             }
 
+            if(CurrentUser != Ad.Owner)
+                await GetAdConversation();
 
-            await GetAdConversation();
+            if (CurrentUser == Ad.Owner)
+                await GetAdConversations();
+
 
             if(AdConversation == null && CurrentUser != null)
             {
@@ -70,7 +75,7 @@ namespace HandelsHjornet.Pages.AdPages
                 await _context.SaveChangesAsync();
             }
 
-            if(AdConversation != null)
+            if(AdConversation != null && CurrentUser != Ad.Owner)
             Messages = AdConversation.Messages;
 
             return Page();
@@ -138,6 +143,25 @@ namespace HandelsHjornet.Pages.AdPages
                        .Include(c => c.Messages)
                        .ThenInclude(m => m.Sender)
                        .FirstOrDefault(c => c.AdId == Ad.Id && (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id));
+                }
+                catch (Exception e)
+                {
+                    await Console.Out.WriteLineAsync();
+                }
+            }
+            return default;
+        }
+
+        private async Task<AdConversation> GetAdConversations()
+        {
+            if (CurrentUser != null)
+            {
+                try
+                {
+                    AdConversations = _context.AdConversations
+                       .Include(c => c.Messages)
+                       .ThenInclude(m => m.Sender)
+                       .Where(c => c.AdId == Ad.Id && (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id)).ToList();
                 }
                 catch (Exception e)
                 {

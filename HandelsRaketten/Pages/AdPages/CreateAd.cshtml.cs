@@ -71,6 +71,7 @@ namespace HandelsHjornet.Pages.AdPages
             }
 
             var user = await _userManager.GetUserAsync(User);
+
             switch (category)
             {
                 case "IndoorPlant":

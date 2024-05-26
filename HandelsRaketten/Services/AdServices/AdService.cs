@@ -34,7 +34,7 @@ namespace HandelsRaketten.Services.AdServices
         }
 
         // Ad A Message to the Ad
-        public async Task AdMessageAsync(int adId, Message message)
+        public async Task AddMessageAsync(int adId, Message message)
         {
             //if(message != null)
             //{
