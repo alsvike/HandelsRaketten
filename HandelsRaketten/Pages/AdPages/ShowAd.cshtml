@@ -5,54 +5,152 @@
 @{
     ViewData["Title"] = Model.Ad.Title;
 }
+<head>
+    <style>
+        .white-background {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
 
+        .ad-header {
+            display: flex;
+            align-items: flex-start;
+        }
 
-<div class="white-background">
-    <h2>@Model.Ad.Title</h2>
-    <p>@Model.Ad.Description</p>
+        .ad-image {
+            max-width: 150px;
+            max-height: 150px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
 
-    @if (Model.Ad is IndoorPlantAd indoorPlantAd)
-    {
-        <p>Species: @indoorPlantAd.Species</p>
-        <p>SunlightNeeds: @indoorPlantAd.SunlightNeeds</p>
-    }
-    else if (Model.Ad is OutdoorPlantAd outdoorPlantAd)
-    {
-        <p>FloweringSeason: @outdoorPlantAd.FloweringSeason</p>
-        <p>RecommendedSoil: @outdoorPlantAd.RecommendedSoil</p>
-    }
+        .ad-details {
+            flex: 1;
+        }
 
-    <div style="border: 1px solid gray; background-color: silver;">
-        @if(Model.Messages != null)
-        {
-            @foreach (var m in Model.Messages)
-            {
-                <div style="border: 1px dotted grey">   
-                    <br />
-                    <p>@m.Sender.UserName</p>
-
-                    <p>@m.Content</p>
-
-                    <p>@m.Timestamp</p>
-                    <br />
-                </div>
-
+            .ad-details h2 {
+                margin-top: 0;
+                color: #333;
             }
-        } 
-    </div>
-    <form method="post">
-        <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea> 
-        <input type="submit" value="Send" />
-    </form>
-    @if (!ModelState.IsValid)
-    {
-        <div class="alert alert-danger">
-            @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+
+            .ad-details p {
+                color: #555;
+            }
+
+        .message-container {
+            border: 1px solid gray;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .message {
+            border-bottom: 1px dotted gray;
+            padding: 10px 0;
+        }
+
+            .message:last-child {
+                border-bottom: none;
+            }
+
+            .message p {
+                margin: 5px 0;
+                color: #555;
+            }
+
+                .message p:first-child {
+                    font-weight: bold;
+                    color: #333;
+                }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+
+        .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="white-background">
+        <div class="ad-header">
+            <img src="/images/@Model.Ad.AdImage" alt="Ad Image" class="ad-image" />
+            <div class="ad-details">
+                <h2>@Model.Ad.Title</h2>
+                <p>@Model.Ad.Description</p>
+
+                @if (Model.Ad is IndoorPlantAd indoorPlantAd)
+                {
+                    <p>Species: @indoorPlantAd.Species</p>
+                    <p>Sunlight Needs: @indoorPlantAd.SunlightNeeds</p>
+                }
+                else if (Model.Ad is OutdoorPlantAd outdoorPlantAd)
+                {
+                    <p>Flowering Season: @outdoorPlantAd.FloweringSeason</p>
+                    <p>Recommended Soil: @outdoorPlantAd.RecommendedSoil</p>
+                }
+            </div>
+        </div>
+
+        <div class="message-container">
+            @if (Model.Messages != null)
             {
-                <p>@error.ErrorMessage</p>
+                @foreach (var m in Model.Messages)
+                {
+                    <div class="message">
+                        <p>@m.Sender.UserName</p>
+                        <p>@m.Content</p>
+                        <p>@m.Timestamp</p>
+                    </div>
+                }
             }
         </div>
-    }
-</div>
 
+        <form method="post">
+            <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
+            <input type="submit" value="Send" />
+        </form>
 
+        @if (!ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+    </div>
+</body>

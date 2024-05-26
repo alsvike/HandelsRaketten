@@ -65,12 +65,12 @@
             <!-- Sidebar Content -->
             <div class="category-dropdown">
                 <form method="post">
-                <select asp-for="SelectedOption">
-                    <option value="">Vælg Kategori</option>
-                    <option value="Plants">Alle Planter</option>
-                    <option value="IndoorPlant">Indendørs</option>
-                    <option value="OutdoorPlant">Udendørs</option>
-                </select>
+                    <select asp-for="SelectedOption">
+                        <option value="">Vælg Kategori</option>
+                        <option value="Plants">Alle Planter</option>
+                        <option value="IndoorPlant">Indendørs</option>
+                        <option value="OutdoorPlant">Udendørs</option>
+                    </select>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -96,7 +96,7 @@
                         {
                             <div class="col-md-4 mb-4">
                                 <div class="card h-100">
-                                    <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="max-width: auto; max-height:150px; background-size: cover;">
+                                    <img src="/images/@ad.AdImage" class="card-img-top" alt="Ad Image" style="width: 100%; height: 150px; object-fit: cover;">
                                     <div class="card-body">
                                         <h5 class="card-title">@ad.Title</h5>
                                         <p class="card-text">@Truncate(@ad.Description, 38)</p>
@@ -110,7 +110,6 @@
                             </div>
                         }
                     </div>
-
                 </div>
             </div>
         </div>
