@@ -71,7 +71,7 @@
                         <option value="IndoorPlant">Indendørs</option>
                         <option value="OutdoorPlant">Udendørs</option>
                     </select>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" asp-page-handler="SortCategory" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 
@@ -83,6 +83,27 @@
                         <input type="submit" asp-page-handler="NameSearch" value="Search" class="btn btn-primary" />
                     </div>
                 </form>
+            </div>
+            <!-- Price Filter -->
+            <div>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Min</span>
+                        </div>
+                        <input asp-for="MinPrice" class="form-control me-2" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Max</span>
+                        </div>
+                        <input asp-for="MaxPrice" class="form-control me-2" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="submit" asp-page-handler="PriceFilter" value="Filter" class="btn btn-primary" />
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

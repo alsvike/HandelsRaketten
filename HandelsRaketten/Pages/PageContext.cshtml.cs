@@ -33,7 +33,7 @@ namespace HandelsRaketten.Pages
         }
 
 
-        public async Task<IActionResult> OnPostAsync(string category)
+        public async Task<IActionResult> OnPostSortCategoryAsync(string category)
         {
             category = SelectedOption;
             switch (SelectedOption)
@@ -60,6 +60,11 @@ namespace HandelsRaketten.Pages
         public IActionResult OnPostNameSearch()
         {
             _ads = _adService.NameSearch(SearchString).ToList();
+            return Page();
+        }
+        public IActionResult OnPostPriceFilter()
+        {
+            _ads = _adService.PriceFilter(MaxPrice, MinPrice).ToList();
             return Page();
         }
     }
