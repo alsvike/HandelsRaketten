@@ -1,4 +1,6 @@
 ﻿@page
+@using HandelsRaketten.Services.AdServices
+@using Newtonsoft.Json
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -90,45 +92,59 @@
 
 </div>
 
-
-
 <script>
-    // Sample ads data (replace this with your actual ads data)
-    const adsData = [
-        { title: "Ad 1", image: "ad1.jpg", description: "Description of Ad 1", price: "$100" },
-        { title: "Ad 2", image: "ad2.jpg", description: "Description of Ad 2", price: "$150" },
-        { title: "Ad 3", image: "ad3.jpg", description: "Description of Ad 3", price: "$120" },
-        // Add more ads as needed
-    ];
+    document.addEventListener("DOMContentLoaded", function () {
+        // Serialize Model.Ads into a JSON array
+        var adsData = @Html.Raw(JsonConvert.SerializeObject(Model.Ads)) || [];
 
-    // Function to randomly pick ads
-    function getRandomAds(numAds) {
-        const shuffledAds = adsData.sort(() => 0.5 - Math.random());
-        return shuffledAds.slice(0, numAds);
-    }
+        // Function to randomly pick ads
+        function getRandomAds(numAds) {
+            if (adsData.length === 0) {
+                console.error("No ads available to display.");
+                return [];
+            }
 
-    // Function to display ads in the UI
-    function displayAds() {
-        const adsList = document.getElementById("ads_list");
-        adsList.innerHTML = ""; // Clear previous ads
+            // Fisher-Yates shuffle algorithm to get a random selection
+            for (let i = adsData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [adsData[i], adsData[j]] = [adsData[j], adsData[i]];
+            }
 
-        const numAdsToShow = 4; // Number of ads to display
-        const randomAds = getRandomAds(numAdsToShow);
+            return adsData.slice(0, numAds);
+        }
 
-        randomAds.forEach(ad => {
-            const li = document.createElement("li");
-            li.classList.add("ad");
-            li.innerHTML = `
-                <img src="${ad.image}" alt="${ad.title}">
-                <h3>${ad.title}</h3>
-                <p>${ad.description}</p>
-                <p class="price">${ad.price}</p>
-            `;
-            adsList.appendChild(li);
-        });
-    }
+        // Function to display ads in the UI
+        function displayAds() {
+            const adsList = document.getElementById("ads_list");
+            if (!adsList) {
+                console.error("Ads list element not found.");
+                return;
+            }
 
-    // Call the displayAds function to initially display ads
-    displayAds();
+            adsList.innerHTML = ""; // Clear previous ads
 
+            const numAdsToShow = 3; // Number of ads to display
+            const randomAds = getRandomAds(numAdsToShow);
+
+            randomAds.forEach(ad => {
+                const li = document.createElement("li");
+                li.classList.add("ad");
+
+                if (ad.image && ad.title && ad.description && ad.price) {
+                    li.innerHTML = `
+                                <img src="${ad.image}" alt="${ad.title}">
+                                <h3>${ad.title}</h3>
+                                <p>${ad.description}</p>
+                                <p class="price">${ad.price}</p>
+                            `;
+                } else {
+                    console.error("Ad data is missing required fields:", ad);
+                }
+
+                adsList.appendChild(li);
+            });
+        }
+
+        displayAds();
+    });
 </script>
