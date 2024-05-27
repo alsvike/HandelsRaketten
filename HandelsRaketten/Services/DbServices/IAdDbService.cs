@@ -19,5 +19,7 @@ namespace HandelsRaketten.Services.DbServices
         Task<List<Ad>> GetAllBySubcategoryAsync(string dicriminator);
 
 
+
+
     }
 }

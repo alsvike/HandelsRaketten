@@ -22,7 +22,7 @@ namespace HandelsHjornet.Pages.AdPages
         UserManager<User> _userManager;
 
         [Required(ErrorMessage = "Tilføj Billede")]
-        [BindProperty] public IFormFile? Photo { get; set; }
+        [BindProperty] public IFormFile Photo { get; set; }
 
         [BindProperty]
         public IndoorPlantAd IndoorPlantAd { get; set; }

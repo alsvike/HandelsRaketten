@@ -12,7 +12,6 @@ namespace HandelsRaketten.Services.AdServices
         Task<List<Ad>> GetAllBySubcategoryAsync(string discriminator);
         Task<List<Ad>> GetAllByUserIdAsync(string userId);
 
-        Task AddMessageAsync(int adId, Message message);
         Task<List<Ad>> GetAllAdsAsync();
         Task<Ad> GetAdConversationAsync(int id);
 
