@@ -2,13 +2,14 @@ using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Services.AdServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel;
 
 namespace HandelsRaketten.Pages
 {
     public class PageContextModel : PageModel
     {
         private readonly IAdService _adService;
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public string SelectedOption { get; set; }
 
         [BindProperty]
@@ -26,11 +27,35 @@ namespace HandelsRaketten.Pages
             _adService = adService;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string category)
         {
-            _ads = await _adService.GetAllAdsAsync();
+            SelectedOption = category;
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                switch (category)
+                {
+                    case "Plants":
+                        _ads = await _adService.GetAllByCategoryAsync(category);
+                        break;
+                    case "IndoorPlant":
+                        _ads = await _adService.GetAllBySubcategoryAsync(category);
+                        break;
+                    case "OutdoorPlant":
+                        _ads = await _adService.GetAllBySubcategoryAsync(category);
+                        break;
+                    default:
+                        _ads = await _adService.GetAllAdsAsync();
+                        break;
+                }
+            }
+            else
+            {
+                _ads = await _adService.GetAllAdsAsync();
+            }
             return Page();
         }
+
 
 
         public async Task<IActionResult> OnPostAsync(string category)

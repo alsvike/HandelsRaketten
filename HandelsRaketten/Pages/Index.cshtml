@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@{
+    Layout = "_NoNavbarLayout";
+}
 
 @* @if (Model._signInManager.IsSignedIn(User))
 {
@@ -68,8 +71,9 @@
 
     <div id="category_navbar">
         <ul>
-            <li><a asp-page="PageContext" asp-route-category="Plants">Planter</a></li>
-            <li><a asp-page="PageContext" asp-route-category="PlantAccessories">Plante Tilbehør</a></li>
+            <li><a asp-page="PageContext" asp-route-category="Plants">Alle Planter</a></li>
+            <li><a asp-page="PageContext" asp-route-category="IndoorPlant">Indendørs Planter</a></li>
+            <li><a asp-page="PageContext" asp-route-category="OutdoorPlant">Udendørs Planter</a></li>
             <!-- Add more list items for additional categories -->
         </ul>
     </div>
