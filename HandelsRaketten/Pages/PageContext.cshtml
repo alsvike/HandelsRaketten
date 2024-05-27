@@ -65,7 +65,7 @@
             <!-- Sidebar Content -->
             <div class="category-dropdown">
                 <form method="post">
-                    <select asp-for="SelectedOption">
+                    <select asp-for="SelectedOption" asp-for="SelectedOption" onchange="this.form.submit()">
                         <option value="">Vælg Kategori</option>
                         <option value="Plants">Alle Planter</option>
                         <option value="IndoorPlant">Indendørs</option>
