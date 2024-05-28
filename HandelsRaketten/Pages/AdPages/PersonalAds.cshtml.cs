@@ -23,15 +23,19 @@ namespace HandelsRaketten.Pages.AdPages
             _adService = adService;
         }
 
+        // This method is executed when the corresponding Razor Page is requested using the HTTP GET method.
         public async Task<IActionResult> OnGetAsync()
         {
+            // Retrieve the currently authenticated user asynchronously.
             CurrentUser = await _userManager.GetUserAsync(User);
-            
-            if(CurrentUser != null)
+
+            // If a user is currently authenticated, retrieve personal ads associated with the user's ID asynchronously.
+            if (CurrentUser != null)
                 PersonalAds = await _adService.GetAllByUserIdAsync(CurrentUser.Id);
 
+            // Render the Razor Page associated with this method.
             return Page();
-
         }
+
     }
 }
