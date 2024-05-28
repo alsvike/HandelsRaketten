@@ -54,11 +54,14 @@ namespace HandelsHjornet.Pages.AdPages
                 return NotFound("Annonce findes ikke");
             }
 
-            if(CurrentUser.Id != Ad.Owner.Id)
-                await GetAdConversation();
+            if(CurrentUser != null)
+            {
+                if (CurrentUser.Id != Ad.Owner.Id)
+                    await GetAdConversation();
 
-            if (CurrentUser.Id == Ad.Owner.Id)
-                await GetAdConversations();
+                if (CurrentUser.Id == Ad.Owner.Id)
+                    await GetAdConversations();
+            }
 
 
             if(AdConversation != null && CurrentUser.Id != Ad.Owner.Id)
