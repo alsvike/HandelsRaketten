@@ -19,41 +19,55 @@ namespace HandelsHjornet.Pages.AdPages
             _adService = adService;
         }
 
+        // Define a public method called OnGet which takes two parameters:
+        // 1. An integer representing an ad ID.
+        // 2. A string representing the subcategory of the ad.
         public IActionResult OnGet(int adId, string subCategory)
         {
+            // Assign the value of subCategory to the SubCategory property of the current class.
             SubCategory = subCategory;
+
+            // Start a switch statement based on the value of subCategory.
             switch (subCategory)
             {
+                // If subCategory is "IndoorPlant", execute the following block.
                 case "IndoorPlant":
+                    // Retrieve the ad with the specified adId from the _adService and cast it to an IndoorPlantAd.
                     IndoorPlantAd = (IndoorPlantAd)_adService.Get(adId);
+                    // Exit the switch statement.
                     break;
+
+                // If subCategory is "OutdoorPlant", execute the following block.
                 case "OutdoorPlant":
+                    // Retrieve the ad with the specified adId from the _adService and cast it to an OutdoorPlantAd.
                     OutdoorPlantAd = (OutdoorPlantAd)_adService.Get(adId);
+                    // Exit the switch statement.
                     break;
             }
+
+            // Return the Page associated with this handler method.
             return Page();
         }
 
-        public IActionResult OnPost(int adId, string subCategory)
+        public IActionResult OnPost(int adId, string subCategory) // Declaring a method to handle POST requests with parameters adId and subCategory
         {
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) // Checking if the model state is not valid
             {
-                return Page();
+                return Page(); // Returning the current page if model state is not valid
             }
 
-            switch (subCategory)
+            switch (subCategory) // Switching based on the value of subCategory parameter
             {
-                case "IndoorPlant":
-                    _adService.UpdateAsync(adId, IndoorPlantAd);
-                    break;
-                case "OutdoorPlant":
-                    _adService.UpdateAsync(adId, OutdoorPlantAd);
-                    break;
+                case "IndoorPlant": // If subCategory is "IndoorPlant"
+                    _adService.UpdateAsync(adId, IndoorPlantAd); // Calling UpdateAsync method of _adService with adId and IndoorPlantAd
+                    break; // Exiting the switch statement
+                case "OutdoorPlant": // If subCategory is "OutdoorPlant"
+                    _adService.UpdateAsync(adId, OutdoorPlantAd); // Calling UpdateAsync method of _adService with adId and OutdoorPlantAd
+                    break; // Exiting the switch statement
             }
 
-
-            return RedirectToPage("ShowAllAds");
+            return RedirectToPage("ShowAllAds"); // Returning a redirect to the "ShowAllAds" page
         }
     }
 }

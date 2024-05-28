@@ -36,34 +36,43 @@ namespace HandelsHjornet.Pages.AdPages
             _userManager = userManager;
         }
 
+        // This method handles HTTP GET requests asynchronously, taking an adId parameter
         public async Task<IActionResult> OnGetAsync(int adId)
         {
+            // Checking if the adId is negative, returning a BadRequest response if true
             if (adId < 0)
             {
                 return BadRequest("Annonce id må ikke være negativ");
             }
 
+            // Getting the current user asynchronously
             CurrentUser = await _userManager.GetUserAsync(User);
+
+            // Retrieving the ad conversation asynchronously based on the adId
             Ad = await _adService.GetAdConversationAsync(adId);
 
-
+            // Returning a NotFound response if the ad is not found
             if (Ad == null)
             {
                 return NotFound("Annonce findes ikke");
             }
 
-            if(CurrentUser.Id != Ad.Owner.Id)
+            // If the current user is not the owner of the ad, retrieving the ad conversation
+            if (CurrentUser.Id != Ad.Owner.Id)
                 await GetAdConversation();
 
+            // If the current user is the owner of the ad, retrieving the ad conversations
             if (CurrentUser.Id == Ad.Owner.Id)
                 await GetAdConversations();
 
+            // If there is a conversation and the current user is not the owner of the ad, setting Messages
+            if (AdConversation != null && CurrentUser.Id != Ad.Owner.Id)
+                Messages = AdConversation.Messages;
 
-            if(AdConversation != null && CurrentUser.Id != Ad.Owner.Id)
-            Messages = AdConversation.Messages;
-
+            // Returning the Page result
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(int adId, int AdConversationId)
         {
@@ -111,14 +120,14 @@ namespace HandelsHjornet.Pages.AdPages
                     return NotFound("Samtale eksisterer ikke.");
                 }
             }
-            else if(CurrentUser != null && CurrentUser.Id == Ad.Owner.Id)
+            else if (CurrentUser != null && CurrentUser.Id == Ad.Owner.Id)
             {
-                if(AdConversations == null)
+                if (AdConversations == null)
                 {
                     await GetAdConversations();
                 }
 
-                if(AdConversations != null)
+                if (AdConversations != null)
                 {
                     // Set properties of the new message
                     NewMessage.AdConversationId = AdConversationId;
@@ -152,41 +161,57 @@ namespace HandelsHjornet.Pages.AdPages
         }
 
 
+        // Method to asynchronously retrieve an ad conversation
         private async Task<AdConversation> GetAdConversation()
         {
+            // Check if there is a current user
             if (CurrentUser != null)
             {
                 try
                 {
+                    // Retrieve the ad conversation from the database context
+                    // Including messages and their senders
                     AdConversation = _context.AdConversations
                        .Include(c => c.Messages)
                        .ThenInclude(m => m.Sender)
+                       // Find the first ad conversation matching the conditions:
+                       // AdId matches the current ad's Id, and either the sender Id or the owner Id matches the current user's Id
                        .FirstOrDefault(c => c.AdId == Ad.Id && (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id));
                 }
                 catch (Exception e)
                 {
+                    // Log any exceptions occurred during retrieval
                     await Console.Out.WriteLineAsync();
                 }
             }
+            // Return the default value (null for reference types)
             return default;
         }
 
+
         private async Task<AdConversation> GetAdConversations()
         {
+            // Check if there is a current user
             if (CurrentUser != null)
             {
                 try
                 {
+                    // Retrieve ad conversations from the database context
                     AdConversations = _context.AdConversations
+                       // Include messages related to each conversation
                        .Include(c => c.Messages)
+                       // Then include the sender of each message
                        .ThenInclude(m => m.Sender)
+                       // Filter conversations based on ad ID and sender or owner ID matching the current user
                        .Where(c => c.AdId == Ad.Id && (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id)).ToList();
                 }
                 catch (Exception e)
                 {
+                    // Log any exceptions that occur during database operation
                     await Console.Out.WriteLineAsync();
                 }
             }
+            // Return default value (null in this case)
             return default;
         }
     }
