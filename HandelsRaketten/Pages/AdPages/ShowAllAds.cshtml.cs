@@ -43,6 +43,10 @@ namespace HandelsHjornet.Pages.TestPages
 
             var user = await _userManager.GetUserAsync(User);
 
+            if(user == null)
+            {
+                return RedirectToPage("/Index");
+            }
             if (!user.IsAdmin)
             {
                 return RedirectToPage("/Index");

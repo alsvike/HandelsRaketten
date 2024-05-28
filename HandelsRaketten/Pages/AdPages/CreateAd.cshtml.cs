@@ -116,7 +116,7 @@ namespace HandelsHjornet.Pages.AdPages
 
         private string ProcessUploadedFile()
         {
-            string uniqueFileName = null;
+            string uniqueFileName = Path.Combine(_webHostEnvironment.WebRootPath, "Images\\0ab56030-c9a1-4be5-ba94-eaade74455ff_TurtleBurger.jpg");
             if (Photo != null)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images");

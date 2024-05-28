@@ -38,32 +38,49 @@ namespace HandelsHjornet.Pages.AdPages
 
         public async Task<IActionResult> OnGetAsync(int adId)
         {
+            // Check if the provided adId is negative. If so, return a BadRequest response.
             if (adId < 0)
             {
                 return BadRequest("Annonce id må ikke være negativ");
             }
 
+            // Get the current user asynchronously using the _userManager service.
             CurrentUser = await _userManager.GetUserAsync(User);
+
+            // Retrieve the ad conversation asynchronously using the provided adId from the _adService.
             Ad = await _adService.GetAdConversationAsync(adId);
 
-
+            // If the ad does not exist, return a NotFound response.
             if (Ad == null)
             {
                 return NotFound("Annonce findes ikke");
             }
 
-            if(CurrentUser.Id != Ad.Owner.Id)
-                await GetAdConversation();
+            if(CurrentUser != null)
+            {
+                // If the current user is not the owner of the ad, get the ad conversation for that user.
+                if (CurrentUser.Id != Ad.Owner.Id)
+                {
+                    await GetAdConversation();
+                }
 
-            if (CurrentUser.Id == Ad.Owner.Id)
-                await GetAdConversations();
+                // If the current user is the owner of the ad, get all ad conversations.
+                if (CurrentUser.Id == Ad.Owner.Id)
+                {
+                    await GetAdConversations();
+                }
+            }
 
+            // If there is an ad conversation and the current user is not the owner, set the Messages property.
+            if (AdConversation != null && CurrentUser.Id != Ad.Owner.Id)
+            {
+                Messages = AdConversation.Messages;
+            }
 
-            if(AdConversation != null && CurrentUser.Id != Ad.Owner.Id)
-            Messages = AdConversation.Messages;
-
+            // Return the current page.
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(int adId, int AdConversationId)
         {

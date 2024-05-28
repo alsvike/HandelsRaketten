@@ -13,12 +13,12 @@ namespace HandelsRaketten.Models.AdModels
         public string Category { get; set; }
         public string? Discriminator { get; set; }
         [StringLength(50, ErrorMessage = "Navn må ikke være over 50 tegn")]
-        public string? Title { get; set; }
+        public string? Title { get; set; } = "No Title Given";
         public bool Active { get; set; }
         public DateTime CreatedOn { get; set; }
 
         [StringLength(2000, ErrorMessage = "Beskrivelse må ikke være over 2000 tegn")]
-        public string? Description { get; set; }
+        public string? Description { get; set; } = "No Description Given";
 
         [Range(0, int.MaxValue, ErrorMessage = "Pris kan ikke være et negativt tal")]
         public int Price { get; set; }

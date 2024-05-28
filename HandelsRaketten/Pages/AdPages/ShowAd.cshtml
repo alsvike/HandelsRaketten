@@ -165,10 +165,13 @@
             }
         </div>
         <form method="post">
-            @if (Model.CurrentUser.Id != Model.Ad.Owner.Id)
+            @if(Model.CurrentUser != null)
             {
-                <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
-                <input type="submit" value="Send" />
+                @if (Model.CurrentUser.Id != Model.Ad.Owner.Id)
+                {
+                    <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
+                    <input type="submit" value="Send" />
+                }
             }
         </form>
 
