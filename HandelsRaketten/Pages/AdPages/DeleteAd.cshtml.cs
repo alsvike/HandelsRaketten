@@ -35,7 +35,7 @@ namespace HandelsHjornet.Pages.AdPages
         }
 
         // This method handles the HTTP POST request sent to this page, taking an adId as a parameter
-        public IActionResult OnPost(int adId)
+        public async Task<IActionResult> OnPostAsync(int adId)
         {
             // Checks if the model state is not valid
             if (!ModelState.IsValid)
@@ -45,7 +45,7 @@ namespace HandelsHjornet.Pages.AdPages
             }
 
             // Calls the DeleteAsync method of the _adService to delete the ad with the specified adId asynchronously
-            _adService.DeleteAsync(adId);
+            await _adService.DeleteAsync(adId);
 
             // Redirects the user to the "ShowAllAds" page after successful deletion
             return RedirectToPage("ShowAllAds");

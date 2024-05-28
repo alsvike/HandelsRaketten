@@ -21,7 +21,7 @@ namespace HandelsHjornet.Pages.AdPages
         AdDbContext _context;
 
         public Ad Ad { get; set; }
-        public User CurrentUser { get; set; }
+        public User? CurrentUser { get; set; }
         public IEnumerable<HandelsRaketten.Models.AdModels.Message>? Messages { get; set; }
 
         public AdConversation? AdConversation { get; set; }
@@ -57,10 +57,10 @@ namespace HandelsHjornet.Pages.AdPages
             if(CurrentUser != null)
             {
                 if (CurrentUser.Id != Ad.Owner.Id)
-                    await GetAdConversation();
+                    await GetAdConversationAsync();
 
                 if (CurrentUser.Id == Ad.Owner.Id)
-                    await GetAdConversations();
+                    await GetAdConversationsAsync();
             }
 
 
@@ -82,7 +82,7 @@ namespace HandelsHjornet.Pages.AdPages
                 if (AdConversation == null)
                 {
                     // If a AdConversation exists load it
-                    await GetAdConversation();
+                    await GetAdConversationAsync();
 
                     // If it doesn't exist create a new
                     if (AdConversation == null && CurrentUser != null && CurrentUser.Id != Ad.Owner.Id)
@@ -121,7 +121,7 @@ namespace HandelsHjornet.Pages.AdPages
             {
                 if (AdConversations == null)
                 {
-                    await GetAdConversations();
+                    await GetAdConversationsAsync();
                 }
 
                 if (AdConversations != null)
@@ -159,7 +159,7 @@ namespace HandelsHjornet.Pages.AdPages
 
 
         // Method to asynchronously retrieve an ad conversation
-        private async Task<AdConversation> GetAdConversation()
+        private async Task<AdConversation> GetAdConversationAsync()
         {
             // Check if there is a current user
             if (CurrentUser != null)
@@ -186,7 +186,7 @@ namespace HandelsHjornet.Pages.AdPages
         }
 
 
-        private async Task<AdConversation> GetAdConversations()
+        private async Task<AdConversation> GetAdConversationsAsync()
         {
             // Check if there is a current user
             if (CurrentUser != null)

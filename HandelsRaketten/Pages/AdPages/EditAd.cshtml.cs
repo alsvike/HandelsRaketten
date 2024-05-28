@@ -49,7 +49,7 @@ namespace HandelsHjornet.Pages.AdPages
             return Page();
         }
 
-        public IActionResult OnPost(int adId, string subCategory) // Declaring a method to handle POST requests with parameters adId and subCategory
+        public async Task<IActionResult> OnPostAsync(int adId, string subCategory) // Declaring a method to handle POST requests with parameters adId and subCategory
         {
 
             if (!ModelState.IsValid) // Checking if the model state is not valid
@@ -60,10 +60,10 @@ namespace HandelsHjornet.Pages.AdPages
             switch (subCategory) // Switching based on the value of subCategory parameter
             {
                 case "IndoorPlant": // If subCategory is "IndoorPlant"
-                    _adService.UpdateAsync(adId, IndoorPlantAd); // Calling UpdateAsync method of _adService with adId and IndoorPlantAd
+                    await _adService.UpdateAsync(adId, IndoorPlantAd); // Calling UpdateAsync method of _adService with adId and IndoorPlantAd
                     break; // Exiting the switch statement
                 case "OutdoorPlant": // If subCategory is "OutdoorPlant"
-                    _adService.UpdateAsync(adId, OutdoorPlantAd); // Calling UpdateAsync method of _adService with adId and OutdoorPlantAd
+                    await _adService.UpdateAsync(adId, OutdoorPlantAd); // Calling UpdateAsync method of _adService with adId and OutdoorPlantAd
                     break; // Exiting the switch statement
             }
 

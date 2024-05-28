@@ -66,7 +66,7 @@ namespace HandelsHjornet.Pages.AdPages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostCreate(string category)
+        public async Task<IActionResult> OnPostCreateAsync(string category)
         {
             // Check if the model state is not valid
             if (!ModelState.IsValid)

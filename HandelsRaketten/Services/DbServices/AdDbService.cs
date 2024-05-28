@@ -23,7 +23,7 @@ namespace HandelsRaketten.Services.DbServices
             }
         }
 
-        public async Task AddMessage(Message message)
+        public async Task AddMessageAsync(Message message)
         {
 
             using (var context = new AdDbContext())
@@ -57,7 +57,7 @@ namespace HandelsRaketten.Services.DbServices
             }
         }
 
-        public async Task SaveObjects(List<Ad> objs)
+        public async Task SaveObjectsAsync(List<Ad> objs)
         {
             using (var context = new AdDbContext())
             {

@@ -26,7 +26,7 @@ namespace HandelsHjornet.Pages.TestPages
         [BindProperty]
         public int MaxPrice { get; set; }
 
-        public List<Ad> _ads;
+        public List<Ad> Ads { get; set; }
 
 
         bool _isNameSorted;
@@ -41,7 +41,7 @@ namespace HandelsHjornet.Pages.TestPages
         public async Task<IActionResult> OnGetAsync()
         {
             // Calls the GetAllAdsAsync method of the _adService to retrieve all ads asynchronously.
-            _ads = await _adService.GetAllAdsAsync();
+            Ads = await _adService.GetAllAdsAsync();
 
             // Retrieves the currently logged-in user asynchronously.
             var user = await _userManager.GetUserAsync(User);
@@ -62,7 +62,7 @@ namespace HandelsHjornet.Pages.TestPages
 
 
         // This method handles HTTP POST requests sent to the current page.
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             // Checks if the model state is valid (i.e., if the data passed validation rules).
             if (!ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace HandelsHjornet.Pages.TestPages
             }
 
             // Calls the asynchronous method to change the category based on the selected option.
-            ChangeCategoryAsync(SelectedOption);
+            await ChangeCategoryAsync(SelectedOption);
 
             // Returns the current page after handling the POST request.
             return Page();
@@ -85,16 +85,16 @@ namespace HandelsHjornet.Pages.TestPages
             {
                 // If selectedOption is "All", fetch all ads regardless of category
                 case "All":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    Ads = await _adService.GetAllByCategoryAsync(selectedOption);
                     break;
                 // If selectedOption is "Plants", fetch ads for Plants category
                 case "Plants":
-                    _ads = await _adService.GetAllByCategoryAsync(selectedOption);
+                    Ads = await _adService.GetAllByCategoryAsync(selectedOption);
                     break;
                 // If selectedOption is "IndoorPlant" or "OutdoorPlant", fetch ads for the respective subcategory
                 case "IndoorPlant":
                 case "OutdoorPlant":
-                    _ads = await _adService.GetAllBySubcategoryAsync(selectedOption);
+                    Ads = await _adService.GetAllBySubcategoryAsync(selectedOption);
                     break;
                 // If selectedOption is any other category of tools or accessories, fetch ads for the respective subcategory
                 case "Tool":
@@ -102,11 +102,11 @@ namespace HandelsHjornet.Pages.TestPages
                 case "PlantAccessories":
                 case "Soil":
                 case "Fertilizer":
-                    _ads = await _adService.GetAllBySubcategoryAsync(selectedOption);
+                    Ads = await _adService.GetAllBySubcategoryAsync(selectedOption);
                     break;
                 // If selectedOption does not match any specific category, fetch all ads
                 default:
-                    _ads = await _adService.GetAllAdsAsync();
+                    Ads = await _adService.GetAllAdsAsync();
                     break;
             }
         }
@@ -125,13 +125,13 @@ namespace HandelsHjornet.Pages.TestPages
             if (_isNameSorted)
             {
                 // If names are already sorted in descending order, sort them in ascending order and update the flag.
-                _ads = _adService.SortByNameDescending().ToList();
+                Ads = _adService.SortByNameDescending().ToList();
                 _isNameSorted = false;
             }
             else
             {
                 // If names are not sorted or sorted in ascending order, sort them in descending order and update the flag.
-                _ads = _adService.SortByName().ToList();
+                Ads = _adService.SortByName().ToList();
                 _isNameSorted = true;
             }
 
@@ -158,7 +158,7 @@ namespace HandelsHjornet.Pages.TestPages
             {
                 // If ads are already sorted by price in descending order, 
                 // retrieve the sorted list and convert it to a list.
-                _ads = _adService.SortByPriceDescending().ToList();
+                Ads = _adService.SortByPriceDescending().ToList();
                 // Update the sorting status to false, indicating that the next sorting will be ascending.
                 _isPriceSorted = false;
             }
@@ -166,7 +166,7 @@ namespace HandelsHjornet.Pages.TestPages
             {
                 // If ads are not already sorted by price, 
                 // retrieve the sorted list in ascending order and convert it to a list.
-                _ads = _adService.SortByPrice().ToList();
+                Ads = _adService.SortByPrice().ToList();
                 // Update the sorting status to true, indicating that the next sorting will be descending.
                 _isPriceSorted = true;
             }
@@ -183,7 +183,7 @@ namespace HandelsHjornet.Pages.TestPages
         public IActionResult OnPostNameSearch()
         {
             // Calls the NameSearch method of the injected _adService with the SearchString parameter
-            _ads = _adService.NameSearch(SearchString).ToList();
+            Ads = _adService.NameSearch(SearchString).ToList();
             // Returns the current page
             return Page();
         }
@@ -192,7 +192,7 @@ namespace HandelsHjornet.Pages.TestPages
         public IActionResult OnPostPriceFilter()
         {
             // Filtering ads based on price range using the AdService PriceFilter method
-            _ads = _adService.PriceFilter(MaxPrice, MinPrice).ToList();
+            Ads = _adService.PriceFilter(MaxPrice, MinPrice).ToList();
 
             // Returning the current page after applying the price filter
             return Page();
