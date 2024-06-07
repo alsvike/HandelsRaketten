@@ -33,6 +33,15 @@ namespace HandelsHjornet.Pages.AdPages
 
         [BindProperty] public string Category { get; set; }
 
+        [Required(ErrorMessage = "Annonce skal have en titel")]
+        [StringLength(30, ErrorMessage = "Titel må ikke være over 30 tegn")]
+
+        [BindProperty] public string Title { get; set; }
+
+        [Required(ErrorMessage = "Annonce skal have en beskrivelse")]
+        [StringLength(2000, ErrorMessage = "Beskrivelse må ikke være over 2000 tegn")]
+        [BindProperty] public string Description { get; set; }
+
         public CreateAdModel(IAdService adService, ISellerService sellerService, IWebHostEnvironment webHostEnvironment, SignInManager<User> signInManager, UserManager<User> userManager)
         {
             _adService = adService;
@@ -44,6 +53,8 @@ namespace HandelsHjornet.Pages.AdPages
 
         public IActionResult OnGet()
         {
+            ModelState.Clear();
+
             // Check if the user is signed in
             if (_signInManager.IsSignedIn(User))
             {
@@ -58,7 +69,7 @@ namespace HandelsHjornet.Pages.AdPages
 
         public IActionResult OnPost(string category)
         {
-
+            ModelState.Clear();
             Category = category;
             // Execute method based on the selected category
 
@@ -82,10 +93,13 @@ namespace HandelsHjornet.Pages.AdPages
             switch (category)
             {
                 case "IndoorPlant":
-                    // Set the user ID for the indoor plant ad
+                    // Set Properties for the Ad
                     IndoorPlantAd.UserId = user.Id;
+                    IndoorPlantAd.Title = Title;
+                    IndoorPlantAd.Description = Description;
                     // Add the seller to the database
                     await _sellerService.AddAsync(Seller);
+
                     // Set the seller ID for the indoor plant ad
                     IndoorPlantAd.SellerId = Seller.Id;
 
@@ -106,10 +120,14 @@ namespace HandelsHjornet.Pages.AdPages
                     await _adService.AddAsync(IndoorPlantAd);
                     break;
                 case "OutdoorPlant":
-                    // Set the user ID for the outdoor plant ad
+                    // Set properties for the Ad
                     OutdoorPlantAd.UserId = user.Id;
+                    OutdoorPlantAd.Title = Title;
+                    OutdoorPlantAd.Description = Description;
+
                     // Add the seller to the database
                     await _sellerService.AddAsync(Seller);
+
                     // Set the seller ID for the outdoor plant ad
                     OutdoorPlantAd.SellerId = Seller.Id;
 

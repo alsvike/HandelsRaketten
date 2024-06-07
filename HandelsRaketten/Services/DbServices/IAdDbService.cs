@@ -12,6 +12,7 @@ namespace HandelsRaketten.Services.DbServices
         Task<List<Ad>> GetAllByUserIdAsync(string userId);
         Task SaveObjectsAsync(List<Ad> objs);
 
+        Task DeleteMessageAsync(int msgId);
         Task AddMessageAsync(Message message);
         Task<Ad> GetAdConversationAsync(int id);
 

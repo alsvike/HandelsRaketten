@@ -205,6 +205,11 @@ namespace HandelsRaketten.Services.AdServices
             return await _dbService.GetAdConversationAsync(adId);
         }
 
+        public async Task DeleteMessageAsync(int msgId)
+        {
+            if(msgId > 0 )
+            await _dbService.DeleteMessageAsync(msgId);
+        }
 
         // sorting and filtering
         // Searches for advertisements by name.

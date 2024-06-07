@@ -5,6 +5,7 @@ using HandelsRaketten.Models;
 using HandelsRaketten.Models.AdModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using NuGet.Protocol;
 
 namespace HandelsRaketten.Services.DbServices
 {
@@ -71,6 +72,21 @@ namespace HandelsRaketten.Services.DbServices
             }
         }
 
+        public async Task DeleteMessageAsync(int msgId)
+        {
+            Message msg;
+            using (var context = new AdDbContext())
+            {
+                msg = context.Messages.Find(msgId);
+
+                if (msg == null) return;
+
+                context.Messages.Remove(msg);
+                await context.SaveChangesAsync();
+            }
+        }
+
+
         public async Task UpdateObjectAsync(Ad obj)
         {
             using (var context = new AdDbContext())
@@ -88,6 +104,7 @@ namespace HandelsRaketten.Services.DbServices
                 await context.SaveChangesAsync();
             }
         }
+
 
         public async Task<Ad> GetObjectByIdAsync(int id)
         {

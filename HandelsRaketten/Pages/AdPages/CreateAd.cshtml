@@ -37,27 +37,36 @@
                             <label asp-for="@Model.Photo" class="control-label"></label>
                             <div class="custom-file">
                                 <input asp-for="@Model.Photo" class="custom-file-input form-control" />
-                                <span asp-validation-for="@Model.Photo" class="fst-italic fs-6"></span>
+                                <span asp-validation-for="@Model.Photo" class="text-danger"></span>
                             </div>
                         </div>
+                    <div>
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
                     }
                 </div>
                 <br />
+            @if (Model.Category == null)
+            {
+                <br />
+                <h3>Vælg en kategori for at oprette en annonce</h3>
+                <br />
 
+            }
 
 
             @if(Model.Category == "IndoorPlant")
             {
-                <div class="form-group">
-                    <label asp-for="IndoorPlantAd.Title" class="control-label"></label>
-                    <input asp-for="IndoorPlantAd.Title" class="form-control" />
-                    <span asp-validation-for="IndoorPlantAd.Title" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="IndoorPlantAd.Description" class="control-label"></label>
-                    <input asp-for="IndoorPlantAd.Description" class="form-control" />
-                    <span asp-validation-for="IndoorPlantAd.Description" class="text-danger"></span>
-                </div>
+
                 <div class="form-group">
                     <label asp-for="IndoorPlantAd.Price" class="control-label"></label>
                     <input asp-for="IndoorPlantAd.Price" class="form-control" />
@@ -72,20 +81,12 @@
             else if(Model.Category == "OutdoorPlant")
             {
                 <div class="form-group">
-                    <label asp-for="OutdoorPlantAd.Title" class="control-label"></label>
-                    <input asp-for="OutdoorPlantAd.Title" class="form-control" />
-                    <span asp-validation-for="OutdoorPlantAd.Title" class="text-danger"></span>
+                    <label asp-for="OutdoorPlantAd.Price" class="control-label"></label>
+                    <input asp-for="OutdoorPlantAd.Price" class="form-control" />
+                    <span asp-validation-for="OutdoorPlantAd.Price" class="text-danger"></span>
                 </div>
             }
 
-
-                @if(Model.Category == null)
-                {
-                    <br />
-                    <h3>Vælg en kategori for at oprette en annonce</h3>
-                    <br />
-
-                }
 
                 <br />
                 @if (!string.IsNullOrEmpty(Model.Category))

@@ -5,10 +5,18 @@
 }
 
 <div class="white-background">
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div>
             @if (Model.SubCategory == Model.IndoorPlantAd.Discriminator)
             {
+                <div class="form-group">
+                    <label asp-for="IndoorPlantAd.AdImage" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="IndoorPlantAd.AdImage" class="custom-file-input form-control" />
+                        <span asp-validation-for="IndoorPlantAd.AdImage" class="text-danger"></span>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label asp-for="IndoorPlantAd.Title" class="control-label"></label>
                     <input asp-for="IndoorPlantAd.Title" class="form-control" />

@@ -27,10 +27,17 @@ namespace HandelsRaketten.Pages
             _adService = adService;
         }
 
-        public async Task<IActionResult> OnGetAsync(string category)
+        public async Task<IActionResult> OnGetAsync(string category, string SearchString)
         {
             // Set the selected option to the provided category.
             SelectedOption = category;
+
+            // if a search input was given, find all ads with that input
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                _ads = _adService.NameSearch(SearchString).ToList();
+                return Page();
+            }
 
             // Check if the category is not null or empty.
             if (!string.IsNullOrEmpty(category))

@@ -14,6 +14,8 @@ namespace HandelsRaketten.Pages
         private readonly ILogger<IndexModel> _logger;
         IAdService _adService;
 
+        [BindProperty] public string SearchString { get; set; }
+
         private const string AdminRoleName = "Admin"; // Define the name of the admin role
 
         public bool IsAdmin { get; private set; }
@@ -59,6 +61,11 @@ namespace HandelsRaketten.Pages
             {
                 return false;
             }
+        }
+
+        public IActionResult OnPostNameSearch()
+        {
+            return RedirectToPage("PageContext", new { SearchString });
         }
 
     }

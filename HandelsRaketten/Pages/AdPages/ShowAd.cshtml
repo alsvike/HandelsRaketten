@@ -108,8 +108,8 @@
         <div class="ad-header">
             <img src="/images/@Model.Ad.AdImage" alt="Ad Image" class="ad-image" />
             <div class="ad-details">
-                <h2>@Model.Ad.Title</h2>
-                <p>@Model.Ad.Description</p>
+                <textarea class="h2" readonly>@Model.Ad.Title</textarea>
+                <textarea class="p-0" readonly>@Model.Ad.Description</textarea>
 
                 @if (Model.Ad is IndoorPlantAd indoorPlantAd)
                 {
@@ -131,8 +131,13 @@
                 {
                     <div class="message">
                         <p>@m.Sender.UserName</p>
-                        <p>@m.Content</p>
+                        <textarea readonly>@m.Content</textarea>
                         <p>@m.Timestamp</p>
+                        @if(Model.CurrentUser.Id == m.Sender.Id)
+                        {
+                            <form method="post"><button asp-page-handler="DeleteMessage" type="submit" asp-route-msgId="@m.Id" asp-route-adId="@Model.Ad.Id">Slet</button></form>
+                        }
+
                     </div>
                 }
             }
@@ -147,9 +152,13 @@
                                 {
                                     <div class="message">
                                         <p>@msg.Sender.UserName</p>
-                                        <p>@msg.Content</p>
+                                        <textarea readonly>@msg.Content</textarea>
                                         <p>@msg.Timestamp</p>
-                                    </div>
+                                        @if (Model.CurrentUser.Id == msg.Sender.Id)
+                                        {
+                                            <form method="post"><button asp-page-handler="DeleteMessage" type="submit" asp-route-msgId="@msg.Id" asp-route-adId="@Model.Ad.Id">Slet</button></form>
+                                        }
+                                </div>
                                 }
                             </div>
                             <form method="post">
@@ -158,6 +167,7 @@
                                     <textarea asp-for="NewMessage.Content" placeholder="Type a message..."></textarea>
                                     <input type="hidden" name="adId" value="@Model.Ad.Id" />
                                     <input type="submit" value="Send" asp-route-AdConversationId="@adc.Id" />
+
                                 }
                             </form>
                         }
@@ -187,3 +197,18 @@
         }
     </div>
 </body>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const textareas = document.querySelectorAll("textarea");
+
+            textareas.forEach(textarea => {
+                // Adjust the height initially
+                textarea.style.height = "auto";
+                textarea.style.height = (textarea.scrollHeight) + "px";
+            });
+        });
+    </script>
+}

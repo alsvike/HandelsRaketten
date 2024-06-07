@@ -157,6 +157,23 @@ namespace HandelsHjornet.Pages.AdPages
             }
         }
 
+        public async Task<IActionResult> OnPostDeleteMessageAsync(int adId, int msgId)
+        {
+            CurrentUser = await _userManager.GetUserAsync(User);
+            Ad = await _adService.GetAdConversationAsync(adId);
+
+            if(Ad == null)
+            {
+                return NotFound("Ad was Null");
+            }
+
+            if(CurrentUser != null)
+            {
+                await _adService.DeleteMessageAsync(msgId);
+            }
+
+            return RedirectToPage("./ShowAd", new { adId = Ad.Id });
+        }
 
         // Method to asynchronously retrieve an ad conversation
         private async Task<AdConversation> GetAdConversationAsync()
@@ -164,8 +181,6 @@ namespace HandelsHjornet.Pages.AdPages
             // Check if there is a current user
             if (CurrentUser != null)
             {
-                try
-                {
                     // Retrieve the ad conversation from the database context
                     // Including messages and their senders
                     AdConversation = _context.AdConversations
@@ -174,12 +189,6 @@ namespace HandelsHjornet.Pages.AdPages
                        // Find the first ad conversation matching the conditions:
                        // AdId matches the current ad's Id, and either the sender Id or the owner Id matches the current user's Id
                        .FirstOrDefault(c => c.AdId == Ad.Id && (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id));
-                }
-                catch (Exception e)
-                {
-                    // Log any exceptions occurred during retrieval
-                    await Console.Out.WriteLineAsync();
-                }
             }
             // Return the default value (null for reference types)
             return default;
@@ -191,8 +200,6 @@ namespace HandelsHjornet.Pages.AdPages
             // Check if there is a current user
             if (CurrentUser != null)
             {
-                try
-                {
                     // Retrieve ad conversations from the database context
                     AdConversations = _context.AdConversations
                        // Include messages related to each conversation
@@ -201,12 +208,6 @@ namespace HandelsHjornet.Pages.AdPages
                        .ThenInclude(m => m.Sender)
                        // Filter conversations based on ad ID and sender or owner ID matching the current user
                        .Where(c => c.AdId == Ad.Id && (c.SenderId == CurrentUser.Id || c.OwnerId == CurrentUser.Id)).ToList();
-                }
-                catch (Exception e)
-                {
-                    // Log any exceptions that occur during database operation
-                    await Console.Out.WriteLineAsync();
-                }
             }
             // Return default value (null in this case)
             return default;

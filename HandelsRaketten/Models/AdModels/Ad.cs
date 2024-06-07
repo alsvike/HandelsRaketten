@@ -12,7 +12,7 @@ namespace HandelsRaketten.Models.AdModels
         [Required]
         public string Category { get; set; }
         public string? Discriminator { get; set; }
-        [StringLength(50, ErrorMessage = "Navn må ikke være over 50 tegn")]
+        [StringLength(30, ErrorMessage = "Titel må ikke være over 30 tegn")]
         public string? Title { get; set; } = "No Title Given";
         public bool Active { get; set; }
         public DateTime CreatedOn { get; set; }
