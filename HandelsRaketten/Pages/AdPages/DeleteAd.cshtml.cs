@@ -48,7 +48,7 @@ namespace HandelsHjornet.Pages.AdPages
             await _adService.DeleteAsync(adId);
 
             // Redirects the user to the "ShowAllAds" page after successful deletion
-            return RedirectToPage("ShowAllAds");
+            return RedirectToPage("PersonalAds");
         }
 
     }

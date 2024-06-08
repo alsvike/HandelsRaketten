@@ -67,7 +67,7 @@ namespace HandelsHjornet.Pages.AdPages
                     break; // Exiting the switch statement
             }
 
-            return RedirectToPage("ShowAllAds"); // Returning a redirect to the "ShowAllAds" page
+            return RedirectToPage("PersonalAds"); // Returning a redirect to the "ShowAllAds" page
         }
     }
 }
