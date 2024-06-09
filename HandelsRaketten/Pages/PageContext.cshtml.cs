@@ -2,6 +2,7 @@ using HandelsRaketten.Models.AdModels;
 using HandelsRaketten.Services.AdServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.ComponentModel;
 
 namespace HandelsRaketten.Pages
@@ -21,7 +22,7 @@ namespace HandelsRaketten.Pages
         [BindProperty]
         public int MaxPrice { get; set; }
 
-        public List<Ad> _ads;
+        public List<Ad> _ads = new List<Ad>();
         public PageContextModel(IAdService adService)
         {
             _adService = adService;
